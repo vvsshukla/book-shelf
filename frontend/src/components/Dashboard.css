@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#dashboardDiv {
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    background-color: rgb(47, 220, 140);
+}
+
+.logo img {
+    max-height: 40px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 0.75rem;
+}
+
+nav ul li {
+    height: 30px;
+    line-height: 30px;
+    text-decoration: none;
+}
+
+nav ul li button {
+    text-decoration: none;
+    background: transparent;
+    border: none;
+    color: #333;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+nav ul li button:hover, .active {
+    color: #006699;
+}
+
+/* .dashboard-links {
+    color: #333;
+    font-weight: bold;
+} */
+
+/* .active {
+    color: #006699;
+    font-weight: bold;
+} */
+
+/* .dashboard-links:hover {
+    color: #006699;
+} */
+
+.user-profile {
+    position: relative;
+}
+
+.user-profile img {
+    /* width: 70px;
+    height: 70px; */
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0.25rem;
+}
+
+.profile-panel {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    width: 180px;
+    text-align: left;
+}
+
+.profile-panel ul {
+    list-style: none;
+}
+
+.profile-panel ul li {
+    padding: 5px;
+}
+
+.profile-panel a {
+    color: #000;
+    text-decoration: none;
+}
+
+.search-form {
+    display: flex;
+    justify-content: center;
+}
+
+.search-books {
+    padding: 5px;
+}
+
+.search-form button {
+    font-size: large;
+}
+
+/* logo css */
+.logo {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 36px;
+    color: #ff6347; /* Coral color */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adding shadow */
+    letter-spacing: 2px; /* Adjust letter spacing */
+  }
+  
+  .logo span {
+    position: relative;
+  }
+  
+  .logo span::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px; /* Adjust thickness of underline */
+    background-color: #ff6347; /* Same color as text */
+    bottom: -5px; /* Adjust distance from text */
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+  
+  .logo span:hover::after {
+    transform: scaleX(1);
+  }
+
+  main {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  /* Laptop/Desktop Css */
+  @media screen and (min-width: 1024px) {
+     main {
+        padding-top: 5vh;
+     }
+  }
+
+/* <a href="https://www.freepik.com/free-vector/blank-user-circles_134996379.htm#query=default%20user&position=5&from_view=keyword&track=ais&uuid=f2a94e02-4925-4ebe-b72a-85ee7504f89f">Image by juicy_fish</a> on Freepik*/

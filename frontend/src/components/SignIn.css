@@ -1,0 +1,75 @@
+#signInDiv, #signUpDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 310px;
+    margin-top: 5vh;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    /* gap: 0.5rem;*/
+}
+
+#signInDiv label, #signUpDiv label {
+    display: block;
+    font-weight: bold;
+    text-align: left;
+}
+
+#signInDiv h2, #signUpDiv h2 {
+    text-align: center;
+}
+
+/* #signInDiv, #signUpDiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+} */
+
+#signInDiv div, #signUpDiv div {
+    margin-bottom:10px;
+    width: 100%;
+    text-align: center;
+}
+
+#signInDiv input, #signUpDiv input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#signInDiv button, #signUpDiv button {
+    width: 40%;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+}
+
+/* #signInDiv button, #signUpDiv button {
+    width: 40%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+} */
+
+#newToBookshelf, #alreadyAMember {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 0.25rem;
+}
+
+#terms_policy {
+    text-align: justify;
+}
