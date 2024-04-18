@@ -27,11 +27,9 @@ userSchema.pre('save', async function (next) {
         return next();
     }
     try {
-        //const hashedPassword = await bcryptjs.hash(this.password, 10);
         this.password = bcryptjs.hashSync(this.password, 10);
         console.log('this.password:', this.password);
         next();
-        //this.password = bcryptjs.hashSync(hashedPassword, 10);
     } catch (error) {
         console.log('Error:', error);
     }

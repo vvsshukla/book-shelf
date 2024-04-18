@@ -1,0 +1,8 @@
+#BookShelfDiv {
+    width: 50%;
+}
+
+#BookShelfDiv p {
+    text-align: center;
+    margin: 0;
+}

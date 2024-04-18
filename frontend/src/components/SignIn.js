@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth.jsx";
 import "./SignIn.css";
 import SignUp from "./SignUp.js";
-// import axios from "axios";
-// import SignUp from "./SignUp.js";
-// import Dashboard from "./Dashboard.js";
+import axios from "axios";
 
 const SignIn = () => {
     const [isSignIn, setIsSignIn] = useState(true);
@@ -19,21 +17,9 @@ const SignIn = () => {
             'Content-Type': 'application/json'
         };
         try {
-            //const response = await axios.post('/api/signin', userData, headers);
-            const response = {
-                "success": true,
-                "message": "Login Successful",
-                "user": {
-                    "_id": "6616cdd60a355b5cfb00435f",
-                    "firstname": "vaibhav",
-                    "lastname": "shukla",
-                    "email": "vaibhav125shukla@gmail.com",
-                    "password": "$2a$10$CKP/bVd.f17P2vu4yGoQ6eIobzEJzGAZ0ZjqD3moGcseFIMMhka36",
-                    "createdAt": "2024-04-10T17:35:18.332Z",
-                    "lastLoggedIn": "2024-04-10T17:58:14.734Z",
-                    "__v": 0
-                }
-            };
+            const result = await axios.post('http://localhost:5000/api/signin', userData, headers);
+            console.log('result:', result);
+            const response = result.data;
             console.log('response:', response);
             if (typeof response !== "undefined" && typeof response.user !== "undefined") {
                 await login(response.user);

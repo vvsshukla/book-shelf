@@ -2,7 +2,7 @@ import React from "react";
 
 const FavoriteGenres = () => {
     return (
-        <div>
+        <div className="content">
             Favorite Genres
         </div>
     );

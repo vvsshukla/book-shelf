@@ -1,18 +1,28 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
-import {BrowserRouter as Router, Routes, Route, useNavigate, Navigate} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import SignIn from "./components/SignIn";
-// import MyBooks from './components/MyBooks';
 import Dashboard from './components/Dashboard';
-// import FavoriteGenres from './components/FavoriteGenres';
+import FavoriteGenres from './components/FavoriteGenres';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { useAuth } from "./hooks/useAuth";
+import { Header } from './components/Header';
+import MyBookShelf from './components/MyBookShelf';
 
-function App() {  
+function App() {
+  const {user} = useAuth();
   return (
-      <Routes>
+      <>
+      {user?._id ? <div id="headerDiv">
+          <Header/>
+        </div> : ''}
+        <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/mybookshelf" element={<MyBookShelf/>} />
+        <Route path="/favorite-genres" element={<FavoriteGenres/>} />
       </Routes>
+      </>
   );
 }
 
