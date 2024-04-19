@@ -1,3 +1,12 @@
+#BookShelfDiv {
+    width: 50%;
+}
+
+#BookShelfDiv p {
+    text-align: center;
+    margin: 0;
+}
+
 #searchBooksDiv {
     display: flex;
     flex-direction: column;

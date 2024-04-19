@@ -1,6 +1,5 @@
 import React from "react";
 import { SearchBooks } from "./SearchBooks";
-import { BookShelf } from "./BookShelf";
 
 const MyBookShelf = () => {
     return (
