@@ -38,10 +38,9 @@ export const BookShelfTable = ({ shelfBooks }) => {
                 </div>
                 <div id="tbody">
                     {shelfBooks?.map((book) => {
-                        let thumbnail = book?.imageLinks?.thumbnail;
-                        let smallThumbnail = book?.imageLinks?.smallThumbnail;
+                        let smallThumbnail = book.smallThumbnail;
                         console.log('book:', book);
-                        if (thumbnail !== undefined && smallThumbnail !== undefined) {
+                        if (smallThumbnail !== undefined) {
                             let bookDetails = {
                                 title: book?.title,
                                 authors: book?.authors,
@@ -51,14 +50,14 @@ export const BookShelfTable = ({ shelfBooks }) => {
                             console.log('bookDetails:', bookDetails);
                             return (
                                 <div id="tbodyTr" key={book.id}>
-                                    <div><img src={thumbnail} alt={book.title} /></div>
+                                    <div><img src={smallThumbnail} alt={book.title} /></div>
                                     <div>{book.title}</div>
                                     <div>{book.authors}</div>
                                     <div><button type="button" onClick={() => addToBookShelf({ bookDetails })}><span>&#43;</span> View</button></div>
                                 </div>
                             )
                         }
-                        return <><tr>No record found.</tr></>
+                        return <><div>No record found.</div></>
                     })}
                 </div>
             </div>

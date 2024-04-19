@@ -14,8 +14,25 @@ export const SearchBooks = () => {
         if (evt.key === 'Enter') {
             try {
                 let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${apiKey}`);
+                console.log('response:', response);
                 if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.items !== "undefined") {
-                    setSearchedBooks(response.data.items);
+                    let shelfBooks = response.data.items;
+                    let bookArray = [];
+                    for (const book of shelfBooks) {
+                        let thumbnail = book?.volumeInfo?.imageLinks?.thumbnail;
+                        let smallThumbnail = book?.volumeInfo?.imageLinks?.smallThumbnail;
+                        if (thumbnail !== undefined && smallThumbnail !== undefined) {
+                            let bookDetails = {
+                                title: book?.volumeInfo?.title,
+                                authors: book?.volumeInfo?.authors,
+                                externalId: book.id,
+                                smallThumbnail:smallThumbnail
+                            };
+                            bookArray.push(bookDetails);
+                        }
+                    }
+                    console.log('result:', bookArray);
+                    setSearchedBooks(bookArray);
                 }
                 console.log('result:', response);
             } catch (error) {
@@ -29,8 +46,24 @@ export const SearchBooks = () => {
         let response = await axios.post('http://localhost:5000/api/books', {}, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
-            setExistingBooks(response.data.books);
-            console.log('existingBooks:', existingBooks);
+            let shelfBooks = response.data.books;
+            console.log('books:', shelfBooks);
+            let bookArray = [];
+            for (const book of shelfBooks) {
+                let thumbnail = book.imageLinks.thumbnail;
+                let smallThumbnail = book.imageLinks.smallThumbnail;
+                if (thumbnail !== undefined && smallThumbnail !== undefined) {
+                    let bookDetails = {
+                        title: book.title,
+                        authors: book.authors,
+                        externalId: book.id,
+                        smallThumbnail: book.imageLinks.smallThumbnail
+                    };
+                    bookArray.push(bookDetails);
+                }
+            }
+            console.log('bookArray:', bookArray);
+            setExistingBooks(bookArray);
         }
     }
 
