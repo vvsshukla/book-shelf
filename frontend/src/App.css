@@ -2,6 +2,13 @@
   text-align: center;
 }
 
+/* mobile devices */
+@media only screen and (max-width:767px){
+    .App {
+        position: static;
+    }
+}
+
 /* #root {
   background-color: rgb(47, 220, 140);
 } */

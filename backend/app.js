@@ -19,8 +19,8 @@ app.use('/api', session({
     name: 'sessId',
     secret: process.env.sessionSecret,
     resave: false,
-    saveUninitialized:true,
-    cookie:{
+    saveUninitialized: true,
+    cookie: {
         secure: false,
         httpOnly: true,
         maxAge: 18000000

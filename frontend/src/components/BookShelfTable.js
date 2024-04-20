@@ -1,65 +1,18 @@
 import React, { useState } from "react";
 import "./BookShelfTable.css";
-import axios from "axios";
+import { BookShelfTableBody } from "./BookShelfTableBody";
+import { BookShelfTableHeader } from "./BookShelfTableHeader";
 
 
-export const BookShelfTable = ({ shelfBooks }) => {
+export const BookShelfTable = ({ shelfBooks, source }) => {
     const [newBook, setNewBook] = useState({});
-    const addToBookShelf = async ({ bookDetails }) => {
-        const headers = {
-            'Content-Type': 'application/json'
-        }
-        console.log('bookDetails:', bookDetails);
-        const response = await axios.post('http://localhost:5000/api/addBookToShelf', bookDetails, headers);
-        console.log('response:', response);
-        if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.newBook !== "undefined") {
-            console.log('Book added successfully.');
-            setNewBook(response.data.newBook);
-        }
-    }
+    const [rating, setRating] = useState(0);
+
     return (
         <div id="searchResult">
             <div id="table">
-                <div id="thead">
-                    <div id="thTr" key={"existingBooksHeader"}>
-                        <div>
-                            Cover
-                        </div>
-                        <div>
-                            Title
-                        </div>
-                        <div>
-                            Author
-                        </div>
-                        <div>
-                            Action
-                        </div>
-                    </div>
-                </div>
-                <div id="tbody">
-                    {shelfBooks?.map((book) => {
-                        let smallThumbnail = book.smallThumbnail;
-                        console.log('book:', book);
-                        if (smallThumbnail !== undefined) {
-                            let bookDetails = {
-                                title: book?.title,
-                                authors: book?.authors,
-                                externalId: book.id,
-                                imageLinks: book?.imageLinks
-                            };
-                            console.log('bookDetails:', bookDetails);
-                            return (
-                                <div id="tbodyTr" key={book.id}>
-                                    <div><img src={smallThumbnail} alt={book.title} /></div>
-                                    <div>{book.title}</div>
-                                    <div>{book.authors}</div>
-                                    <div><button type="button" onClick={() => addToBookShelf({ bookDetails })}><span>&#43;</span> View</button></div>
-                                </div>
-                            )
-                        }
-                        return <><div>No record found.</div></>
-                    })}
-                </div>
+            <BookShelfTableHeader source={source}/>
+            <BookShelfTableBody source={source} shelfBooks={shelfBooks}/>
             </div>
         </div>
     );

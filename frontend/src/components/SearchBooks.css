@@ -11,64 +11,9 @@
     border: none;
 }
 
-#searchResult {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    width: 60vw;
-}
-
-#table {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid brown;
-    width: 100%;
-}
-
-#thead, #tbody {
-    display: flex;
-    flex-direction: column;
-}
-
-#thTr, #tbodyTr {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-}
-
-#thTr > div, #tbodyTr > div {
-    padding: 8px;
-    border-bottom: 1px solid;
-    width: 100%;
-    border-right: 1px solid brown;
-}
-
-#thTr > div {
-    font-weight: bold;
-}
-
-table {
-    text-align: center;
-    width: 1000px;
-}
-
-th, td {
-    border: 1px solid;
-    border-style: inset;
-    padding: 10px;
-}
-
-td button {
-    width: max-content;
-    border-radius: 0.25rem;
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-}
-
-td button span {
-    color: green;
-    font-size: 24px;
+/* mobile devices */
+@media only screen and (max-width:767px){
+    #searchBooksDiv {
+        width: 100%;
+    }
 }

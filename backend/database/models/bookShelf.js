@@ -1,4 +1,4 @@
-import { Double } from "mongodb";
+import { ObjectId } from "mongodb";
 import { Schema, model } from "mongoose";
 const bookShelfSchema = new Schema({
     title: {
@@ -18,15 +18,18 @@ const bookShelfSchema = new Schema({
         type: Object,
         required: true
     },
-    review: {
-        type: String
-    },
-    rating: {
-        type: Number
+    avgRating: {
+        type: Number,
+        default: 0.0
     },
     tag: {
         type: String,
-        default: 'read'
+        default: 'to-read'
+    },
+    userId: {
+        type: ObjectId,
+        ref:"user",
+        required: true
     },
     createdAt: { type: Date, default: Date.now }
 });

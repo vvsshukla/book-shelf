@@ -5,8 +5,8 @@ export const addBook = async (req, res) => {
     try {
         console.log('test addBook');
         console.log('req.body:', req.body);
-        let {title, authors, externalId, imageLinks} = req.body;
-        let newBook = await addBookToShelf({title, authors, externalId, imageLinks});
+        let {title, authors, externalId, imageLinks, userId} = req.body;
+        let newBook = await addBookToShelf({title, authors, externalId, imageLinks, userId});
         res.status(200).json({success: true, message: 'Book added to shelf.', newBook});   
     } catch (error) {
         console.error('Error in shelf:', error);
@@ -15,9 +15,9 @@ export const addBook = async (req, res) => {
 
 export const fetchBooks = async (req, res) => {
     try {
-        console.log('test fetchBooks');
-        console.log('req.body:', req.body);
-        let books = await fetchBooksfromShelf();
+        console.log('req:', req.body);
+        let {userId} = req.body;
+        let books = await fetchBooksfromShelf(userId);
         res.status(200).json({success: true, books});
     } catch (error) {
         console.error('Error in fetching:', error);

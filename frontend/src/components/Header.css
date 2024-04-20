@@ -80,7 +80,6 @@ nav ul li button:hover,
     display: flex;
     justify-content: center;
     margin: 3vh;
-    padding: 3vh;
 }
 
 /* User Profile */
@@ -93,6 +92,7 @@ nav ul li button:hover,
     top: 60px;
     right: 0;
     width: 65vh;
+    width: 25vh;
     text-transform: capitalize;
 }
 
@@ -120,8 +120,14 @@ nav ul li button:hover,
 }
 
 /* Laptop/Desktop Css */
-@media screen and (min-width: 1024px) {
+/* @media screen and (min-width: 1024px) {
     .content {
        padding-top: 5vh;
+    }
+} */
+
+@media screen and (min-width:767px) {
+    .content {
+        padding: 3vh;
     }
 }
