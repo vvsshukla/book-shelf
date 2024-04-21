@@ -33,8 +33,8 @@ const SignUp = ({ onSignInClick }) => {
             //     }
             // };
             console.log('response:', response);
-            if (typeof response !== "undefined" && typeof response.newUser !== "undefined") {
-                await login(response.newUser);
+            if (typeof response !== "undefined" && typeof response.data!=="undefined" && typeof response.data.newUser !== "undefined") {
+                await login(response.data.newUser);
             }
         } catch (error) {
             //Handle registration failure

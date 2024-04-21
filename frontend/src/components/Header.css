@@ -91,7 +91,7 @@ nav ul li button:hover,
     position: absolute;
     top: 60px;
     right: 0;
-    width: 65vh;
+    /* width: 65vh; */
     width: 25vh;
     text-transform: capitalize;
 }

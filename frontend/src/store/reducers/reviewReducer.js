@@ -4,7 +4,9 @@ const initState = {
     avgRating: 0,
     rating: '',
     newBook:{},
-    bookShelfExternalIds:[]
+    bookShelfExternalIds:[],
+    bookId: '',
+    tag:''
 }
 
 export default (state = initState, action) => {
@@ -22,7 +24,9 @@ export default (state = initState, action) => {
             console.log('action:', action);
             return {
                 ...state,
-                rating: action.rating
+                rating: action.rating,
+                avgRating: action.avgRating,
+                bookId: action.bookId
             };
         }
         case "ADD_BOOK_TO_SHELF":{
@@ -30,6 +34,13 @@ export default (state = initState, action) => {
             return {
                 ...state,
                 newBook:action.bookDetails
+            }
+        }
+
+        case "START_READING": {
+            return {
+                ...state,
+                tag: action.tag
             }
         }
         default:{

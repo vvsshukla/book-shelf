@@ -8,6 +8,10 @@ const reviewSchema = new Schema({
     comment:{
        type: String         
     },
+    bookId:{
+        type: ObjectId,
+        required: true
+    },
     userId: {
         type: ObjectId,
         required: true
@@ -17,3 +21,6 @@ const reviewSchema = new Schema({
         default: Date.now
     }
 });
+
+const Review = model('Review', reviewSchema);
+export default Review;
