@@ -1,11 +1,14 @@
 import React, { useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
 import "./SignIn.css";
 const SignUp = ({ onSignInClick }) => {
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loginUser, setLoginUser] = useState({});
+    //const [loginUser, setLoginUser] = useState({});
+    const {login} = useAuth();
     const signUp = async () => {
         console.log('firstName:', firstname);
         console.log('lastName:', lastname);
@@ -14,24 +17,24 @@ const SignUp = ({ onSignInClick }) => {
             'Content-Type': 'application/json'
         };
         try {
-            //const response = await axios.post('/api/signup', userData, headers);
-            const response = {
-                "success": true,
-                "message": "Registration Successful",
-                "user": {
-                    "_id": "6616cdd60a355b5cfb00435f",
-                    "firstname": "vaibhav",
-                    "lastname": "shukla",
-                    "email": "vaibhav125shukla@gmail.com",
-                    "password": "$2a$10$CKP/bVd.f17P2vu4yGoQ6eIobzEJzGAZ0ZjqD3moGcseFIMMhka36",
-                    "createdAt": "2024-04-10T17:35:18.332Z",
-                    "lastLoggedIn": "2024-04-10T17:58:14.734Z",
-                    "__v": 0
-                }
-            };
+            const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/signup', userData, headers);
+            // const response = {
+            //     "success": true,
+            //     "message": "Registration Successful",
+            //     "user": {
+            //         "_id": "6616cdd60a355b5cfb00435f",
+            //         "firstname": "vaibhav",
+            //         "lastname": "shukla",
+            //         "email": "vaibhav125shukla@gmail.com",
+            //         "password": "$2a$10$CKP/bVd.f17P2vu4yGoQ6eIobzEJzGAZ0ZjqD3moGcseFIMMhka36",
+            //         "createdAt": "2024-04-10T17:35:18.332Z",
+            //         "lastLoggedIn": "2024-04-10T17:58:14.734Z",
+            //         "__v": 0
+            //     }
+            // };
             console.log('response:', response);
-            if (typeof response !== "undefined" && typeof response.user !== "undefined") {
-                setLoginUser(response.user);
+            if (typeof response !== "undefined" && typeof response.newUser !== "undefined") {
+                await login(response.newUser);
             }
         } catch (error) {
             //Handle registration failure

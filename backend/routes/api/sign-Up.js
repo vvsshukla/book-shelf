@@ -4,8 +4,8 @@ const signUp = async (req, res) => {
         console.log('test signUp');
         console.log('req.body:', req.body);
         let { firstname, lastname, email, password } = req.body;
-        await signUpUser({ firstname, lastname, email, password });
-        res.json({success: true, message: 'Registered Successfully!'});
+        const newUser = await signUpUser({ firstname, lastname, email, password });
+        res.json({success: true, message: 'Registered Successfully', newUser});
     } catch (error) {
         console.log('Error in signUpUser:', error);
         res.json({ error: error });

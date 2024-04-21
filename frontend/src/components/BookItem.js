@@ -33,7 +33,7 @@ export const BookItem = ({ book, source, search }) => {
         const headers = {
             'Content-Type': 'application/json'
         }
-        const response = await axios.post('http://localhost:5000/api/addBookToShelf', bookDetails, headers);
+        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/addBookToShelf', bookDetails, headers);
         //console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.newBook !== "undefined") {
             console.log('Book added successfully.');
