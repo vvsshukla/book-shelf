@@ -1,4 +1,4 @@
-import {Types} from "mongoose";
+import mongoose from "mongoose";
 import Bookshelf from "../database/models/bookShelf.js";
 
 export const addBookToShelf = async ({title, authors, externalId, imageLinks, userId}) => {
@@ -12,7 +12,9 @@ export const addBookToShelf = async ({title, authors, externalId, imageLinks, us
 
 export const fetchBooksfromShelf = async({userId}) => {
     try {
-        const books = await Bookshelf.find({userId: Types.ObjectId(userId)});
+        console.log('type:', typeof userId, userId);
+        const userIdObjectId = new mongoose.Types.ObjectId(userId);
+        const books = await Bookshelf.find({userId: userIdObjectId});
         return Promise.resolve(books);
     } catch (error) {
         return Promise.reject({error});   

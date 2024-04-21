@@ -4,15 +4,12 @@ import { BookShelfTableBody } from "./BookShelfTableBody";
 import { BookShelfTableHeader } from "./BookShelfTableHeader";
 
 
-export const BookShelfTable = ({ shelfBooks, source }) => {
-    const [newBook, setNewBook] = useState({});
-    const [rating, setRating] = useState(0);
-
+export const BookShelfTable = ({ shelfBooks, source, search}) => {
     return (
         <div id="searchResult">
             <div id="table">
             <BookShelfTableHeader source={source}/>
-            <BookShelfTableBody source={source} shelfBooks={shelfBooks}/>
+            <BookShelfTableBody source={source} shelfBooks={shelfBooks} search={search}/>
             </div>
         </div>
     );

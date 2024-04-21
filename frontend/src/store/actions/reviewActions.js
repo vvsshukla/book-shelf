@@ -1,3 +1,10 @@
+export const getExistingBooks = (existingBooks) => {
+    console.log('existingBooks:', existingBooks);
+    return {
+        type: "GET_EXISTING_BOOKS",
+        existingBooks
+    }
+}
 
 
 export const updateRating = (rating) => {

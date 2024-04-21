@@ -17,7 +17,8 @@ export const fetchBooks = async (req, res) => {
     try {
         console.log('req:', req.body);
         let {userId} = req.body;
-        let books = await fetchBooksfromShelf(userId);
+        console.log('fetchBooks userId:', userId);
+        let books = await fetchBooksfromShelf({userId});
         res.status(200).json({success: true, books});
     } catch (error) {
         console.error('Error in fetching:', error);

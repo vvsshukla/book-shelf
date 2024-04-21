@@ -3,6 +3,8 @@ import axios from "axios";
 import "./SearchBooks.css";
 import { BookShelfTable } from "./BookShelfTable";
 import { useAuth } from "../hooks/useAuth";
+import { getExistingBooks } from "../store/actions/reviewActions";
+import { useDispatch } from "react-redux";
 
 export const SearchBooks = () => {
     const apiKey = 'AIzaSyDWMI2ifsQqe5Os9ZTu5IgR4ZULcwcFCBM';
@@ -10,15 +12,16 @@ export const SearchBooks = () => {
     const [searchedBooks, setSearchedBooks] = useState([]);
     const [existingBooks, setExistingBooks] = useState([]);
     const {user} = useAuth();
+    const dispatch = useDispatch();
 
     const searchBook = async (evt) => {
-        if (evt.key === 'Enter') {
+        if (evt.key === 'Enter' || evt.type === 'click') {
             try {
                 let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${apiKey}`);
                 console.log('response:', response);
                 if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.items !== "undefined") {
                     let shelfBooks = response.data.items;
-                    let bookArray = [];
+                    let searchedbookArray = [];
                     for (const book of shelfBooks) {
                         let thumbnail = book?.volumeInfo?.imageLinks?.thumbnail;
                         let smallThumbnail = book?.volumeInfo?.imageLinks?.smallThumbnail;
@@ -30,13 +33,12 @@ export const SearchBooks = () => {
                                 smallThumbnail: smallThumbnail,
                                 imageLinks: book.volumeInfo?.imageLinks
                             };
-                            bookArray.push(bookDetails);
+                            searchedbookArray.push(bookDetails);
                         }
                     }
-                    console.log('result:', bookArray);
-                    setSearchedBooks(bookArray);
+                    console.log('result:', searchedbookArray);
+                    setSearchedBooks(searchedbookArray);
                 }
-                console.log('result:', response);
             } catch (error) {
                 console.log('Error:', error);
             }
@@ -45,15 +47,12 @@ export const SearchBooks = () => {
 
     const fetchBooks = async () => {
         let headers = { 'Content-type': 'application/json' };
-        //console.log('user:', user);
         let userData = {userId: user._id};
-        console.log('userDate:', userData);
         let response = await axios.post('http://localhost:5000/api/books', userData, headers);
-        console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let shelfBooks = response.data.books;
-            console.log('books:', shelfBooks);
-            let bookArray = [];
+            console.log('fetchBooks:', shelfBooks);
+            let existingBookArray = [];
             for (const book of shelfBooks) {
                 let thumbnail = book.imageLinks.thumbnail;
                 let smallThumbnail = book.imageLinks.smallThumbnail;
@@ -62,16 +61,17 @@ export const SearchBooks = () => {
                         id:book._id,
                         title: book.title,
                         authors: book.authors,
-                        externalId: book.id,
+                        externalId: book.externalId,
                         smallThumbnail: book.imageLinks.smallThumbnail,
                         avgRating:book.avgRating,
                         tag: book.tag
                     };
-                    bookArray.push(bookDetails);
+                    existingBookArray.push(bookDetails);
                 }
             }
-            console.log('bookArray:', bookArray);
-            setExistingBooks(bookArray);
+            console.log('existingBookArray:', existingBookArray);
+            setExistingBooks(existingBookArray);
+            dispatch(getExistingBooks(existingBookArray));
         }
     }
 
@@ -81,12 +81,12 @@ export const SearchBooks = () => {
     return (
         <div id="searchBooksDiv">
             <div className="search-form">
-                <input type="text" id="search-books" placeholder="Enter Your Book Name" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={searchBook} />
+                <input type="text" id="search-books" placeholder="Search Library with Book Name" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={searchBook} />
                 <button type="button" onClick={searchBook}>&#128269;</button>
             </div>
             {
                 search !== '' ? (searchedBooks.length > 0 ?
-                    <BookShelfTable shelfBooks={searchedBooks} source='external'/> : 'No record found.') : (existingBooks.length > 0 ? <BookShelfTable shelfBooks={existingBooks} source="internal"/> : <p>Add book to shelf</p>)
+                    <BookShelfTable shelfBooks={searchedBooks} source='external' search={search}/> : 'No record found.') : (existingBooks.length > 0 ? <BookShelfTable shelfBooks={existingBooks} source="internal"/> : <p>Add book to shelf</p>)
             }
         </div>
     )

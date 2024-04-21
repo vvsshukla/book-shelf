@@ -3,11 +3,21 @@
 const initState = {
     avgRating: 0,
     rating: '',
-    newBook:{}
+    newBook:{},
+    bookShelfExternalIds:[]
 }
 
 export default (state = initState, action) => {
     switch (action.type) {
+        case "GET_EXISTING_BOOKS":{
+            console.log('action:', action);
+            let externalIds = action?.existingBooks.map(book => book.externalId);
+            console.log('externalIds:', externalIds);
+            return {
+                ...state,
+                bookShelfExternalIds: externalIds
+            }
+        }
         case "UPDATE_RATING":{
             console.log('action:', action);
             return {
