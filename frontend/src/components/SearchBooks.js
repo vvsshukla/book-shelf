@@ -48,22 +48,23 @@ export const SearchBooks = () => {
     const fetchBooks = async () => {
         let headers = { 'Content-type': 'application/json' };
         let userData = {userId: user._id};
-        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/books', userData, headers);
+        let response = await axios.post('http://localhost:5000/api/books', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let shelfBooks = response.data.books;
             console.log('fetchBooks:', shelfBooks);
             let existingBookArray = [];
             for (const book of shelfBooks) {
-                let thumbnail = book.imageLinks.thumbnail;
-                let smallThumbnail = book.imageLinks.smallThumbnail;
+                let bookObject = book.bookId;
+                let thumbnail = bookObject.imageLinks.thumbnail;
+                let smallThumbnail = bookObject.imageLinks.smallThumbnail;
                 if (thumbnail !== undefined && smallThumbnail !== undefined) {
                     let bookDetails = {
-                        id:book._id,
-                        title: book.title,
-                        authors: book.authors,
-                        externalId: book.externalId,
-                        smallThumbnail: book.imageLinks.smallThumbnail,
-                        avgRating:book.avgRating,
+                        id:bookObject._id,
+                        title: bookObject.title,
+                        authors: bookObject.authors,
+                        externalId: bookObject.externalId,
+                        smallThumbnail: bookObject.imageLinks.smallThumbnail,
+                        avgRating:bookObject.avgRating,
                         tag: book.tag
                     };
                     existingBookArray.push(bookDetails);

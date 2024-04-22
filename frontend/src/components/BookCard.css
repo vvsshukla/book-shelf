@@ -1,0 +1,23 @@
+.capitalize {
+    text-transform: capitalize;
+}
+
+/* Desktop devices */
+@media only screen and (min-width:768px) {
+    .bookCard {
+        display: flex;
+        gap: 1rem;
+    }
+}
+
+/* Mobile devices */
+@media only screen and (max-width:767px){
+    .bookCard {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .bookCard img{
+        width: 30vw;
+    }
+}

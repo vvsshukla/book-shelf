@@ -25,9 +25,11 @@ export const addBook = (bookDetails) => {
     }
 }
 
-export const startReading = (tag) => {
+export const updateTag = (tag, bookId) => {
+    console.log('START_READING action:', tag, bookId);
     return {
         type: "START_READING",
-        tag
+        tag,
+        bookId
     }
 }

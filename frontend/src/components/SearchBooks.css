@@ -16,5 +16,13 @@
 @media only screen and (max-width:767px){
     #searchBooksDiv {
         width: 100%;
+        text-align: center;
+    }
+    /* .search-form{
+        display: block;
+    } */
+
+    #searchBooksDiv .search-form #search-books {
+        width: 50vw;
     }
 }

@@ -1,5 +1,3 @@
-
-
 const initState = {
     avgRating: 0,
     rating: '',
@@ -30,17 +28,19 @@ export default (state = initState, action) => {
             };
         }
         case "ADD_BOOK_TO_SHELF":{
-            console.log('ADD_BOOK_TO_SHELF state:',action);
+            console.log('ADD_BOOK_TO_SHELF reducer action:', action);
             return {
                 ...state,
-                newBook:action.bookDetails
+                newBook: action.bookDetails,
+                bookId: action.bookDetails?._id
             }
         }
-
         case "START_READING": {
+            console.log('START_READING reducer action:', action);
             return {
                 ...state,
-                tag: action.tag
+                tag: action.tag,
+                bookId: action.bookId
             }
         }
         default:{

@@ -16,6 +16,10 @@ const bookShelfUserSchema = new Schema({
             type: String,
             default: 'to-read'
         },
+        progress: {
+            type: Number,
+            default: 0
+        },
         createdAt: {
             type: Date,
             default: Date.now()

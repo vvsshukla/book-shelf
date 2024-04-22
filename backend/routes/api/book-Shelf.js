@@ -1,4 +1,5 @@
-import { fetchBooksfromShelf, updateBookReviewByUser, addBookToShelf} from "../../controllers/bookShelf.js";
+import { fetchBooksfromShelf, updateBookReviewByUser, addBookToShelf, updateTagByUser} from "../../controllers/bookShelf.js";
+import { getCurrentlyReadingBooks, getReviewUpdatesByUser, updateBookProgress} from "../../controllers/bookShelf.js";
 
 export const addBook = async (req, res) => {
     try {
@@ -38,10 +39,40 @@ export const updateBookReview = async (req, res) => {
 
 export const startReading = async (req, res) => {
     try {
-        let {bookId, userId}= req.body;
-        let tag = await updateTagByUser({bookId, userId});
-        res.status(200).json({success:true, tag});
+        let {bookId, userId, tag}= req.body;
+        let updatedTag = await updateTagByUser({bookId, userId, tag});
+        res.status(200).json({success:true, updatedTag});
     } catch (error) {
         console.log('Error in startReading:', error);
+    }
+}
+
+export const fetchCurrentlyReadingBooks = async (req, res) => {
+    try {
+        let {userId} = req.body;
+        let books = await getCurrentlyReadingBooks({userId});
+        res.status(200).json({success: true, books});
+    } catch (error) {
+        console.log('Error in getCurrentlyReadingBooks:', error);
+    }
+}
+
+export const fetchUpdatesByfriends = async (req, res) => {
+    try {
+        let {userId} = req.body;
+        let updates = await getReviewUpdatesByUser({userId});
+        res.status(200).json(updates);
+    } catch (error) {
+        console.log('Error in fetchUpdatesByfriends', error);
+    }
+}
+
+export const updateProgress = async (req, res) => {
+    try {
+        let {userId, bookId, progress} = req.body;
+        let result = await updateBookProgress({userId, bookId, progress});
+        res.status(200).json(result);
+    } catch (error) {
+        console.log('Error in updateProgress:', error);
     }
 }

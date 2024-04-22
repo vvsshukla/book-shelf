@@ -1,17 +1,46 @@
 import React, { useEffect, useState } from "react";
+import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
+import { BookCard } from "./BookCard";
 
 const CurrentlyReading = () => {
+    const { user } = useAuth();
     const [loading, setLoading] = useState(true);
-    const [currentlyReading, setCurrentlyReading ] = useState([]);
-    useEffect(()=>{
-        setTimeout(function(){
+    const [currentlyReading, setCurrentlyReading] = useState([]);
+    const fetchCurrentlyReadingBooks = async () => {
+        let headers = { 'Content-type': 'application/json' };
+        let userData = { userId: user._id };
+        let response = await axios.post('http://localhost:5000/api/currentlyReadingBooks', userData, headers);
+        if (typeof response !== "undefined" && typeof response.data !== "undefined") {
+            let currentlyReadingBooks = response.data.books;
+            console.log('currentlyReadingBooks:', currentlyReadingBooks);
+            setCurrentlyReading(response.data.books);
             setLoading(false);
-        }, 2000);
+        }
+    }
+
+    useEffect(() => {
+        fetchCurrentlyReadingBooks();
     }, []);
+    console.log('currentlyReading:', currentlyReading);
     return (
         <div id="currentlyReading">
-            <h3>Currently Reading</h3>
-            {loading ? <div>Loading...</div> : <p>Search here.</p>}
+            {loading ?
+                <div>Loading...</div> :
+                <div id="currentlReadingBooks">
+                    <h2>Currently Reading</h2>
+                    {
+                        currentlyReading.length > 0 ?
+                            <>
+                                {currentlyReading?.map(currentBook => {
+                                    let book = currentBook.bookId;
+                                    return <BookCard book={book} key={book?._id} tag={currentBook.tag}/>;
+                                })}
+                            </>
+                            : <div>You are not reading any book currently.</div>
+                    }
+                </div>
+            }
         </div>
     );
 }

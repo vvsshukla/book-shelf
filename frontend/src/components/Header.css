@@ -131,3 +131,48 @@ nav ul li button:hover,
         padding: 3vh;
     }
 }
+
+@media only screen and (max-width:767px){
+    header {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .logo {
+        text-align: center;
+    }
+
+    .logo img {
+        max-height: 30px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        height: auto;
+        line-height: 1;
+    }
+
+    .user-profile {
+        position: absolute;
+        top:1vh;
+        right:2vw;
+    }
+
+    #profile-photo {
+        width: 40px;
+        height: 40px;
+    }
+
+    #profile-panel {
+        position: absolute;
+        right: 0;
+        width: 25vh;
+        text-transform: capitalize;
+        top:5vh;
+        background-color: aquamarine;
+    }
+}
