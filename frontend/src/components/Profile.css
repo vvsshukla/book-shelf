@@ -1,0 +1,27 @@
+#profileDiv {
+    display: flex;
+    justify-content: center;
+}
+
+#profileDiv .content {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #ddd;
+}
+
+.contentLabel {
+    font-weight: bold;
+    padding: 5px;
+    width: 10vw;
+    border: 2px solid #ddd;
+}
+
+.contentValue {
+    padding: 5px;
+    width: 15vw;
+    border: 2px solid #ddd;
+}
+
+.contentRow {
+    display: flex;
+}

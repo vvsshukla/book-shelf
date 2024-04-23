@@ -54,6 +54,12 @@
     color: white;
 }
 
+#loginFailureMessage {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
 /* #signInDiv button, #signUpDiv button {
     width: 40%;
     padding: 10px;

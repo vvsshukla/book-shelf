@@ -16,8 +16,10 @@ export const signInUser = async ({email, password}) => {
         console.log('Login details:', {email, password});
         const user = await User.findOne({email});
         console.log('user:', user);
-        await user.checkPassword(password);
-        await user.updateLastLoggedIn();
+        if (user) {
+            await user.checkPassword(password);
+            await user.updateLastLoggedIn();
+        }
         return Promise.resolve(user);
     } catch (error) {
         console.log('signInUser error:', error);

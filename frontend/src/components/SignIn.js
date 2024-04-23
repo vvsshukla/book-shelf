@@ -9,6 +9,7 @@ const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { login } = useAuth();
+    const [messsage, setMessage] = useState('');
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -21,9 +22,12 @@ const SignIn = () => {
             console.log('result:', result);
             const response = result.data;
             console.log('response:', response);
-            if (typeof response !== "undefined" && typeof response.user !== "undefined") {
+            if (typeof response !== "undefined" && typeof response.success !== "undefined" && response.success === true) {
                 await login(response.user);
                 console.log('navigated');
+            } else {
+                console.log('message:', response.message);
+                setMessage(response.message);
             }
         } catch (error) {
             console.log('Error while login:', error);
@@ -48,6 +52,7 @@ const SignIn = () => {
                     </div>
                     
                     <p id="terms_policy">By signing in, you agree to the BookShelf Terms of Service and Privacy Policy</p>
+                    <p id="loginFailureMessage">{messsage}</p>
                 </form>
                 <p id="newToBookshelf">New To Bookshelf? <button type="button" onClick={(e) => setIsSignIn(false)}>Sign Up</button></p>
             </div> : <SignUp onSignInClick={() => setIsSignIn(true)} />}
