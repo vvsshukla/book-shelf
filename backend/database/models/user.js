@@ -18,6 +18,15 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    phone: {
+        type: String
+    },
+    gender: {
+        type: String
+    },
+    address: {
+        type: String
+    },
     createdAt: { type: Date, default: Date.now },
     lastLoggedIn: { type: Date, default: Date.now }
 });
@@ -38,11 +47,12 @@ userSchema.pre('save', async function (next) {
 userSchema.methods.checkPassword = async function (password) {
     const match = await bcryptjs.compare(password, this.password);
     console.log('match:', match);
-    if (match) {
-        return Promise.resolve();
-    } else {
-        return Promise.reject();
-    }
+    return match;
+    // if (match) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
 }
 
 userSchema.methods.updateLastLoggedIn = function () {

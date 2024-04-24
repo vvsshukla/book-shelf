@@ -16,11 +16,19 @@ export const signInUser = async ({email, password}) => {
         console.log('Login details:', {email, password});
         const user = await User.findOne({email});
         console.log('user:', user);
-        if (user) {
-            await user.checkPassword(password);
-            await user.updateLastLoggedIn();
+        if (user?._id) {
+            let match = await user.checkPassword(password);
+            if (match) {
+                await user.updateLastLoggedIn();
+                return Promise.resolve(user);
+            } else {
+                console.log('controller Invalid username or password');
+                return({success:false, message:'Invalid username or password'});
+            }
+        } else {
+            return Promise.resolve({success:false, message:'No account is associated with this email.'});
         }
-        return Promise.resolve(user);
+        
     } catch (error) {
         console.log('signInUser error:', error);
         return Promise.reject({error});     

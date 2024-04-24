@@ -7,9 +7,11 @@ const SignUp = ({ onSignInClick }) => {
     const [lastname, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [messsage, setMessage] = useState('');
     //const [loginUser, setLoginUser] = useState({});
     const {login} = useAuth();
     const signUp = async () => {
+        document.getElementById('signUp').innerText = "Signing Up...";
         console.log('firstName:', firstname);
         console.log('lastName:', lastname);
         const userData = { firstname, lastname, email, password };
@@ -17,7 +19,8 @@ const SignUp = ({ onSignInClick }) => {
             'Content-Type': 'application/json'
         };
         try {
-            const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/signup', userData, headers);
+            const result = await axios.post('https://book-shelf-xvxk.onrender.com/api/signup', userData, headers);
+            const response = result.data;
             // const response = {
             //     "success": true,
             //     "message": "Registration Successful",
@@ -33,9 +36,13 @@ const SignUp = ({ onSignInClick }) => {
             //     }
             // };
             console.log('response:', response);
-            if (typeof response !== "undefined" && typeof response.data!=="undefined" && typeof response.data.newUser !== "undefined") {
-                await login(response.data.newUser);
+            if (typeof response.success !== "undefined" && response.success === true) {
+                await login(response.newUser);
+            } else {
+                console.log('message:', response.message);
+                setMessage(response.message);
             }
+            document.getElementById('signUp').innerText = "Sign Up";
         } catch (error) {
             //Handle registration failure
             console.log('Error registering user:', error);
@@ -63,9 +70,10 @@ const SignUp = ({ onSignInClick }) => {
                         <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value.trim())} required />
                     </div>
                     <div>
-                        <button type="button" onClick={(e) => signUp()}>Sign Up</button>
+                        <button type="button" id="signUp" onClick={(e) => signUp()}>Sign Up</button>
                     </div>
                     <div>By creating an account, you agree to the BookShelf Terms of Service and Privacy Policy.</div>
+                    <p id="failureMessage">{messsage}</p>
                 </form>
                 <div id="alreadyAMember">Already a member? <button type="button" onClick={onSignInClick}>Sign In</button></div>
             </div>}

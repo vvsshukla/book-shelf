@@ -13,6 +13,7 @@ const SignIn = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        document.getElementById('signIn').innerText = "Signing In...";
         const userData = { email, password };
         const headers = {
             'Content-Type': 'application/json'
@@ -22,13 +23,14 @@ const SignIn = () => {
             console.log('result:', result);
             const response = result.data;
             console.log('response:', response);
-            if (typeof response !== "undefined" && typeof response.success !== "undefined" && response.success === true) {
+            if (typeof response.success !== "undefined" && response.success === true) {
                 await login(response.user);
                 console.log('navigated');
             } else {
                 console.log('message:', response.message);
                 setMessage(response.message);
             }
+            document.getElementById('signIn').innerText = 'Sign In';
         } catch (error) {
             console.log('Error while login:', error);
         }
@@ -48,11 +50,11 @@ const SignIn = () => {
                         <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
                     <div>
-                        <button type="submit">Sign In</button>
+                        <button type="submit" id="signIn">Sign In</button>
                     </div>
                     
                     <p id="terms_policy">By signing in, you agree to the BookShelf Terms of Service and Privacy Policy</p>
-                    <p id="loginFailureMessage">{messsage}</p>
+                    <p id="failureMessage">{messsage}</p>
                 </form>
                 <p id="newToBookshelf">New To Bookshelf? <button type="button" onClick={(e) => setIsSignIn(false)}>Sign Up</button></p>
             </div> : <SignUp onSignInClick={() => setIsSignIn(true)} />}

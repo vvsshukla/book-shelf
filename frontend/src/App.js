@@ -5,18 +5,16 @@ import SignIn from "./components/SignIn";
 import Dashboard from './components/Dashboard';
 import {Profile} from './components/Profile';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { useAuth } from "./hooks/useAuth";
 import MyBookShelf from './components/MyBookShelf';
 
 function App() {
-  const { user } = useAuth();
   return (
     <>
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path='/dashboard' element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/mybookshelf" element={<MyBookShelf />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
       </Routes>
     </>
   );
