@@ -1,4 +1,4 @@
-import { signUpUser } from "../../controllers/user.js";
+import { signUpUser, updateUserProfile } from "../../controllers/user.js";
 export const signUp = async (req, res) => {
     try {
         console.log('test signUp');
@@ -16,9 +16,9 @@ export const updateProfile = async (req, res) => {
     try {
         console.log('test updateProfile');
         console.log('req.body:', req.body);
-        let { firstname, lastname, phone, gender} = req.body;
-        const existingUser = await updateUserProfile({firstname, lastname, phone, gender});
-        res.json({success: true, message: 'Profile updated Successfully', existingUser});
+        let { firstname, lastname, phone, gender, userId} = req.body;
+        const existingUser = await updateUserProfile({firstname, lastname, phone, gender, userId});
+        res.json({success: true, message: 'Profile updated successfully', existingUser});
     } catch (error) {
         console.log('Error in updateProfile:', error);
         res.json({ error: error });

@@ -1,27 +1,86 @@
-#profileDiv {
-    display: flex;
-    justify-content: center;
+h3 {
+    text-align: center;
 }
 
-#profileDiv .content {
-    display: flex;
-    flex-direction: column;
-    border: 2px solid #ddd;
+/* Desktop devices */
+@media only screen and (min-width:768px) {
+    #profileDiv {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+    
+    #profileDiv .content {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid #ddd;
+    }
+    
+    .contentLabel {
+        font-weight: bold;
+        padding: 5px;
+        width: 10vw;
+        border: 2px solid #ddd;
+    }
+    
+    .contentValue {
+        padding: 5px;
+        width: 17vw;
+        border: 2px solid #ddd;
+    }
+    
+    .contentRow {
+        display: flex;
+        justify-content: center;
+    }
+    
+    .contentRow:last-child {
+        padding: 0.5rem;
+    }
+
+    .profileButton {
+        border: 2px solid #ddd;
+    }
+
+    .contentValue input[type="text"] {
+        width: 15vw;
+    }
 }
 
-.contentLabel {
-    font-weight: bold;
-    padding: 5px;
-    width: 10vw;
-    border: 2px solid #ddd;
-}
+/* Desktop devices */
+@media only screen and (max-width:767px) {
+    #profileDiv {
+        margin-top: 1rem;
+    }
+    
+    .profileContent {
+        display: flex;
+        flex-direction: column;
+        border: 2px solid #ddd;
+        padding: 0.5rem;
+        margin: 0.5rem;
+    }
+    
+    .contentLabel {
+        font-weight: bold;
+        padding: 5px;
+        border: 2px solid #ddd;
+        width: 30vw;
+    }
+    
+    .contentValue {
+        padding: 5px;
+        border: 2px solid #ddd;
+        width: 50vw;
+    }
 
-.contentValue {
-    padding: 5px;
-    width: 15vw;
-    border: 2px solid #ddd;
-}
-
-.contentRow {
-    display: flex;
+    .contentRow {
+        display: flex;
+        justify-content: center;
+    }
+    
+    
+    .contentRow button {
+        margin-top: 0.5rem;
+    }
 }

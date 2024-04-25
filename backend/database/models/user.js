@@ -48,11 +48,6 @@ userSchema.methods.checkPassword = async function (password) {
     const match = await bcryptjs.compare(password, this.password);
     console.log('match:', match);
     return match;
-    // if (match) {
-    //     return true;
-    // } else {
-    //     return false;
-    // }
 }
 
 userSchema.methods.updateLastLoggedIn = function () {

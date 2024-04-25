@@ -34,3 +34,20 @@ export const signInUser = async ({email, password}) => {
         return Promise.reject({error});     
     }
 }
+
+export const updateUserProfile = async ({firstname, lastname, phone, gender}) => {
+    try {
+        console.log('Profile details:', {firstname, lastname, phone, gender});
+        const userIdObjectId = new mongoose.Types.ObjectId(userId);
+        const result = await User.updateOne({ userId: userIdObjectId }, { $set: { firstname: firstname, lastname: lastname, phone: phone, gender: gender}}, { upsert: true });
+        console.log('updateOne result:', result);
+        if (result) {
+            return({success:true, message:'Profile updated successfully.'});
+        } else {
+            return({success:false, message:'Unable to update profile.'});
+        }
+    } catch (error) {
+        console.log('updateUserProfile error:', error);
+        return Promise.reject({error});     
+    }
+}

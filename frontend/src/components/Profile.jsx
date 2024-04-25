@@ -16,7 +16,7 @@ export const Profile = () => {
 
     const updateProfile = async (e) => {
         e.preventDefault();
-        const userData = { firstname, lastname, phone, gender };
+        const userData = { firstname: firstname, lastname: lastname, phone: phone, gender: gender, userId: user._id};
         const headers = {
             'Content-Type': 'application/json'
         };
@@ -26,6 +26,7 @@ export const Profile = () => {
             const response = result.data;
             console.log('response:', response);
             if (typeof response.success !== "undefined" && response.success === true) {
+                
             } else {
                 console.log('message:', response.message);
                 setMessage(response.message);
@@ -39,32 +40,34 @@ export const Profile = () => {
     return <>
         <Header />
         <div id="profileDiv">
-            <div className="content">
+            {messsage ? <p>{messsage}</p>: ''}
+            <div className="profileContent">
+                <h3>My Profile</h3>
                 <form onSubmit={updateProfile}>
                     <div className="contentRow">
-                        <div className="contentLabel">First Name:</div>
-                        <div className="contentValue capitalize"><input type="text" value={firstname} onChange={(e) => setFirstName(e.target.value)} /></div>
+                        <label className="contentLabel">First Name:</label>
+                        <div className="contentValue"><input type="text" className="capitalize" value={firstname} onChange={(e) => setFirstName(e.target.value)} /></div>
                     </div>
                     <div className="contentRow">
-                        <div className="contentLabel">Last Name:</div>
-                        <div className="contentValue capitalize"><input type="text" value={lastname} onChange={(e) => setLastName(e.target.value)} /></div>
+                        <label className="contentLabel">Last Name:</label>
+                        <div className="contentValue"><input type="text" className="capitalize" value={lastname} onChange={(e) => setLastName(e.target.value)} /></div>
                     </div>
                     <div className="contentRow">
-                        <div className="contentLabel">Email:</div>
-                        <div className="contentValue capitalize"><input type="text" value={email} readOnly/></div>
+                        <label className="contentLabel">Email:</label>
+                        <div className="contentValue"><input type="text" className="capitalize" value={email} readOnly/></div>
                     </div>
                     <div className="contentRow">
-                        <div className="contentLabel">Phone:</div>
-                        <div className="contentValue"><input type="text" value={phone} onChange={(e) => setPhone(e.target.value)}/></div>
+                        <label className="contentLabel">Phone:</label>
+                        <div className="contentValue"><input type="text" className="capitalize" value={phone} onChange={(e) => setPhone(e.target.value)}/></div>
                     </div>
                     <div className="contentRow">
-                        <div className="contentLabel">Gender:</div>
+                        <label className="contentLabel">Gender:</label>
                         <div className="contentValue">
-                            <input type="radio" name="gender" value="male" checked={gender === 'male'} onClick={(e) => setGender(e.target.value)}/><label for="male">Male</label>
-                            <input type="radio" name="gender" value="female" checked={gender === 'female'} onClick={(e) => setGender(e.target.value)} /><label for="female">Female</label>
+                            <input type="radio" name="gender" value="male" checked={gender === 'male'} onChange={(e) => setGender(e.target.value)}/><label htmlFor="male">Male</label>
+                            <input type="radio" name="gender" value="female" checked={gender === 'female'} onChange={(e) => setGender(e.target.value)} /><label htmlFor="female">Female</label>
                         </div>
                     </div>
-                    <div className="contentRow">
+                    <div className="contentRow profileButton">
                         <button type="submit">Update Profile</button>
                     </div>
                 </form>
