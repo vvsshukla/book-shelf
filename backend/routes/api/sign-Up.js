@@ -18,9 +18,13 @@ export const updateProfile = async (req, res) => {
         console.log('req.body:', req.body);
         let { firstname, lastname, phone, gender, userId} = req.body;
         const existingUser = await updateUserProfile({firstname, lastname, phone, gender, userId});
-        res.json({success: true, message: 'Profile updated successfully', existingUser});
+        if (existingUser) {
+            res.json({success: true, message: 'Profile updated successfully', existingUser});
+        } else {
+            res.json({success: false, message: 'Unable to update profile.', existingUser});
+        }
     } catch (error) {
         console.log('Error in updateProfile:', error);
-        res.json({ error: error });
+        res.json({success: false, message: 'Something went wrong.'});
     }
 }

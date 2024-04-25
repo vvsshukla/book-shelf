@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useAuth } from "../hooks/useAuth";
 import { Header } from "./Header";
 import "./Profile.css";
@@ -21,21 +21,29 @@ export const Profile = () => {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('http://localhost:5000/api/profile', userData, headers);//https://book-shelf-xvxk.onrender.com
+            const result = await axios.post('http://localhost:5000/api/profile', userData, headers);
+            //https://book-shelf-xvxk.onrender.com
             console.log('result:', result);
             const response = result.data;
             console.log('response:', response);
-            if (typeof response.success !== "undefined" && response.success === true) {
-                
+            if (typeof response.success !== "undefined" && response.success === true && response.existingUser._id!=="") {
+                let profileDetails = response.existingUser;
+                setFirstName(profileDetails.firstname);
+                setLastName(profileDetails.lastname);
+                setPhone(profileDetails.phone);
+                setGender(profileDetails.gender);
             } else {
                 console.log('message:', response.message);
                 setMessage(response.message);
             }
-            document.getElementById('signIn').innerText = 'Sign In';
         } catch (error) {
-            console.log('Error while login:', error);
+            console.log('Error in profile updation:', error);
         }
     }
+
+    useEffect(() => {
+
+    }, []);
 
     return <>
         <Header />

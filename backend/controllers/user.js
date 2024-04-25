@@ -1,4 +1,5 @@
 import User from "../database/models/user.js";
+import mongoose from "mongoose";
 
 export const signUpUser = async ({firstname, lastname, email, password}) => {
     try {
@@ -35,19 +36,16 @@ export const signInUser = async ({email, password}) => {
     }
 }
 
-export const updateUserProfile = async ({firstname, lastname, phone, gender}) => {
+export const updateUserProfile = async ({firstname, lastname, phone, gender, userId}) => {
     try {
         console.log('Profile details:', {firstname, lastname, phone, gender});
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
-        const result = await User.updateOne({ userId: userIdObjectId }, { $set: { firstname: firstname, lastname: lastname, phone: phone, gender: gender}}, { upsert: true });
-        console.log('updateOne result:', result);
-        if (result) {
-            return({success:true, message:'Profile updated successfully.'});
-        } else {
-            return({success:false, message:'Unable to update profile.'});
-        }
+        const result = await User.updateOne({ _id: userIdObjectId }, { $set: { firstname: firstname, lastname: lastname, phone: phone, gender: gender}}, { upsert: true });
+        const user = await User.findOne({_id: userIdObjectId});
+        console.log('updateOne result:', user); 
+        return Promise.resolve(user);
     } catch (error) {
         console.log('updateUserProfile error:', error);
-        return Promise.reject({error});     
+        return Promise.reject(error);     
     }
 }
