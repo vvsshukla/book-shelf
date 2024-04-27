@@ -54,7 +54,7 @@
     color: white;
 }
 
-#failureMessage {
+.failureMessage {
     color: red;
     font-weight: bold;
     text-align: center;

@@ -12,7 +12,6 @@ const headers = {
 export const BookItem = ({ book, source, search }) => {
     const { user } = useAuth();
     console.log('book:', book);
-    //const [averageRating, setAverageRating] = useState(book.avgRating);
     let finalRating = '';
     let finalAvgRating = '';
     let updatedTag = '';
@@ -22,7 +21,6 @@ export const BookItem = ({ book, source, search }) => {
         finalAvgRating = avgRating;
         console.log('updated rating:', rating);
         console.log('updated avgRating:', avgRating);
-        //setAverageRating(avgRating);
     } else {
         finalRating = finalAvgRating = book.avgRating;
         console.log('existing rating:', finalRating, 'book:', book.title);
@@ -34,7 +32,6 @@ export const BookItem = ({ book, source, search }) => {
     } else {
         updatedTag = book.tag;
     }
-    //console.log('bookShelfExternalIds:', bookShelfExternalIds);
     const dispatch = useDispatch();
     let bookDetails = {
         title: book.title,
@@ -43,7 +40,6 @@ export const BookItem = ({ book, source, search }) => {
         imageLinks: book.imageLinks,
         userId: user._id
     };
-    //console.log('bookdetails:', bookDetails);
 
     const handleRating = async (rating) => {
         let data = {
@@ -71,8 +67,6 @@ export const BookItem = ({ book, source, search }) => {
     } 
 
     const addToBookShelf = async (bookDetails) => {
-        // console.log('addToBookShelf');
-        // console.log('bookDetails:', bookDetails);
         const response = await axios.post('http://localhost:5000/api/addBookToShelf', bookDetails, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.newBook !== "undefined") {

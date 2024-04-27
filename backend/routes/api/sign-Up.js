@@ -1,4 +1,4 @@
-import { signUpUser, updateUserProfile } from "../../controllers/user.js";
+import { signUpUser, updateUserProfile, getUserProfile, searchUserByEmail } from "../../controllers/user.js";
 export const signUp = async (req, res) => {
     try {
         console.log('test signUp');
@@ -19,12 +19,45 @@ export const updateProfile = async (req, res) => {
         let { firstname, lastname, phone, gender, userId} = req.body;
         const existingUser = await updateUserProfile({firstname, lastname, phone, gender, userId});
         if (existingUser) {
-            res.json({success: true, message: 'Profile updated successfully', existingUser});
+            res.json({success: true, message: 'Profile updated successfully.', existingUser});
         } else {
             res.json({success: false, message: 'Unable to update profile.', existingUser});
         }
     } catch (error) {
         console.log('Error in updateProfile:', error);
         res.json({success: false, message: 'Something went wrong.'});
+    }
+}
+
+export const getProfile = async (req, res) => {
+    try {
+        console.log('test getProfile');
+        console.log('req.body:', req.body);
+        let { userId } = req.body;
+        const userProfile = await getUserProfile({userId});
+        if (userProfile?._id !== "") {
+            res.json({success: true, profile : userProfile});
+        } else {
+            res.json({success: false, profile: userProfile});
+        }
+        return Promise.resolve(userProfile);
+    } catch (error) {
+        console.log('Error in getProfile', error);
+    }
+}
+
+export const searchUser = async (req, res) => {
+    try {
+        let {email} = req.body;
+        let user = await searchUserByEmail({email});
+        console.log('api user:', user);
+        if (user !== null && typeof user._id !== "undefined") {
+            res.status(200).json({success: true, user});
+        } else {
+            res.status(200).json({success: true, message: 'Sorry, user not found.', user});
+        }
+    } catch (error) {
+        console.log('signIn Error:', error);
+        res.status(401).json({success: false, message: 'Something went wrong.'});
     }
 }

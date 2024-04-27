@@ -104,11 +104,6 @@ nav ul li button:hover,
     list-style: none;
 }
 
-.search-form {
-    display: flex;
-    align-items: center;
-}
-
 .search-form button{
    font-size: 16px;
 }
@@ -117,6 +112,10 @@ nav ul li button:hover,
     height: 23.6px;
     box-sizing: border-box;
     border: none;
+}
+
+h2 {
+    text-align: center;
 }
 
 /* Laptop/Desktop Css */
@@ -129,6 +128,19 @@ nav ul li button:hover,
 @media screen and (min-width:767px) {
     .content {
         padding: 3vh;
+    }
+
+    .search-form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #searchBooksDiv .search-form #search-books {
+        height: 100%;
+        box-sizing: border-box;
+        border: none;
+        width: 13vw;
     }
 }
 
@@ -174,5 +186,16 @@ nav ul li button:hover,
         text-transform: capitalize;
         top:5vh;
         background-color: aquamarine;
+    }
+
+    .failureMessage {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .search-form {
+        display: flex;
+        align-items: center;
     }
 }

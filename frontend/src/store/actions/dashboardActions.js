@@ -1,7 +1,8 @@
-export const updateProgress = (progress) => {
-    console.log('progress:', progress);
+export const updateProgress = (progress, bookId) => {
+    console.log('progress:', progress, 'bookId:', bookId);
     return {
         type: "UPDATE_PROGRESS",
-        progress
+        progress,
+        bookId
     }
 }

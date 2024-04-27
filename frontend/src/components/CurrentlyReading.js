@@ -13,7 +13,7 @@ const CurrentlyReading = () => {
         let response = await axios.post('http://localhost:5000/api/currentlyReadingBooks', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let currentlyReadingBooks = response.data.books;
-            console.log('currentlyReadingBooks:', currentlyReadingBooks);
+            //console.log('currentlyReadingBooks:', currentlyReadingBooks);
             setCurrentlyReading(response.data.books);
             setLoading(false);
         }
@@ -22,7 +22,7 @@ const CurrentlyReading = () => {
     useEffect(() => {
         fetchCurrentlyReadingBooks();
     }, []);
-    console.log('currentlyReading:', currentlyReading);
+    //console.log('currentlyReading:', currentlyReading);
     return (
         <div id="currentlyReading">
             {loading ?
@@ -34,7 +34,8 @@ const CurrentlyReading = () => {
                             <>
                                 {currentlyReading?.map(currentBook => {
                                     let book = currentBook.bookId;
-                                    return <BookCard book={book} key={book?._id} tag={currentBook.tag}/>;
+                                    console.log('currentBook:', currentBook);
+                                    return <BookCard book={book} key={book?._id} tag={currentBook.tag} currentProgress={currentBook.progress}/>;
                                 })}
                             </>
                             : <div>You are not reading any book currently.</div>

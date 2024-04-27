@@ -77,7 +77,7 @@ export const getCurrentlyReadingBooks = async ({userId}) => {
     try {
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
         const books = await BookShelfUser.find({userId: userIdObjectId, tag: 'currently-reading'})
-            .select('bookId userId tag')
+            .select('bookId userId tag progress')
             .populate({
                 path: 'bookId',
                 model: 'BookShelf',

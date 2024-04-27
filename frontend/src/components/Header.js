@@ -42,7 +42,7 @@ export const Header = () => {
                     <ul>
                         <li>{user?.firstname} {user?.lastname}</li>
                         <li><Link to="/profile">Profile</Link></li>
-                        <li><Link to="">Friends</Link></li>
+                        <li><Link to="/friends">Friends</Link></li>
                         <li><Link to="" onClick={handleLogout}>Logout</Link></li>
                     </ul>
                 </div> : ''}

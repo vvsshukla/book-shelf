@@ -8,7 +8,6 @@ const MyBookShelf = () => {
             <Header/>
             <div className="content">
             <SearchBooks/>
-            {/* <BookShelf/> */}
             </div>
         </>
     )

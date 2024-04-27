@@ -40,12 +40,37 @@ export const updateUserProfile = async ({firstname, lastname, phone, gender, use
     try {
         console.log('Profile details:', {firstname, lastname, phone, gender});
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
-        const result = await User.updateOne({ _id: userIdObjectId }, { $set: { firstname: firstname, lastname: lastname, phone: phone, gender: gender}}, { upsert: true });
+        await User.updateOne({ _id: userIdObjectId }, { $set: { firstname: firstname, lastname: lastname, phone: phone, gender: gender}}, { upsert: true });
         const user = await User.findOne({_id: userIdObjectId});
         console.log('updateOne result:', user); 
         return Promise.resolve(user);
     } catch (error) {
         console.log('updateUserProfile error:', error);
         return Promise.reject(error);     
+    }
+}
+
+export const getUserProfile = async ({userId}) => {
+    try {
+        console.log('getProfile userId:', userId);
+        const userIdObjectId = new mongoose.Types.ObjectId(userId);
+        const profile = await User.findOne({_id: userIdObjectId});
+        console.log('profile:', profile);
+        return Promise.resolve(profile);   
+    } catch (error) {
+        console.log('getProfile error:', error);
+        return Promise.reject(error);
+    }
+}
+
+export const searchUserByEmail = async ({email}) => {
+    try {
+        console.log('searchUserByEmail:', email);
+        const result = await User.findOne({email});
+        console.log('result:', result);
+        return Promise.resolve(result);
+    } catch (error) {
+        console.log('searchUserByEmail error:', error);
+        return Promise.reject(error);
     }
 }

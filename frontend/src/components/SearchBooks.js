@@ -82,7 +82,7 @@ export const SearchBooks = () => {
     return (
         <div id="searchBooksDiv">
             <div className="search-form">
-                <input type="text" id="search-books" placeholder="Search Library with Book Name" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={searchBook} />
+                <input type="text" id="search-books" placeholder="Search Library By Book Name" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={searchBook} />
                 <button type="button" onClick={searchBook}>&#128269;</button>
             </div>
             {

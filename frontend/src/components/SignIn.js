@@ -54,7 +54,7 @@ const SignIn = () => {
                     </div>
                     
                     <p id="terms_policy">By signing in, you agree to the BookShelf Terms of Service and Privacy Policy</p>
-                    <p id="failureMessage">{messsage}</p>
+                    <p className="failureMessage">{messsage}</p>
                 </form>
                 <p id="newToBookshelf">New To Bookshelf? <button type="button" onClick={(e) => setIsSignIn(false)}>Sign Up</button></p>
             </div> : <SignUp onSignInClick={() => setIsSignIn(true)} />}

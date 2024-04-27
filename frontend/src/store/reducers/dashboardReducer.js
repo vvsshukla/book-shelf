@@ -1,5 +1,6 @@
 const initState = {
-    bookProgress: ''
+    bookProgress: '',
+    progressBookId: ''
 }
 
 export default (state = initState, action) => {
@@ -7,7 +8,8 @@ export default (state = initState, action) => {
             case 'UPDATE_PROGRESS':{
                 return {
                     ...state,
-                    bookProgress: action.progress
+                    bookProgress: action.progress,
+                    progressBookId: action.bookId
                 }
             }
             default:

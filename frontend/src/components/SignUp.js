@@ -73,7 +73,7 @@ const SignUp = ({ onSignInClick }) => {
                         <button type="button" id="signUp" onClick={(e) => signUp()}>Sign Up</button>
                     </div>
                     <div>By creating an account, you agree to the BookShelf Terms of Service and Privacy Policy.</div>
-                    <p id="failureMessage">{messsage}</p>
+                    <p className="failureMessage">{messsage}</p>
                 </form>
                 <div id="alreadyAMember">Already a member? <button type="button" onClick={onSignInClick}>Sign In</button></div>
             </div>}

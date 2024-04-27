@@ -1,0 +1,76 @@
+.reader button {
+    background: none;
+    color: green;
+    border: none;
+    font-size: 32px;
+}
+
+/* Mobile Devices */
+@media screen and (max-width:767px) {
+    #friendsDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #friendsDiv .search-form #search-books {
+        width: 52vw;
+        height: 3.8vh;
+    }
+
+    .reader {
+        display: flex;
+        justify-content: space-around;
+        gap: 0.25rem;
+        width: 70vw;
+        padding: 10px;
+        border: 1px solid;
+    }
+
+    #searchResults {
+        margin-top: 2rem
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #friendsDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;   
+    }
+
+    #friendsDiv .search-form #search-friends {
+        height: 3.65vh;
+        box-sizing: border-box;
+        border: none;
+        width: 13vw;
+    }
+
+    #searchResults {
+        margin-top: 2rem
+    }
+
+    .reader {
+        display: flex;
+        justify-content: flex-start;
+        gap: 1rem;
+        width: 50vw;
+        padding: 10px;
+        border: 1px solid;
+    }
+    
+    .reader img {
+        height: 50px;
+    }
+
+    .readerDetails {
+        flex: 1;
+        height: 50px;
+    }
+
+    .reader button {
+        flex: 1;
+        height: 50px;
+        text-align: right;
+    }
+}

@@ -1,4 +1,9 @@
-h3 {
+.profileContent h3 {
+    text-align: center;
+}
+
+.profileContent p {
+    color: green;
     text-align: center;
 }
 
