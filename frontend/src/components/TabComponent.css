@@ -1,0 +1,38 @@
+.wrapper {
+    width: 800px;
+    margin: 30px auto;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+}
+
+.tabItem {
+    width: 100px;
+    height: 20px;
+    cursor: pointer;
+    border: 2px solid;
+    text-align: center;
+    padding: 15px;
+}
+
+.tabItemInactive {
+    opacity: 0.3;
+    filter: grayscale(100%);
+}
+
+.tabItemTitle {
+    color: rgb(0, 0, 0, 0.9);
+    font-size: 16px;
+    margin: 0;
+}
+
+.wrapper .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+

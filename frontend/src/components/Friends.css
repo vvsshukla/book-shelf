@@ -1,4 +1,4 @@
-.reader button {
+.addFrientBtn {
     background: none;
     color: green;
     border: none;
@@ -68,9 +68,21 @@
         height: 50px;
     }
 
-    .reader button {
+    .addFrientBtn {
         flex: 1;
         height: 50px;
         text-align: right;
+    }
+
+    .frActions {
+        height: 4vh;
+    }
+
+    .fa-check {
+        color: green;
+    }
+
+    .fa-ban {
+        color: red;
     }
 }

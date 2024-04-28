@@ -3,7 +3,7 @@ import {signUp, updateProfile, getProfile, searchUser} from "./sign-Up.js";
 import signIn from "./sign-In.js";
 import {addBook, fetchBooks, updateBookReview, startReading, fetchCurrentlyReadingBooks} from "./book-Shelf.js";
 import {fetchUpdatesByfriends, updateProgress} from "./book-Shelf.js";
-import { addFriend } from "./friend.js";
+import { addFriend, friendRequests, acknowledgeFriendRequest} from "./friend.js";
 
 const router = Router();
 router.post('/signin', signIn);
@@ -19,4 +19,6 @@ router.post('/profile', updateProfile);
 router.post('/getProfile', getProfile);
 router.post('/searchUser', searchUser);
 router.post('/addFriend', addFriend);
+router.post('/friendRequests', friendRequests);
+router.post('/acknowledgeFriendRequest', acknowledgeFriendRequest);
 export default router;

@@ -142,6 +142,10 @@ h2 {
         border: none;
         width: 13vw;
     }
+
+    header nav {
+        width: 30vw;
+    }
 }
 
 @media only screen and (max-width:767px){

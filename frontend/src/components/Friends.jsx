@@ -1,13 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Header } from "./Header";
 import axios from "axios";
 import "./Friends.css";
 import { Reader } from "./Reader";
+import "./TabComponent.css";
+import { useAuth } from "../hooks/useAuth";
+
+const TabItemComponent = ({title, onItemClicked = () => console.error('You passed no action to the component.'), isActive = false}) => {
+    return (
+        <div className={isActive ? 'tabItem' : 'tabItem tabItemInactive'} onClick={onItemClicked}>
+            <p className="tabItemTitle">{title}</p>
+        </div>
+    )
+}
 
 export const Friends = () => {
+    const {user} = useAuth();
     const [search, setSearch] = useState('');
     const [result, setResult] = useState([]);
     const [message, setMessage] = useState('');
+    const [active, setActive] = useState(1);
+    const [activeTab, setActiveTab] = useState(1);
+    const [friendRequests, setFriendRequests] = useState([]);
+    const tabItems = [
+        {
+            id: 1,
+            title: 'Friends'
+        },
+        {
+            id: 2,
+            title: 'Add Friends'
+        },
+        {
+            id: 3,
+            title: 'Notifications'
+        }
+    ]
+
     const searchFriends = async (evt) => {
         if (evt.key === 'Enter' || evt.type === 'click') {
             let headers = {'Content-Type':'application/json'};
@@ -24,26 +53,72 @@ export const Friends = () => {
         }
     }
 
-    return (
-        <>
-            <Header />
-            <div id="friendsDiv">
-                <h3>Friends</h3>
+    const fetchFriendRequests = async () => {
+        let headers = { 'Content-type': 'application/json' };
+        let data = {receiverId: user._id};
+        let response = await axios.post('http://localhost:5000/api/friendRequests', data, headers);
+        console.log('response:', response);
+        if (typeof response !== "undefined" && typeof response.data.success !== "undefined" && response.data.success === true) {
+            let requests = response.data.requests;
+            console.log('fetchFriendRequests:', requests);
+            setFriendRequests(requests);
+        }
+    }
+
+    const renderTabContent = () => {
+        switch(activeTab) {
+            case 1:
+                return <div>Step 1 Content</div>;
+            case 2:
+                return <><h3>Friends</h3>
                 <div className="search-form">
                     <input type="text" id="search-friends" placeholder="Search By Friend Email" value={search} onChange={(e)=>setSearch(e.target.value)} onKeyDown={searchFriends}/>
                     <button type="button" onClick={searchFriends}>🔍</button>
                 </div>
                 <div id="searchResults">
-                    {/* <div class="reader">
-                        <img src="https://s.gr-assets.com/assets/nophoto/user/u_60x60-267f0ca0ea48fd3acfd44b95afa64f01.png" alt="User Profile" id="profile-photo"/>
-                        <div class="readerDetails">
-                            <div class="readerName capitalize">madhura mulay</div>
-                            <div class="readerBooks">4 Books</div>
-                        </div>
-                        <button>+</button>
-                    </div> */}
                     {result.length > 1 ? (result?.map((reader) => <Reader reader={reader}/>)) : (result.length !== 0 ? <Reader reader={result}/> : <p className="failureMessage">{message}</p>)}
+                </div></>;
+            case 3:
+                return <><h3>Friend Requests</h3>
+                <div id="searchResults">
+                    {friendRequests.length > 0 ? (friendRequests?.map((reader) => <Reader reader={reader} userType="receiver"/>)) : <p className="failureMessage">{message}</p>}
+                </div></>;
+            default:
+                return;
+        }
+    }
+
+    useEffect(() => {
+        fetchFriendRequests();
+    }, []);
+
+    return (
+        <>
+            <Header />
+            <div id="friendsDiv">
+            <div className="wrapper">
+            <div className="tabs">
+                {tabItems?.map(({id, title}) => 
+                    <TabItemComponent 
+                        key={title} 
+                        title={title}
+                        onItemClicked={() => { setActive(id); setActiveTab(id);}}
+                        isActive={active === id}
+                    />)}
+            </div>
+            <div className="content">
+                {renderTabContent()}
+            </div>
+        </div>
+                {/* <TabsComponent tabItems={tabItems}/> */}
+                {/* <h3>Friends</h3>
+                <div className="search-form">
+                    <input type="text" id="search-friends" placeholder="Search By Friend Email" value={search} onChange={(e)=>setSearch(e.target.value)} onKeyDown={searchFriends}/>
+                    <button type="button" onClick={searchFriends}>🔍</button>
                 </div>
+                <div id="searchResults">
+                    {result.length > 1 ? (result?.map((reader) => <Reader reader={reader}/>)) : (result.length !== 0 ? <Reader reader={result}/> : <p className="failureMessage">{message}</p>)}
+                </div> */}
             </div>
         </>
     );
