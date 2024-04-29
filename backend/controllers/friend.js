@@ -16,7 +16,7 @@ export const sendFriendRequest = async ({senderId, receiverId}) => {
 export const getFriendRequests = async ({receiverId}) => {
     try {
         let receiverIdObjectId = new mongoose.Types.ObjectId(receiverId);
-        let requests = await Friend.find({receiverId: receiverIdObjectId, requestStatus: 'sent', AcknowledgedAt: null})
+        let requests = await Friend.find({receiverId: receiverIdObjectId, requestStatus: 'sent'})
                                    .select('senderId requestStatus sentAt AcknowledgedAt')
                                    .populate({  
                                         path: 'senderId',
@@ -40,5 +40,24 @@ export const updateFriendRequestStatus = async ({requestId, requestStatus}) => {
     } catch (error) {
         console.log('updateFriendRequestStatus error:', error);
         return Promise.reject(error);     
+    }
+}
+
+export const fetchFriendsByUser = async ({userId}) => {
+    try {
+        let receiverIdObjectId = new mongoose.Types.ObjectId(receiverId);
+        let requests = await Friend.find({receiverId: receiverIdObjectId, requestStatus: 'sent'})
+                                   .select('senderId requestStatus sentAt AcknowledgedAt')
+                                   .populate({  
+                                        path: 'senderId',
+                                        model: 'User',
+                                        select: 'firstname lastname'
+                                   })
+                                   .exec();
+        console.log('friendrequests:', requests);
+        return Promise.resolve(requests);
+    } catch (error) {
+        console.log('updateFriendRequestStatus error:', error);
+        return Promise.reject(error);
     }
 }

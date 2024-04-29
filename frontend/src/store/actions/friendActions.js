@@ -4,3 +4,11 @@ export const addFriend = (receiverId) => {
         receiverId
     }
 }
+
+export const updateFriendRequestStatus = (requestId, requestStatus) => {
+    return {
+        type: 'UPDATE_FRIEND_REQUEST_STATUS',
+        requestId, 
+        requestStatus
+    }
+}

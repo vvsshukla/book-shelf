@@ -1,6 +1,8 @@
 const initState = {
     receiverId: '',
-    isRequestSent: false
+    isRequestSent: false,
+    requestId:'',
+    requestStatus:''
 }
 
 export default (state = initState, action) => {
@@ -10,6 +12,14 @@ export default (state = initState, action) => {
                 ...state,
                 receiverId: action.receiverId,
                 isRequestSent: true
+            }
+        }
+
+        case 'UPDATE_FRIEND_REQUEST_STATUS':{
+            return {
+                ...state,
+                requestId: action.requestId,
+                requestStatus: action.requestStatus
             }
         }
 

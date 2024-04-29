@@ -22,6 +22,7 @@ export const Friends = () => {
     const [active, setActive] = useState(1);
     const [activeTab, setActiveTab] = useState(1);
     const [friendRequests, setFriendRequests] = useState([]);
+    const [friends, setFriends] = useState([]);
     const tabItems = [
         {
             id: 1,
@@ -65,12 +66,26 @@ export const Friends = () => {
         }
     }
 
+    const fetchFriends = async () => {
+        let headers = { 'Content-type': 'application/json' };
+        let data = {userId: user._id};
+        let response = await axios.post('http://localhost:5000/api/fetchFriends', data, headers);
+        console.log('response:', response);
+        if (typeof response !== "undefined" && typeof response.data.success !== "undefined" && response.data.success === true) {
+            let friends = response.data.friends;
+            console.log('fetchedFriends:', friends);
+            setFriends(friends);
+        }
+    }
+
     const renderTabContent = () => {
         switch(activeTab) {
             case 1:
-                return <div>Step 1 Content</div>;
+                return <><div>Friends for {user.email}</div><div id="searchResults">
+                {result.length > 1 ? (result?.map((reader) => <Reader reader={reader}/>)) : (result.length !== 0 ? <Reader reader={result}/> : <p className="failureMessage">{message}</p>)}
+            </div></>;
             case 2:
-                return <><h3>Friends</h3>
+                return <>
                 <div className="search-form">
                     <input type="text" id="search-friends" placeholder="Search By Friend Email" value={search} onChange={(e)=>setSearch(e.target.value)} onKeyDown={searchFriends}/>
                     <button type="button" onClick={searchFriends}>🔍</button>
@@ -90,6 +105,7 @@ export const Friends = () => {
 
     useEffect(() => {
         fetchFriendRequests();
+        fetchFriends();
     }, []);
 
     return (
