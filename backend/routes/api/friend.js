@@ -35,7 +35,7 @@ export const acknowledgeFriendRequest = async (req, res) => {
 
 export const fetchFriends = async (req, res) => {
     try {
-        console.log('req:', req.body);
+        console.log('fetchFriends req:', req.body);
         let {userId} = req.body;
         let friends = await fetchFriendsByUser({userId});
         res.status(200).json({success:true, friends});

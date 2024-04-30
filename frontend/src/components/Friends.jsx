@@ -71,7 +71,7 @@ export const Friends = () => {
         let data = {userId: user._id};
         let response = await axios.post('http://localhost:5000/api/fetchFriends', data, headers);
         console.log('response:', response);
-        if (typeof response !== "undefined" && typeof response.data.success !== "undefined" && response.data.success === true) {
+        if (typeof response.data.success !== "undefined" && response.data.success === true) {
             let friends = response.data.friends;
             console.log('fetchedFriends:', friends);
             setFriends(friends);
@@ -82,7 +82,7 @@ export const Friends = () => {
         switch(activeTab) {
             case 1:
                 return <><div>Friends for {user.email}</div><div id="searchResults">
-                {result.length > 1 ? (result?.map((reader) => <Reader reader={reader}/>)) : (result.length !== 0 ? <Reader reader={result}/> : <p className="failureMessage">{message}</p>)}
+                {friends.length > 0 ? (friends?.map((reader) => <Reader reader={reader} userType="friend"/>)) : <p className="failureMessage">{message}</p>}
             </div></>;
             case 2:
                 return <>
@@ -104,7 +104,7 @@ export const Friends = () => {
     }
 
     useEffect(() => {
-        fetchFriendRequests();
+        //fetchFriendRequests();
         fetchFriends();
     }, []);
 
