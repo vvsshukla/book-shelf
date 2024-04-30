@@ -23,6 +23,16 @@ export default (state = initState, action) => {
             }
         }
 
+        case 'RESET':{
+            return {
+                ...state,
+                receiverId: '',
+                isRequestSent: false,
+                requestId:'',
+                requestStatus:''
+            }
+        }
+
         default: {
             return state;
         }

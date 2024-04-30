@@ -12,3 +12,9 @@ export const updateFriendRequestStatus = (requestId, requestStatus) => {
         requestStatus
     }
 }
+
+export const reset = () => {
+    return {
+        type:'RESET'
+    }
+}

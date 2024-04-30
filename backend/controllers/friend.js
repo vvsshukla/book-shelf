@@ -17,7 +17,7 @@ export const getFriendRequests = async ({ receiverId }) => {
     try {
         let receiverIdObjectId = new mongoose.Types.ObjectId(receiverId);
         let requests = await Friend.find({ receiverId: receiverIdObjectId, requestStatus: 'sent' })
-            .select('senderId requestStatus sentAt AcknowledgedAt')
+            .select('senderId receiverId requestStatus sentAt AcknowledgedAt')
             .populate({
                 path: 'senderId',
                 model: 'User',

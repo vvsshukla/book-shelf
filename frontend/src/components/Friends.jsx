@@ -5,6 +5,8 @@ import "./Friends.css";
 import { Reader } from "./Reader";
 import "./TabComponent.css";
 import { useAuth } from "../hooks/useAuth";
+import { useDispatch } from "react-redux";
+import { reset } from "../store/actions/friendActions";
 
 const TabItemComponent = ({title, onItemClicked = () => console.error('You passed no action to the component.'), isActive = false}) => {
     return (
@@ -23,6 +25,7 @@ export const Friends = () => {
     const [activeTab, setActiveTab] = useState(1);
     const [friendRequests, setFriendRequests] = useState([]);
     const [friends, setFriends] = useState([]);
+    const dispatch = useDispatch();
     const tabItems = [
         {
             id: 1,
@@ -87,14 +90,14 @@ export const Friends = () => {
             case 2:
                 return <>
                 <div className="search-form">
-                    <input type="text" id="search-friends" placeholder="Search By Friend Email" value={search} onChange={(e)=>setSearch(e.target.value)} onKeyDown={searchFriends}/>
+                    <input type="text" id="search-friends" placeholder="Search Friends By Email" value={search} onChange={(e)=>setSearch(e.target.value)} onKeyDown={searchFriends}/>
                     <button type="button" onClick={searchFriends}>🔍</button>
                 </div>
                 <div id="searchResults">
                     {result.length > 1 ? (result?.map((reader) => <Reader reader={reader}/>)) : (result.length !== 0 ? <Reader reader={result}/> : <p className="failureMessage">{message}</p>)}
                 </div></>;
             case 3:
-                return <><h3>Friend Requests</h3>
+                return <>
                 <div id="searchResults">
                     {friendRequests.length > 0 ? (friendRequests?.map((reader) => <Reader reader={reader} userType="receiver"/>)) : <p className="failureMessage">{message}</p>}
                 </div></>;
@@ -104,7 +107,8 @@ export const Friends = () => {
     }
 
     useEffect(() => {
-        //fetchFriendRequests();
+        dispatch(reset());
+        fetchFriendRequests();
         fetchFriends();
     }, []);
 

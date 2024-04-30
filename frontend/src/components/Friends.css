@@ -42,8 +42,9 @@
     #friendsDiv .search-form #search-friends {
         height: 3.65vh;
         box-sizing: border-box;
-        border: none;
+        border: 0.5px solid #ddd;
         width: 13vw;
+        text-align: center;
     }
 
     #searchResults {
