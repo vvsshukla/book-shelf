@@ -75,7 +75,7 @@
         text-align: right;
     }
 
-    .frActions {
+    .frActions, .frStatus {
         height: 4vh;
     }
 

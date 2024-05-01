@@ -9,7 +9,7 @@
 }
 
 .tabItem {
-    width: 100px;
+    width: auto;
     height: 20px;
     cursor: pointer;
     border: 2px solid;

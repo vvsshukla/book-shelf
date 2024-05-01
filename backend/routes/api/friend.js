@@ -18,7 +18,7 @@ export const friendRequests = async (req, res) => {
         res.json({success: true, requests});
     } catch (error) {
         console.log('Error in friendRequests:', error);
-        res.json({success: false, message: 'Error in fetching friend requests.', error: error});
+        res.json({success: false, message:'Please try again. Something went wrong.', error: error});
     }
 }
 

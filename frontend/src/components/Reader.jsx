@@ -46,6 +46,7 @@ export const Reader = ({ reader, userType }) => {
                 //     return <><button type="button" className="frActions fa fa-check" onClick={() => friendRequestAction(reader._id, 'accepted')}>Accept</button><button type="button" className="frActions fa fa-ban" onClick={() => friendRequestAction(reader._id, 'rejected')}>Reject</button></>
                 // }
             default://Add friend
+                console.log('reader:', reader);
                 if (reader._id === receiverId) {
                     return <span>Request sent.</span>;
                 } else {
