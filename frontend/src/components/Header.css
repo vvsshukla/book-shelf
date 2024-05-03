@@ -53,6 +53,10 @@ nav ul li button:hover,
     /* Adjust letter spacing */
 }
 
+.logoLink {
+    color: #ff6347;
+}
+
 .logo span {
     position: relative;
 }

@@ -7,6 +7,8 @@ import "./TabComponent.css";
 import { useAuth } from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { reset } from "../store/actions/friendActions";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 
 const TabItemComponent = ({ title, onItemClicked = () => console.error('You passed no action to the component.'), isActive = false }) => {
     return (
@@ -27,6 +29,8 @@ export const Friends = () => {
     const [activeTab, setActiveTab] = useState(1);
     const [friendRequests, setFriendRequests] = useState([]);
     const [friends, setFriends] = useState([]);
+    const [friendIds, setFriendIds] = useState([]);
+    const [loader, setLoader] = useState(1);
     const dispatch = useDispatch();
     const tabItems = [
         {
@@ -53,7 +57,8 @@ export const Friends = () => {
             if (typeof userResult.user !== "undefined" && userResult.user !== null) {
                 setResult(userResult.user);
             } else {
-                setMessage(userResult.message);
+                setResult([]);
+                setSearchMessage(<span className="failureMessage">{userResult.message}</span>);
             }
             console.log('response:', response);
         }
@@ -74,6 +79,7 @@ export const Friends = () => {
         } else {
             setNotificationMessage(<span className="failureMessage">{response.data.message}</span>);
         }
+        setLoader(0);
     }
 
     const fetchFriends = async () => {
@@ -84,6 +90,15 @@ export const Friends = () => {
         if (typeof response.data.success !== "undefined" && response.data.success === true) {
             let friends = response.data.friends;
             console.log('fetchedFriends:', friends);
+            let myFriendsIds = [];
+            friends.forEach(friend => {
+                if (user._id === friend.senderId._id) {
+                    myFriendsIds.push(friend.receiverId._id); 
+                } else {
+                    myFriendsIds.push(friend.senderId._id); 
+                }
+            });
+            setFriendIds(myFriendsIds);
             setFriends(friends);
             if (friends.length === 0) {
                 setMessage(<span className="infoMessage">You have no friends.</span>);   
@@ -91,11 +106,43 @@ export const Friends = () => {
         } else {
             setMessage(<span className="failureMessage">{response.data.message}</span>);
         }
+        setLoader(0);
     }
+
+    const populateTabContent = (tabId) => {
+        if (tabId === 1 || tabId === 3) {
+          setLoader(1);
+        }
+        
+        console.log('populateTabContent:', tabId);
+        switch(tabId){
+            case 1:
+                console.log(' populateTabContent fetchFriends');
+                fetchFriends();
+                // setTimeout(function(){
+                //     fetchFriends()
+                // }, 2000);
+                break;
+            case 2:
+                console.log('populateTabContent searchFriends');
+            case 3:
+                console.log(' populateTabContent fetchFriendRequests');
+                fetchFriendRequests();
+                // setTimeout(function(){
+                //     fetchFriendRequests()
+                // }, 2000);
+                break;
+
+        }
+    }
+
+    console.log('searchMessage:', searchMessage);
+    console.log('result:', result);
 
     const renderTabContent = () => {
         switch (activeTab) {
             case 1:
+                //fetchFriends();
                 return <><div>Friends for {user.email}</div>
                     <div id="searchResults">
                         {friends.length > 0 ? (friends?.map((reader) => <Reader reader={reader} userType="friend" />)) : message}
@@ -107,9 +154,10 @@ export const Friends = () => {
                         <button type="button" onClick={searchFriends}>🔍</button>
                     </div>
                     <div id="searchResults">
-                        {result.length > 1 ? (result?.map((reader) => <Reader reader={reader} />)) : (result.length !== 0 ? <Reader reader={result} /> : searchMessage)}
+                        {result.length > 1 ? (result?.map((reader) => <Reader reader={reader} friendIds={friendIds}/>)) : (result.length !== 0 ? <Reader reader={result} friendIds={friendIds}/> : searchMessage)}
                     </div></>;
             case 3:
+                console.log('fetchFriendRequests');
                 return <>
                     <div id="searchResults">
                         {friendRequests.length > 0 ? (friendRequests?.map((reader) => <Reader reader={reader} userType="receiver" />)) : notificationMessage}
@@ -121,7 +169,6 @@ export const Friends = () => {
 
     useEffect(() => {
         dispatch(reset());
-        fetchFriendRequests();
         fetchFriends();
     }, []);
 
@@ -135,12 +182,12 @@ export const Friends = () => {
                             <TabItemComponent
                                 key={title}
                                 title={title}
-                                onItemClicked={() => { setActive(id); setActiveTab(id); }}
+                                onItemClicked={() => { setActive(id); setActiveTab(id); populateTabContent(id);}}
                                 isActive={active === id}
                             />)}
                     </div>
                     <div className="content">
-                        {renderTabContent()}
+                        {loader == 1 ? <FontAwesomeIcon icon={faSpinner} size="2x" spin color="gray" /> : renderTabContent()}           
                     </div>
                 </div>
             </div>

@@ -10,6 +10,7 @@ export const Header = () => {
         logout();
     }
     const [openProfile, setOpenProfile] = useState(false);
+
     const openProfilePanel = () => {
         let profileParentElement = document.getElementById('profile-photo').parentElement;
         let currentColor = window.getComputedStyle(profileParentElement).backgroundColor;
@@ -20,10 +21,27 @@ export const Header = () => {
         }
         setOpenProfile(!openProfile);
     }
+
+    //Close profile panel when clicked anywhere outside profile section
+    document.addEventListener('click', function(event){
+        let userProfile = document.getElementsByClassName('user-profile')[0];
+        let profileParentElement = document.getElementById('profile-photo')?.parentElement;
+        console.log('profileParentElement:', profileParentElement);
+        let targetElement = event.target;
+        console.log("event.target.id:", event.target.id);
+        let skipElements = ['logoutLink', 'signIn', 'signUp']; 
+        if (targetElement !== userProfile && !userProfile?.contains(targetElement) && !skipElements.includes(event.target.id)) {
+            if (openProfile === true && profileParentElement) {
+                setOpenProfile(false);
+                profileParentElement.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+            }
+        }                 
+    });
+    
     return (
         <header>
             <div className="logo">
-                <span>BookShelf</span>
+                <span><Link to="/dashboard" className="logoLink">BookShelf</Link></span>
             </div>
             <nav>
                 <ul>
@@ -39,7 +57,7 @@ export const Header = () => {
                         <li>{user?.firstname} {user?.lastname}</li>
                         <li><Link to="/profile">Profile</Link></li>
                         <li><Link to="/friends">Friends</Link></li>
-                        <li><Link to="" onClick={handleLogout}>Logout</Link></li>
+                        <li><Link to="" id="logoutLink" onClick={handleLogout}>Logout</Link></li>
                     </ul>
                 </div> : ''}
             </div>

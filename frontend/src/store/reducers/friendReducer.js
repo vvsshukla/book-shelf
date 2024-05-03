@@ -2,7 +2,8 @@ const initState = {
     receiverId: '',
     isRequestSent: false,
     requestId:'',
-    requestStatus:''
+    requestStatus:'',
+    friendsObjectIds: []
 }
 
 export default (state = initState, action) => {

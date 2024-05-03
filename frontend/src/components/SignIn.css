@@ -55,26 +55,30 @@
 }
 
 .failureMessage {
-    color: red;
-    font-weight: bold;
-    text-align: center;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
 .infoMessage {
     color: #0c5460;
     background-color: #d1ecf1;
-    border-color: #bee5eb;
-    font-weight: bold;
-    text-align: center;
+    border-color: #d6e9c6;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
 }
 
-/* #signInDiv button, #signUpDiv button {
-    width: 40%;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: white;
-    color: black;
-} */
+.errorMessage {
+    color: red;
+    text-align: left;
+    margin: 0;
+}
 
 #newToBookshelf, #alreadyAMember {
     display: flex;
@@ -86,4 +90,8 @@
 
 #terms_policy {
     text-align: justify;
+}
+
+button[disabled] {
+    background-color: #676d6ef5!important;
 }

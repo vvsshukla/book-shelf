@@ -4,7 +4,7 @@ import { addFriend, updateFriendRequestStatus } from "../store/actions/friendAct
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
-export const Reader = ({ reader, userType }) => {
+export const Reader = ({ reader, userType, friendIds}) => {
     let firstName = '', lastName = '';
     const { user } = useAuth();
     const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const Reader = ({ reader, userType }) => {
                } else {
                    firstName = reader.senderId.firstname;
                    lastName = reader.senderId.lastname; 
-               } 
+               }
             }
             break;
         case 'receiver':
@@ -46,9 +46,12 @@ export const Reader = ({ reader, userType }) => {
                 //     return <><button type="button" className="frActions fa fa-check" onClick={() => friendRequestAction(reader._id, 'accepted')}>Accept</button><button type="button" className="frActions fa fa-ban" onClick={() => friendRequestAction(reader._id, 'rejected')}>Reject</button></>
                 // }
             default://Add friend
-                console.log('reader:', reader);
+                console.log('add friend reader:', reader);
+                console.log('friendIds:', friendIds);
                 if (reader._id === receiverId) {
                     return <span>Request sent.</span>;
+                } else if (friendIds?.includes(reader._id)) {
+                    return <p><span className="capitalize">{reader.firstname}</span> is your friend.</p>
                 } else {
                     return <button onClick={() => add(reader._id)} className="addFrientBtn" title="Send Friend Request">&#43;</button>;
                 }
