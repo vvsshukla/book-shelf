@@ -96,23 +96,8 @@ const MyBookShelf = () => {
         
     }
 
-    const renderBookShelf = ({rating, bookId, avgRating: propAvgRating, tag}) => {
+    const renderBookShelf = ({rating: propRating, bookId, avgRating: propAvgRating, tag}) => {
         let dataSource = [];
-        
-        const handleRating = async (rating, bookId) => {
-            console.log(rating, bookId);
-            let data = {
-                rating: rating,
-                userId: user._id,
-                bookId: bookId
-            }
-            const response = await axios.post('http://localhost:5000/api/updateRating', data, headers);
-            console.log('response:', response);
-            if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating!=="undefined") {
-                console.log('Rating updated successfully.');
-                dispatch(updateRating(response.data.review.rating, response.data.review.avgRating, bookId));
-            }
-        }
         
         existingBooks.forEach(book => {
             let finalRating = '';
@@ -125,10 +110,10 @@ const MyBookShelf = () => {
                 updatedTag = book.tag;
             }
             console.log('updated avgRating:', propAvgRating);
-            if (rating != '' && bookId == book.id && propAvgRating != '') {
-                finalRating = rating;
+            if (propRating != '' && bookId == book.id && propAvgRating != '') {
+                finalRating = propRating;
                 finalAvgRating = propAvgRating;
-                console.log('updated rating:', rating);
+                console.log('updated rating:', propRating);
                 console.log('updated avgRating:', propAvgRating);
             } else {
                 finalRating = finalAvgRating = book.avgRating;
@@ -138,6 +123,20 @@ const MyBookShelf = () => {
             let title = book.title;
             let authors = book.authors;
             let shelves = updatedTag;
+            const handleRating = async (rate) => {
+                let data = {
+                    rating: rate,
+                    userId: user._id,
+                    bookId: book.id
+                }
+                console.log(data);
+                const response = await axios.post('http://localhost:5000/api/updateRating', data, headers);
+                console.log('response:', response);
+                if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating!=="undefined") {
+                    console.log('Rating updated successfully.');
+                    dispatch(updateRating(response.data.review.rating, response.data.review.avgRating, book.id));
+                }
+            }
             let avgRating = (
                 <>
                     <Rating
@@ -146,10 +145,8 @@ const MyBookShelf = () => {
                         transition
                         fillColor="gold"
                         emptyColor="lightgray"
-                        onClick={(e) => {
-                            console.log(e.target);
-                            handleRating(finalRating, book.id)
-                        }}
+                        onClick={handleRating}
+                        bookId={book.id}
                     />
                     ({finalAvgRating})
                 </>

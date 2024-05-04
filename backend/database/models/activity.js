@@ -25,8 +25,17 @@ const activitySchema = new Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now
     }
+});
+
+activitySchema.pre('save', async function(next){
+    this.updatedAt = Date.now();
+    return next();
 });
 
 const Activity = model('Activity', activitySchema);

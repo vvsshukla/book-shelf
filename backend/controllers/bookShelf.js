@@ -54,10 +54,11 @@ export const updateBookReviewByUser = async ({ rating, comment, bookId, userId})
         const avgRating = totalRating / reviews.length;
 
         await Bookshelf.updateOne({ _id: bookIdObjectId }, { $set: { avgRating: avgRating } });
+
         if (comment) {
-            await Activity.create({type: 'review', userId: userIdObjectId, bookId: bookIdObjectId, content: "added a review."});
+            await Activity.updateOne({bookId: bookIdObjectId, userId: userIdObjectId }, { $set: {type: 'review', content: "added a review.", updatedAt: Date.now()} }, { upsert: true });
         } else {
-            await Activity.create({type: 'rating', userId: userIdObjectId, bookId: bookIdObjectId, content: "rated a book.", rating: rating});
+            await Activity.updateOne({bookId: bookIdObjectId, userId: userIdObjectId }, { $set: {type: 'rating', content: "rated a book.", rating: rating, updatedAt: Date.now()} }, { upsert: true });
         }
         review = await Review.find({ bookId: bookIdObjectId, userId: userIdObjectId });
         console.log('updated doc:', review);

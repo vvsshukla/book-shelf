@@ -19,7 +19,16 @@ const reviewSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now()
     }
+});
+
+reviewSchema.pre('save', async function(next){
+    this.updatedAt = Date.now();
+    return next();
 });
 
 const Review = model('Review', reviewSchema);
