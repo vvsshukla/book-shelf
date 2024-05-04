@@ -10,14 +10,30 @@ const SocialCards = () => {
 
     const fetchUpdatesByFriends = async () => {
         let headers = { 'Content-type': 'application/json' };
-        let userData = {userId: user._id};
-        let response = await axios.post('http://localhost:5000/api/fetchUpdates', userData, headers);
+        let data = { userId: user._id };
+        let response = await axios.post('http://localhost:5000/api/fetchFriends', data, headers);
         console.log('response:', response);
-        if (typeof response !== "undefined" && typeof response.data !== "undefined") {
-            console.log('socialCardUpdates:', response.data);
-            setSocialCardUpdates(response.data);
-            setLoading(false);
-        }    
+        console.log('fiends:', response.data.friends);
+        if (typeof response.data.success !== "undefined" && response.data.success === true && typeof response.data.friends !== "undefined") {
+            let friends = response.data.friends;
+            console.log('fetchedFriends:', friends);
+            let myFriendsIds = [];
+            friends.forEach(friend => {
+                if (user._id === friend.senderId._id) {
+                    myFriendsIds.push(friend.receiverId._id); 
+                } else {
+                    myFriendsIds.push(friend.senderId._id); 
+                }
+            });
+            let userData = {userId: user._id, friendIds: myFriendsIds};
+            let updateResponse = await axios.post('http://localhost:5000/api/fetchUpdates', userData, headers);
+            console.log('response:', updateResponse);
+            if (typeof updateResponse !== "undefined" && typeof updateResponse.data !== "undefined") {
+                console.log('socialCardUpdates:', updateResponse.data);
+                setSocialCardUpdates(updateResponse.data);
+                setLoading(false);
+            }
+        }
     }
 
     useEffect(()=>{
@@ -38,7 +54,7 @@ const SocialCards = () => {
                                         let user = update.userId;
                                         console.log('book:', book);
                                         return (
-                                            <SocialCard book={book} user={user} rating={update.rating}/>
+                                            <SocialCard update={update}/>
                                         )
                                     })
                                 : <div>No new updates.</div>

@@ -1,5 +1,5 @@
 import { fetchBooksfromShelf, updateBookReviewByUser, addBookToShelf, updateTagByUser} from "../../controllers/bookShelf.js";
-import { getCurrentlyReadingBooks, getReviewUpdatesByUser, updateBookProgress} from "../../controllers/bookShelf.js";
+import { getCurrentlyReadingBooks, getSocialCardUpdatesByUser, updateBookProgress} from "../../controllers/bookShelf.js";
 
 export const addBook = async (req, res) => {
     try {
@@ -59,8 +59,8 @@ export const fetchCurrentlyReadingBooks = async (req, res) => {
 
 export const fetchUpdatesByfriends = async (req, res) => {
     try {
-        let {userId} = req.body;
-        let updates = await getReviewUpdatesByUser({userId});
+        let {userId, friendIds} = req.body;
+        let updates = await getSocialCardUpdatesByUser({userId, friendIds});
         res.status(200).json(updates);
     } catch (error) {
         console.log('Error in fetchUpdatesByfriends', error);

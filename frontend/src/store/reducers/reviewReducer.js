@@ -43,6 +43,16 @@ export default (state = initState, action) => {
                 bookId: action.bookId
             }
         }
+        case 'RESET_REVIEW': {
+            return {
+                avgRating: 0,
+                rating: '',
+                newBook: {},
+                bookShelfExternalIds: [],
+                bookId: '',
+                tag: ''
+            }
+        }
         default:{
             return {
                 ...state

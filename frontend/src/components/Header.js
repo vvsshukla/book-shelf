@@ -26,9 +26,9 @@ export const Header = () => {
     document.addEventListener('click', function(event){
         let userProfile = document.getElementsByClassName('user-profile')[0];
         let profileParentElement = document.getElementById('profile-photo')?.parentElement;
-        console.log('profileParentElement:', profileParentElement);
+        //console.log('profileParentElement:', profileParentElement);
         let targetElement = event.target;
-        console.log("event.target.id:", event.target.id);
+        //console.log("event.target.id:", event.target.id);
         let skipElements = ['logoutLink', 'signIn', 'signUp']; 
         if (targetElement !== userProfile && !userProfile?.contains(targetElement) && !skipElements.includes(event.target.id)) {
             if (openProfile === true && profileParentElement) {

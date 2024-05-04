@@ -44,7 +44,7 @@
         box-sizing: border-box;
         border: 0.5px solid #ddd;
         width: 13vw;
-        text-align: center;
+        /* text-align: center; */
     }
 
     #searchResults {

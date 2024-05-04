@@ -33,3 +33,9 @@ export const updateTag = (tag, bookId) => {
         bookId
     }
 }
+
+export const resetReview = () => {
+    return {
+        type:'RESET_REVIEW'
+    }
+}

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Bookshelf from "../database/models/bookShelf.js";
 import BookShelfUser from "../database/models/bookShelfUser.js";
 import Review from "../database/models/review.js";
+import Activity from "../database/models/activity.js";
 
 export const addBookToShelf = async ({ title, authors, externalId, imageLinks, userId }) => {
     try {
@@ -39,10 +40,10 @@ export const fetchBooksfromShelf = async ({ userId }) => {
     }
 }
 
-export const updateBookReviewByUser = async ({ rating, comment, bookId, userId }) => {
+export const updateBookReviewByUser = async ({ rating, comment, bookId, userId}) => {
     let review = null;
     try {
-        console.log('req:', { rating, comment, bookId, userId });
+        console.log('req:', { rating, comment, bookId, userId});
         const bookIdObjectId = new mongoose.Types.ObjectId(bookId);
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
         const result = await Review.updateOne({ bookId: bookIdObjectId, userId: userIdObjectId }, { $set: { rating: rating, comment: comment } }, { upsert: true });
@@ -53,10 +54,14 @@ export const updateBookReviewByUser = async ({ rating, comment, bookId, userId }
         const avgRating = totalRating / reviews.length;
 
         await Bookshelf.updateOne({ _id: bookIdObjectId }, { $set: { avgRating: avgRating } });
-
+        if (comment) {
+            await Activity.create({type: 'review', userId: userIdObjectId, bookId: bookIdObjectId, content: "added a review."});
+        } else {
+            await Activity.create({type: 'rating', userId: userIdObjectId, bookId: bookIdObjectId, content: "rated a book.", rating: rating});
+        }
         review = await Review.find({ bookId: bookIdObjectId, userId: userIdObjectId });
         console.log('updated doc:', review);
-        return Promise.resolve({ review, avgRating });
+        return Promise.resolve({ review, avgRating, rating });
     } catch (error) {
         console.log('Error in updateBookReviewByUser:', error);
     }
@@ -67,6 +72,7 @@ export const updateTagByUser = async ({bookId, userId, tag}) => {
         const bookIdObjectId = new mongoose.Types.ObjectId(bookId);
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
         await BookShelfUser.updateOne({bookId: bookIdObjectId, userId: userIdObjectId}, {$set:{tag: tag}});
+        await Activity.create({type: tag, userId: userIdObjectId,bookId: bookIdObjectId, content: 'marked book as '+tag});
         return Promise.resolve({tag, bookId});
     } catch (error) {
         console.log('Error in updateTagByUser:', error);
@@ -91,11 +97,14 @@ export const getCurrentlyReadingBooks = async ({userId}) => {
     }
 }
 
-export const getReviewUpdatesByUser = async ({userId}) => {
+export const getSocialCardUpdatesByUser = async ({userId, friendIds}) => {
     try {
+        console.log('friendIds:', friendIds);
+        let friendObjectIds = friendIds.map((id)=> new mongoose.Types.ObjectId(id));
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
-        const reviewUpdates = await Review.find({userId: userIdObjectId})
-                                   .select('bookId userId rating')
+        console.log('friendObjectIds:', friendObjectIds);
+        const socialCardUpdates = await Activity.find({userId: {$in:friendObjectIds}})
+                                   .select('bookId userId type content rating')
                                    .populate({
                                         path: 'bookId',
                                         model: 'BookShelf',
@@ -107,10 +116,10 @@ export const getReviewUpdatesByUser = async ({userId}) => {
                                         select: 'firstname lastname'
                                    })
                                    .exec();
-        console.log('reviewUpdates:', reviewUpdates);                        
-        return Promise.resolve(reviewUpdates);                           
+        console.log('socialCardUpdates:', socialCardUpdates);
+        return Promise.resolve(socialCardUpdates);
     } catch (error) {
-        console.log('Error in getReviewUpdatesByUser:', error);
+        console.log('Error in getSocialCardUpdatesByUser:', error);
     }
 }
 
