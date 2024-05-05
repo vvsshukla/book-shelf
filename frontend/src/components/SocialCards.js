@@ -11,7 +11,7 @@ const SocialCards = () => {
     const fetchUpdatesByFriends = async () => {
         let headers = { 'Content-type': 'application/json' };
         let data = { userId: user._id };
-        let response = await axios.post('http://localhost:5000/api/fetchFriends', data, headers);
+        let response = await axios.post('http://book-shelf-xvxk.onrender.com/api/fetchFriends', data, headers);
         console.log('response:', response);
         console.log('fiends:', response.data.friends);
         if (typeof response.data.success !== "undefined" && response.data.success === true && typeof response.data.friends !== "undefined") {
@@ -26,7 +26,7 @@ const SocialCards = () => {
                 }
             });
             let userData = {userId: user._id, friendIds: myFriendsIds};
-            let updateResponse = await axios.post('http://localhost:5000/api/fetchUpdates', userData, headers);
+            let updateResponse = await axios.post('http://book-shelf-xvxk.onrender.com/api/fetchUpdates', userData, headers);
             console.log('response:', updateResponse);
             if (typeof updateResponse !== "undefined" && typeof updateResponse.data !== "undefined") {
                 console.log('socialCardUpdates:', updateResponse.data);

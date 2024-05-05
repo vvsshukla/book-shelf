@@ -22,7 +22,7 @@ export const Profile = () => {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('http://localhost:5000/api/profile', userData, headers);
+            const result = await axios.post('http://book-shelf-xvxk.onrender.com/api/profile', userData, headers);
             //https://book-shelf-xvxk.onrender.com
             const response = result.data;
             if (typeof response.success !== "undefined" && response.success === true && response.existingUser._id!=="") {
@@ -45,7 +45,7 @@ export const Profile = () => {
     //         'Content-Type': 'application/json'
     //     };
     //     try {
-    //         const result = await axios.post('http://localhost:5000/api/getProfile', userData, headers);//https://book-shelf-xvxk.onrender.com
+    //         const result = await axios.post('http://book-shelf-xvxk.onrender.com/api/getProfile', userData, headers);//https://book-shelf-xvxk.onrender.com
     //         console.log('result:', result);
     //         const response = result.data;
     //         console.log('response:', response);

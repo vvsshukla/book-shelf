@@ -65,7 +65,7 @@ export const Reader = ({ reader, userType, friendIds}) => {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('http://localhost:5000/api/addFriend', data, headers);
+            const result = await axios.post('http://book-shelf-xvxk.onrender.com/api/addFriend', data, headers);
             //https://book-shelf-xvxk.onrender.com
             const response = result.data;
             if (typeof response.success !== "undefined" && response.success === true) {
@@ -83,7 +83,7 @@ export const Reader = ({ reader, userType, friendIds}) => {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('http://localhost:5000/api/acknowledgeFriendRequest', data, headers);
+            const result = await axios.post('http://book-shelf-xvxk.onrender.com/api/acknowledgeFriendRequest', data, headers);
             console.log('result:', result);
             //https://book-shelf-xvxk.onrender.com
             const response = result.data;

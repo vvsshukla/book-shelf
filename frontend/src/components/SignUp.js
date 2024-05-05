@@ -23,7 +23,7 @@ const SignUp = ({ onSignInClick }) => {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('http://localhost:5000/api/signup', userData, headers);
+            const result = await axios.post('http://book-shelf-xvxk.onrender.com/api/signup', userData, headers);
             //https://book-shelf-xvxk.onrender.com/api/signup
             const response = result.data;
             // const response = {
