@@ -3,8 +3,7 @@ import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import { Header } from "./Header";
 import BookShelf from "./BookShelf";
-import { getExistingBooks } from "../store/actions/reviewActions";
-import { updateRating, updateTag, resetReview } from "../store/actions/reviewActions";
+import { updateRating, updateTag, resetReview, addBook, getExistingBooks} from "../store/actions/reviewActions";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -34,20 +33,54 @@ const TabItemComponent = ({ title, onItemClicked = () => console.error('You pass
 let headers = { 'Content-type': 'application/json' };
 
 const MyBookShelf = () => {
+    const apiKey = 'AIzaSyDWMI2ifsQqe5Os9ZTu5IgR4ZULcwcFCBM';
+    const [search, setSearch] = useState('');
+    const [searchedBooks, setSearchedBooks] = useState([]);
     const [existingBooks, setExistingBooks] = useState([]);
     const [active, setActive] = useState(1);
     const [activeTab, setActiveTab] = useState(1);
     const [loader, setLoader] = useState(1);
     const [message, setMessage] = useState('');
-    const {user} = useAuth();
+    const { user } = useAuth();
     const dispatch = useDispatch();
 
-    let {rating, bookId, avgRating, tag} = useSelector(state => state.review);
+    let {newBook, rating, bookShelfExternalIds, bookId, avgRating, tag} = useSelector(state => state.review);
+
+    const searchBook = async (evt) => {
+        if (evt.key === 'Enter' || evt.type === 'click') {
+            try {
+                let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${apiKey}`);
+                console.log('response:', response);
+                if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.items !== "undefined") {
+                    let shelfBooks = response.data.items;
+                    let searchedbookArray = [];
+                    for (const book of shelfBooks) {
+                        let thumbnail = book?.volumeInfo?.imageLinks?.thumbnail;
+                        let smallThumbnail = book?.volumeInfo?.imageLinks?.smallThumbnail;
+                        if (thumbnail !== undefined && smallThumbnail !== undefined) {
+                            let bookDetails = {
+                                title: book.volumeInfo?.title,
+                                authors: book.volumeInfo?.authors,
+                                externalId: book.id,
+                                smallThumbnail: smallThumbnail,
+                                imageLinks: book.volumeInfo?.imageLinks
+                            };
+                            searchedbookArray.push(bookDetails);
+                        }
+                    }
+                    console.log('result:', searchedbookArray);
+                    setSearchedBooks(searchedbookArray);
+                }
+            } catch (error) {
+                console.log('Error:', error);
+            }
+        }
+    }
 
     const fetchBooks = async () => {
         let headers = { 'Content-type': 'application/json' };
         let userData = { userId: user._id };
-        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/books', userData, headers);
+        let response = await axios.post('http://localhost:5000/api/books', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let shelfBooks = response.data.books;
             console.log('fetchBooks:', shelfBooks);
@@ -71,8 +104,8 @@ const MyBookShelf = () => {
             }
             console.log('existingBookArray:', existingBookArray);
             setExistingBooks(existingBookArray);
+            dispatch(getExistingBooks(existingBookArray));
             setLoader(0);
-            //dispatch(getExistingBooks(existingBookArray));
         }
     }
 
@@ -82,23 +115,22 @@ const MyBookShelf = () => {
     }, []);
 
     const startReading = async (bookId) => {
-        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/startreading', {bookId: bookId, userId: user._id, tag: 'currently-reading'}, headers);
+        const response = await axios.post('http://localhost:5000/api/startreading', { bookId: bookId, userId: user._id, tag: 'currently-reading' }, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.updatedTag !== "undefined" && typeof response.data.updatedTag !== "") {
             console.log('read response:', response);
             let tag = response.data.updatedTag.tag;
             let bookId = response.data.updatedTag.bookId;
             dispatch(updateTag(tag, bookId));
-        }        
+        }
     }
 
     const populateTabContent = (tabId) => {
-        
+
     }
 
-    const renderBookShelf = ({rating: propRating, bookId, avgRating: propAvgRating, tag}) => {
+    const renderBookShelf = ({ rating: propRating, bookId, avgRating: propAvgRating, tag }) => {
         let dataSource = [];
-        
         existingBooks.forEach(book => {
             let finalRating = '';
             let finalAvgRating = '';
@@ -130,9 +162,9 @@ const MyBookShelf = () => {
                     bookId: book.id
                 }
                 console.log(data);
-                const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/updaterating', data, headers);
+                const response = await axios.post('http://localhost:5000/api/updaterating', data, headers);
                 console.log('response:', response);
-                if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating!=="undefined") {
+                if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating !== "undefined") {
                     console.log('Rating updated successfully.');
                     dispatch(updateRating(response.data.review.rating, response.data.review.avgRating, book.id));
                 }
@@ -163,29 +195,60 @@ const MyBookShelf = () => {
                 action = <button type="button"><span>&#43;</span> View </button>;
             }
             //let action = updatedTag == 'to-read' ? <><button type="button" onClick={()=>startReading(book.id)} title="Mark as Currently Reading">Start Reading</button><button type="button"><span>&#43;</span> View </button></>: <button type="button"><span>&#43;</span> View </button>;
-            dataSource.push({ cover: cover, title: title, author: authors, shelves: shelves, avgRating: avgRating, action: action});
+            dataSource.push({ cover: cover, title: title, author: authors, shelves: shelves, avgRating: avgRating, action: action });
         });
         console.log('existingBooks.length:', existingBooks.length);
         return <>
             <div id="bookShelfResults">
-                {existingBooks.length > 0 ? <BookShelf dataSource={dataSource}/> : <span className="infoMessage">BookShelf is empty.</span>}
+                {existingBooks.length > 0 ? <BookShelf dataSource={dataSource} /> : <span className="infoMessage">BookShelf is empty.</span>}
             </div>
         </>;
+    }
+
+    const renderLibrary = () => {
+                let dataSource = [];
+                searchedBooks.forEach(book => {
+                    let cover = <img src={book.smallThumbnail} alt={book.title} />;
+                    let title = book.title;
+                    let authors = book.authors;
+                    let bookDetails = {
+                        cover: cover,
+                        title: title,
+                        authors: authors,
+                        imageLinks: book.imageLinks,
+                        userId: user._id
+                    }
+                    const addToBookShelf = async (bookDetails) => {
+                        const response = await axios.post('http://localhost:5000/api/addbooktoshelf', bookDetails, headers);
+                        console.log('response:', response);
+                        if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.newBook !== "undefined") {
+                            console.log('Book added successfully.');
+                            dispatch(addBook(response.data.newBook));
+                        }
+                    }
+                    let action = (Object.keys(newBook).length > 0 && newBook.externalId === book.externalId) || (bookShelfExternalIds.includes(book.externalId)) ? <button type="button"><span>&#43;</span> View</button> : <button type="button" onClick={() => addToBookShelf(bookDetails)}><span>&#43;</span> Add To BookShelf</button>;
+                    dataSource.push({ cover: cover, title: title, author: authors, action: action });
+                });
+                console.log('searchedBooks.length:', searchedBooks.length);
+                return <>
+                            <div id="searchBooksDiv">
+                                <div className="search-form">
+                                    <input type="text" id="search-books" placeholder="Search Library By Book Name" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={searchBook} />
+                                    <button type="button" onClick={searchBook}>&#128269;</button>
+                                </div>
+                                {
+                                    search !== '' ? (searchedBooks.length > 0 ? <BookShelf dataSource={dataSource} /> : <span className="infoMessage">'No record found.'</span>) : ('')
+                                }
+                            </div>
+                       </>;
     }
 
     const renderTabContent = () => {
         switch (activeTab) {
             case 1:
-                return renderBookShelf({rating, bookId, avgRating, tag});
-            // case 2:
-            //     return <>
-            //         <div className="search-form">
-            //             <input type="text" id="search-friends" placeholder="Search Friends By Email" value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={searchFriends} />
-            //             <button type="button" onClick={searchFriends}>🔍</button>
-            //         </div>
-            //         <div id="searchResults">
-            //             {result.length > 1 ? (result?.map((reader) => <Reader reader={reader} friendIds={friendIds}/>)) : (result.length !== 0 ? <Reader reader={result} friendIds={friendIds}/> : searchMessage)}
-            //         </div></>;
+                return renderBookShelf({ rating, bookId, avgRating, tag });
+            case 2:
+                return renderLibrary();
             // case 3:
             //     console.log('fetchFriendRequests');
             //     return <>
@@ -198,24 +261,24 @@ const MyBookShelf = () => {
     }
 
     return <>
-        <Header />
-        <div id="friendsDiv">
-            <div className="wrapper">
-                <div className="tabs">
-                    {tabItems?.map(({ id, title }) =>
-                        <TabItemComponent
-                            key={title}
-                            title={title}
-                            onItemClicked={() => { setActive(id); setActiveTab(id); populateTabContent(id); }}
-                            isActive={active === id}
-                        />)}
+                <Header />
+                <div id="friendsDiv">
+                    <div className="wrapper">
+                        <div className="tabs">
+                            {tabItems?.map(({ id, title }) =>
+                                <TabItemComponent
+                                    key={title}
+                                    title={title}
+                                    onItemClicked={() => { setActive(id); setActiveTab(id); populateTabContent(id); }}
+                                    isActive={active === id}
+                                />)}
+                        </div>
+                        <div className="content">
+                            {loader == 1 ? <FontAwesomeIcon icon={faSpinner} size="2x" spin color="gray" /> : renderTabContent()}
+                        </div>
+                    </div>
                 </div>
-                <div className="content">
-                    {loader == 1 ? <FontAwesomeIcon icon={faSpinner} size="2x" spin color="gray" /> : renderTabContent()}
-                </div>
-            </div>
-        </div>
-    </>;
+           </>;
 }
 
 export default MyBookShelf;

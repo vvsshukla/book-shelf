@@ -65,8 +65,8 @@ export const Reader = ({ reader, userType, friendIds}) => {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('https://book-shelf-xvxk.onrender.com/api/addfriend', data, headers);
-            //https://book-shelf-xvxk.onrender.com
+            const result = await axios.post('http://localhost:5000/api/addfriend', data, headers);
+            //http://localhost:5000
             const response = result.data;
             if (typeof response.success !== "undefined" && response.success === true) {
                 dispatch(addFriend(reader_id));
@@ -83,9 +83,9 @@ export const Reader = ({ reader, userType, friendIds}) => {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('https://book-shelf-xvxk.onrender.com/api/acknowledgefriendrequest', data, headers);
+            const result = await axios.post('http://localhost:5000/api/acknowledgefriendrequest', data, headers);
             console.log('result:', result);
-            //https://book-shelf-xvxk.onrender.com
+            //http://localhost:5000
             const response = result.data;
             if (typeof response.success !== "undefined" && response.success === true) {
                 dispatch(updateFriendRequestStatus(requestId, requestStatus));
