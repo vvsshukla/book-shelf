@@ -24,7 +24,7 @@ export const BookCard = ({book, tag, currentProgress}) => {
     const updateBookProgress = async () => {
         let headers = { 'Content-type': 'application/json' };
         let userData = { userId: user._id, bookId: book._id, progress: progress };
-        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/updateProgress', userData, headers);
+        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/updateprogress', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             dispatch(updateProgress(response.data, book._id));
             setUpdateProgressFlag(false);

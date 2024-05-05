@@ -47,7 +47,7 @@ export const BookItem = ({ book, source, search }) => {
             userId: user._id,
             bookId: book.id
         }
-        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/updateRating', data, headers);
+        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/updaterating', data, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating!=="undefined") {
             console.log('Rating updated successfully.');
@@ -56,7 +56,7 @@ export const BookItem = ({ book, source, search }) => {
     }
 
     const startReading = async (bookId) => {
-        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/startReading', {bookId: bookId, userId: user._id, tag: 'currently-reading'}, headers);
+        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/startreading', {bookId: bookId, userId: user._id, tag: 'currently-reading'}, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.updatedTag !== "undefined" && typeof response.data.updatedTag !== "") {
             console.log('read response:', response);
@@ -67,7 +67,7 @@ export const BookItem = ({ book, source, search }) => {
     } 
 
     const addToBookShelf = async (bookDetails) => {
-        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/addBookToShelf', bookDetails, headers);
+        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/addbooktoshelf', bookDetails, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.newBook !== "undefined") {
             console.log('Book added successfully.');
