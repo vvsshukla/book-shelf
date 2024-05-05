@@ -47,7 +47,7 @@ const MyBookShelf = () => {
     const fetchBooks = async () => {
         let headers = { 'Content-type': 'application/json' };
         let userData = { userId: user._id };
-        let response = await axios.post('http://book-shelf-xvxk.onrender.com/api/books', userData, headers);
+        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/books', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let shelfBooks = response.data.books;
             console.log('fetchBooks:', shelfBooks);
@@ -82,7 +82,7 @@ const MyBookShelf = () => {
     }, []);
 
     const startReading = async (bookId) => {
-        const response = await axios.post('http://book-shelf-xvxk.onrender.com/api/startReading', {bookId: bookId, userId: user._id, tag: 'currently-reading'}, headers);
+        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/startReading', {bookId: bookId, userId: user._id, tag: 'currently-reading'}, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.updatedTag !== "undefined" && typeof response.data.updatedTag !== "") {
             console.log('read response:', response);
@@ -130,7 +130,7 @@ const MyBookShelf = () => {
                     bookId: book.id
                 }
                 console.log(data);
-                const response = await axios.post('http://book-shelf-xvxk.onrender.com/api/updateRating', data, headers);
+                const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/updateRating', data, headers);
                 console.log('response:', response);
                 if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating!=="undefined") {
                     console.log('Rating updated successfully.');

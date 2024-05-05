@@ -51,7 +51,7 @@ export const Friends = () => {
         if (evt.key === 'Enter' || evt.type === 'click') {
             let headers = { 'Content-Type': 'application/json' };
             let data = { 'email': search };
-            let response = await axios.post('http://book-shelf-xvxk.onrender.com/api/searchUser', data, headers);
+            let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/searchUser', data, headers);
             let userResult = typeof response.data !== "undefined" ? response.data : '';
             console.log('result:', userResult);
             if (typeof userResult.user !== "undefined" && userResult.user !== null) {
@@ -67,7 +67,7 @@ export const Friends = () => {
     const fetchFriendRequests = async () => {
         let headers = { 'Content-type': 'application/json' };
         let data = { receiverId: user._id };
-        let response = await axios.post('http://book-shelf-xvxk.onrender.com/api/friendRequests', data, headers);
+        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/friendRequests', data, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data.success !== "undefined" && response.data.success === true) {
             let requests = response.data.requests;
@@ -85,7 +85,7 @@ export const Friends = () => {
     const fetchFriends = async () => {
         let headers = { 'Content-type': 'application/json' };
         let data = { userId: user._id };
-        let response = await axios.post('http://book-shelf-xvxk.onrender.com/api/fetchFriends', data, headers);
+        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/fetchFriends', data, headers);
         console.log('response:', response);
         if (typeof response.data.success !== "undefined" && response.data.success === true) {
             let friends = response.data.friends;
