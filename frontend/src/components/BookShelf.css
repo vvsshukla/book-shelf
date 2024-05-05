@@ -2,5 +2,6 @@
 @media screen and (min-width: 768px) {
     #bookShelfResults {
         width: 85vw;
+        text-align: center;
     }
 }
