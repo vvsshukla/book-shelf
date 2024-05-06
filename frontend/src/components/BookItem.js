@@ -15,7 +15,7 @@ export const BookItem = ({ book, source, search }) => {
     let finalRating = '';
     let finalAvgRating = '';
     let updatedTag = '';
-    let {newBook, rating, bookShelfExternalIds, bookId, avgRating, tag} = useSelector(state => state.review);
+    let { newBook, rating, bookShelfExternalIds, bookId, avgRating, tag } = useSelector(state => state.review);
     if (rating != '' && bookId == book.id && avgRating != '') {
         finalRating = rating;
         finalAvgRating = avgRating;
@@ -47,27 +47,27 @@ export const BookItem = ({ book, source, search }) => {
             userId: user._id,
             bookId: book.id
         }
-        const response = await axios.post('http://localhost:5000/api/updaterating', data, headers);
+        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/updaterating', data, headers);
         console.log('response:', response);
-        if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating!=="undefined") {
+        if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating !== "undefined") {
             console.log('Rating updated successfully.');
             dispatch(updateRating(response.data.review.rating, response.data.review.avgRating, book.id));
         }
     }
 
     const startReading = async (bookId) => {
-        const response = await axios.post('http://localhost:5000/api/startreading', {bookId: bookId, userId: user._id, tag: 'currently-reading'}, headers);
+        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/startreading', { bookId: bookId, userId: user._id, tag: 'currently-reading' }, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.updatedTag !== "undefined" && typeof response.data.updatedTag !== "") {
             console.log('read response:', response);
             let tag = response.data.updatedTag.tag;
             let bookId = response.data.updatedTag.bookId;
             dispatch(updateTag(tag, bookId));
-        }        
-    } 
+        }
+    }
 
     const addToBookShelf = async (bookDetails) => {
-        const response = await axios.post('http://localhost:5000/api/addbooktoshelf', bookDetails, headers);
+        const response = await axios.post('https://book-shelf-xvxk.onrender.com/api/addbooktoshelf', bookDetails, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.newBook !== "undefined") {
             console.log('Book added successfully.');
@@ -80,23 +80,23 @@ export const BookItem = ({ book, source, search }) => {
             <div>{book.title}</div>
             <div>{book.authors}</div>
             {source === 'internal' ? (
-            <>
-                <div>
-                    <Rating
-                        initialValue={finalRating}
-                        size={18}
-                        transition
-                        fillColor="gold"
-                        emptyColor="lightgray"
-                        onClick={handleRating}
-                    />({finalAvgRating})
-                </div>
-                <div>{updatedTag}</div>
-            </>
-        ) : ''}
+                <>
+                    <div>
+                        <Rating
+                            initialValue={finalRating}
+                            size={18}
+                            transition
+                            fillColor="gold"
+                            emptyColor="lightgray"
+                            onClick={handleRating}
+                        />({finalAvgRating})
+                    </div>
+                    <div>{updatedTag}</div>
+                </>
+            ) : ''}
             <div>
                 {search ? ((Object.keys(newBook).length > 0 && newBook.externalId === book.externalId) || (bookShelfExternalIds.includes(book.externalId)) ? <button type="button"><span>&#43;</span> View</button> : <button type="button" onClick={() => addToBookShelf(bookDetails)}><span>&#43;</span> Add To BookShelf</button>)
-                        : updatedTag === 'to-read' ? <><button type="button" onClick={()=>startReading(book.id)} title="Mark as Currently Reading">Start Reading</button><button type="button"><span>&#43;</span> View </button></>: <button type="button"><span>&#43;</span> View </button>}
+                    : updatedTag === 'to-read' ? <><button type="button" onClick={() => startReading(book.id)} title="Mark as Currently Reading">Start Reading</button><button type="button"><span>&#43;</span> View </button></> : <button type="button"><span>&#43;</span> View </button>}
             </div>
         </div>
     );

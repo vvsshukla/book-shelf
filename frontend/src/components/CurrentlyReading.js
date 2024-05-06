@@ -10,7 +10,7 @@ const CurrentlyReading = () => {
     const fetchCurrentlyReadingBooks = async () => {
         let headers = { 'Content-type': 'application/json' };
         let userData = { userId: user._id };
-        let response = await axios.post('http://localhost:5000/api/currentlyreadingbooks', userData, headers);
+        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/currentlyreadingbooks', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let currentlyReadingBooks = response.data.books;
             //console.log('currentlyReadingBooks:', currentlyReadingBooks);
@@ -35,7 +35,7 @@ const CurrentlyReading = () => {
                                 {currentlyReading?.map(currentBook => {
                                     let book = currentBook.bookId;
                                     console.log('currentBook:', currentBook);
-                                    return <BookCard book={book} key={book?._id} tag={currentBook.tag} currentProgress={currentBook.progress}/>;
+                                    return <BookCard book={book} key={book?._id} tag={currentBook.tag} currentProgress={currentBook.progress} />;
                                 })}
                             </>
                             : <div>You are not reading any book currently.</div>

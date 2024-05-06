@@ -11,7 +11,7 @@ export const SearchBooks = () => {
     const [search, setSearch] = useState('');
     const [searchedBooks, setSearchedBooks] = useState([]);
     const [existingBooks, setExistingBooks] = useState([]);
-    const {user} = useAuth();
+    const { user } = useAuth();
     const dispatch = useDispatch();
 
     const searchBook = async (evt) => {
@@ -47,8 +47,8 @@ export const SearchBooks = () => {
 
     const fetchBooks = async () => {
         let headers = { 'Content-type': 'application/json' };
-        let userData = {userId: user._id};
-        let response = await axios.post('http://localhost:5000/api/books', userData, headers);
+        let userData = { userId: user._id };
+        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/books', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let shelfBooks = response.data.books;
             console.log('fetchBooks:', shelfBooks);
@@ -59,12 +59,12 @@ export const SearchBooks = () => {
                 let smallThumbnail = bookObject.imageLinks.smallThumbnail;
                 if (thumbnail !== undefined && smallThumbnail !== undefined) {
                     let bookDetails = {
-                        id:bookObject._id,
+                        id: bookObject._id,
                         title: bookObject.title,
                         authors: bookObject.authors,
                         externalId: bookObject.externalId,
                         smallThumbnail: bookObject.imageLinks.smallThumbnail,
-                        avgRating:bookObject.avgRating,
+                        avgRating: bookObject.avgRating,
                         tag: book.tag
                     };
                     existingBookArray.push(bookDetails);
@@ -86,8 +86,7 @@ export const SearchBooks = () => {
                 <button type="button" onClick={searchBook}>&#128269;</button>
             </div>
             {
-                search !== '' ? (searchedBooks.length > 0 ?
-                    <BookShelfTable shelfBooks={searchedBooks} source='external' search={search}/> : 'No record found.') : (existingBooks.length > 0 ? <BookShelfTable shelfBooks={existingBooks} source="internal"/> : <p>Add book to shelf</p>)
+                (searchedBooks.length > 0 ? <BookShelfTable shelfBooks={searchedBooks} source='external' search={search} /> : 'No record found.')
             }
         </div>
     )

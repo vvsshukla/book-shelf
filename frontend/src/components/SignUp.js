@@ -13,7 +13,7 @@ const SignUp = ({ onSignInClick }) => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     //const [loginUser, setLoginUser] = useState({});
-    const {login} = useAuth();
+    const { login } = useAuth();
     const signUp = async () => {
         document.getElementById('signUp').innerText = "Signing Up...";
         console.log('firstName:', firstname);
@@ -23,8 +23,8 @@ const SignUp = ({ onSignInClick }) => {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('http://localhost:5000/api/signup', userData, headers);
-            //http://localhost:5000/api/signup
+            const result = await axios.post('https://book-shelf-xvxk.onrender.com/api/signup', userData, headers);
+            //https://book-shelf-xvxk.onrender.com/api/signup
             const response = result.data;
             // const response = {
             //     "success": true,
@@ -55,7 +55,7 @@ const SignUp = ({ onSignInClick }) => {
     }
 
     const validateSignUp = (event) => {
-        switch(event.target.id) {
+        switch (event.target.id) {
             case 'firstname':
                 console.log('firstname:', firstname.trim());
                 if (!firstname.trim()) {
@@ -80,7 +80,7 @@ const SignUp = ({ onSignInClick }) => {
                 if (!email.trim()) {
                     setEmailError('Email is required.');
                 } else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.trim()))) {
-                    setEmailError('Please enter valid email address.');                
+                    setEmailError('Please enter valid email address.');
                 } else {
                     setEmailError('');
                 }
@@ -91,10 +91,10 @@ const SignUp = ({ onSignInClick }) => {
                 } else {
                     setPasswordError('');
                 }
-                break;    
+                break;
         }
     }
-    
+
     return (
         <>
             {<div id="signUpDiv">
@@ -121,7 +121,7 @@ const SignUp = ({ onSignInClick }) => {
                         {passwordError && <p className="errorMessage">{passwordError}</p>}
                     </div>
                     <div>
-                        <button type="button" id="signUp" disabled={firstNameError||lastNameError||emailError||passwordError} onClick={(e) => signUp()}>Sign Up</button>
+                        <button type="button" id="signUp" disabled={firstNameError || lastNameError || emailError || passwordError} onClick={(e) => signUp()}>Sign Up</button>
                     </div>
                     <div>By creating an account, you agree to the BookShelf Terms of Service and Privacy Policy.</div>
                     {messsage ? <p className="failureMessage">{messsage}</p> : ''}
