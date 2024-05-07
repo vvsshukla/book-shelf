@@ -65,12 +65,12 @@ const SignIn = () => {
                 <form onSubmit={handleLogin}>
                     <div>
                         <label htmlFor="email">Email:</label>
-                        <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} onKeyDown={validateEmail} required />
+                        <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} onKeyUp={validateEmail} required />
                         {emailError && <p className="errorMessage">{emailError}</p>}
                     </div>
                     <div>
                         <label htmlFor="password">Password:</label>
-                        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyDown={validatePasswword} required />
+                        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} onKeyUp={validatePasswword} required />
                         {passwordError && <p className="errorMessage">{passwordError}</p>}
                     </div>
                     <div>

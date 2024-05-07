@@ -106,6 +106,7 @@ nav ul li button:hover,
 
 #profile-panel ul li {
     list-style: none;
+    padding: 0.1;
 }
 
 .search-form button{
