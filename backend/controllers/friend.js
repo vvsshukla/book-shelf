@@ -1,3 +1,4 @@
+import BookShelfUser from "../database/models/bookShelfUser.js";
 import Friend from "../database/models/friend.js";
 import mongoose from "mongoose";
 
@@ -57,13 +58,41 @@ export const fetchFriendsByUser = async ({ userId }) => {
         .populate({
             path: 'senderId receiverId',
             model: 'User',
-            select: 'firstname lastname'
+            select: 'firstname lastname booksCount'
         })
         .exec();
-        console.log('fetchFriendsByUser:', friends);
+        //let friendsWithBooksCount = await processFriends(friends);
+        //console.log('fetchFriendsByUser:', friendsWithBooksCount);
         return Promise.resolve(friends);
     } catch (error) {
         console.log('fetchFriendsByUser error:', error);
         return Promise.reject(error);
     }
+}
+
+const processFriends = async (friends) => {
+    for (let friend of friends){
+        let receiverObjectId = new mongoose.Types.ObjectId(friend.receiverId._id);
+        let receiverBookCounts = await BookShelfUser.find({
+            userId:receiverObjectId
+        }).countDocuments();
+        friend['receiverBooksCount'] = receiverBookCounts;
+        //newFriend.receiverBooksCount = receiverBookCounts;
+        //console.log('friend.receiverId.booksCount:', newFriend.receiverBooksCount);
+        //console.log('friend.receiverId:', friend.receiverId);
+        console.log('friend loop:', friend);
+        let senderObjectId = new mongoose.Types.ObjectId(friend.senderId._id);
+        let senderBookCounts = await BookShelfUser.find({
+            userId: senderObjectId
+        }).countDocuments();
+        if (friend.senderId) {
+            friend = {...friend, senderBookCounts: senderBookCounts};
+        }
+        //newFriend.senderBookCounts = senderBookCounts;
+        //console.log('friend:', friend);
+    }
+    console.log('friends:', friends);
+    //let friendsWithBooksCount = await Promise.all(friends);
+    //console.log('friendsWithBooksCount:', friendsWithBooksCount);
+    return friends;
 }

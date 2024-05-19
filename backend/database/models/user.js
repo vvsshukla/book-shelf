@@ -27,6 +27,10 @@ const userSchema = new Schema({
     address: {
         type: String
     },
+    booksCount:{
+        type: Number,
+        default: 0
+    },
     createdAt: { type: Date, default: Date.now },
     lastLoggedIn: { type: Date, default: Date.now }
 });

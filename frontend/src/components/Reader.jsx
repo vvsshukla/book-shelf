@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 export const Reader = ({ reader, userType, friendIds }) => {
-    let firstName = '', lastName = '';
+    let firstName = '', lastName = '', booksCount='';
     const { user } = useAuth();
     const dispatch = useDispatch();
     const { receiverId, requestId, requestStatus } = useSelector(state => state.friend);
@@ -15,9 +15,11 @@ export const Reader = ({ reader, userType, friendIds }) => {
                 if (user._id === reader.senderId._id) {
                     firstName = reader.receiverId.firstname;
                     lastName = reader.receiverId.lastname;
+                    booksCount = reader.receiverId.booksCount;
                 } else {
                     firstName = reader.senderId.firstname;
                     lastName = reader.senderId.lastname;
+                    booksCount = reader.senderId.booksCount;
                 }
             }
             break;
@@ -42,9 +44,6 @@ export const Reader = ({ reader, userType, friendIds }) => {
                 } else if (reader.receiverId === user._id) {
                     return <><button type="button" className="frActions fa fa-check" onClick={() => friendRequestAction(reader._id, 'accepted')}>Accept</button><button type="button" className="frActions fa fa-ban" onClick={() => friendRequestAction(reader._id, 'rejected')}>Reject</button></>
                 }
-            // else {
-            //     return <><button type="button" className="frActions fa fa-check" onClick={() => friendRequestAction(reader._id, 'accepted')}>Accept</button><button type="button" className="frActions fa fa-ban" onClick={() => friendRequestAction(reader._id, 'rejected')}>Reject</button></>
-            // }
             default://Add friend
                 console.log('add friend reader:', reader);
                 console.log('friendIds:', friendIds);
@@ -58,15 +57,13 @@ export const Reader = ({ reader, userType, friendIds }) => {
         }
     }
 
-    //console.log('firstName:', firstName, 'lastName:', lastName);
     const add = async (reader_id) => {
         const data = { senderId: user._id, receiverId: reader_id };
         const headers = {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('https://book-shelf-xvxk.onrender.com/api/addfriend', data, headers);
-            //https://book-shelf-xvxk.onrender.com
+            const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/addfriend', data, headers);
             const response = result.data;
             if (typeof response.success !== "undefined" && response.success === true) {
                 dispatch(addFriend(reader_id));
@@ -83,7 +80,7 @@ export const Reader = ({ reader, userType, friendIds }) => {
             'Content-Type': 'application/json'
         };
         try {
-            const result = await axios.post('https://book-shelf-xvxk.onrender.com/api/acknowledgefriendrequest', data, headers);
+            const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/acknowledgefriendrequest', data, headers);
             console.log('result:', result);
             //https://book-shelf-xvxk.onrender.com
             const response = result.data;
@@ -103,7 +100,7 @@ export const Reader = ({ reader, userType, friendIds }) => {
             <div className="readerDetails">
                 {/* <div className="readerName capitalize">{userType === 'receiver' ? `${reader.senderId.firstname} ${reader.senderId.lastname}` : `${reader.firstname} ${reader.lastname}`}</div> */}
                 <div className="readerName capitalize">{firstName} {lastName}</div>
-                <div className="readerBooks">4 Books</div>
+                <div className="readerBooks">{booksCount} Books</div>
             </div>
             {renderActionButtons(userType)}
             {/* {userType === 'receiver' ? (

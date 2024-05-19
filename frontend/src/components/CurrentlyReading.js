@@ -10,7 +10,7 @@ const CurrentlyReading = () => {
     const fetchCurrentlyReadingBooks = async () => {
         let headers = { 'Content-type': 'application/json' };
         let userData = { userId: user._id };
-        let response = await axios.post('https://book-shelf-xvxk.onrender.com/api/currentlyreadingbooks', userData, headers);
+        let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/currentlyreadingbooks', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let currentlyReadingBooks = response.data.books;
             //console.log('currentlyReadingBooks:', currentlyReadingBooks);

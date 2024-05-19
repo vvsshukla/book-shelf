@@ -3,6 +3,7 @@ import Bookshelf from "../database/models/bookShelf.js";
 import BookShelfUser from "../database/models/bookShelfUser.js";
 import Review from "../database/models/review.js";
 import Activity from "../database/models/activity.js";
+import User from "../database/models/user.js";
 
 export const addBookToShelf = async ({ title, authors, externalId, imageLinks, userId }) => {
     try {
@@ -14,6 +15,8 @@ export const addBookToShelf = async ({ title, authors, externalId, imageLinks, u
         const bookId = newBook._id;
         const newbookShelfUser = await BookShelfUser.create({ bookId, userId });
         console.log('newbookShelfUser:', newbookShelfUser);
+        const userIdObjectId = new mongoose.Types.ObjectId(userId);
+        await User.updateOne({_id:userIdObjectId}, {$inc:{booksCount:1}})
         return Promise.resolve(newBook);
     } catch (error) {
         return Promise.reject({ error });
