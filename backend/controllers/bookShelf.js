@@ -142,3 +142,11 @@ export const updateBookProgress = async ({userId, bookId, progress}) => {
     }
     return Promise.resolve(response);
 }
+
+export const fetchBookReview = async ({userId, bookId}) => {
+    const userIdObjectId = new mongoose.Types.ObjectId(userId);
+    const bookIdObjectId = new mongoose.Types.ObjectId(bookId);
+    const reviews = await Review.findOne({ bookId: bookIdObjectId, userId: userIdObjectId });
+    console.log('reviews:', reviews);
+    return Promise.resolve(reviews);
+}

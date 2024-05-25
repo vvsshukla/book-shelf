@@ -1,0 +1,27 @@
+@media screen and (min-width: 768px) {
+    .reviewContent h3 {
+        text-align: center;
+    }
+
+    .reviewContentValue textarea {
+        width: 100%;
+        height: 15vh;
+    }
+
+    .reviewContentValue {
+        padding: 5px;
+        width: 28vw;
+        border: 2px solid #ddd;
+        display: flex;
+    }
+
+    .reviewContent {
+        border: 2px solid #ddd;
+        margin: 2%;
+    }
+
+    .reviewContent .contentRow .contentLabel {
+       width: 18vw;
+    }
+}
+

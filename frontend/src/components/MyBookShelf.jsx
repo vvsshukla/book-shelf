@@ -201,17 +201,6 @@ const MyBookShelf = () => {
                     break;
             }
             console.log('action:', action);
-            // if (updatedTag === 'to-read') {
-            //     action = (
-            //         <div className="actionBtns">
-            //             <button type="button" className="read-button" onClick={() => startReading(book.id)} title="Mark as Currently Reading"><FontAwesomeIcon icon={faBookReader} size="1x"/>Read</button>
-            //             <button type="button" className="view-button"><span>&#128065;</span> View </button>
-            //             <Link to={`/review/${book.id}`} className="review-button"><span> &#9733;</span>Review</Link>
-            //         </div>
-            //     );
-            // } else {
-            //     action = <div className="actionBtns"><button type="button" className="view-button"><span>&#128065;</span>View</button><Link to={`/review/${book.id}`} className="review-button"><span>&#9733;</span>Review</Link></div>;
-            // }
             dataSource.push({ cover: cover, title: title, author: authors, shelves: shelves, avgRating: avgRating, action: action });
         });
         console.log('existingBooks.length:', existingBooks.length);

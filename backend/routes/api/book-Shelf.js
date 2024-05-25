@@ -1,5 +1,5 @@
 import { fetchBooksfromShelf, updateBookReviewByUser, addBookToShelf, updateTagByUser} from "../../controllers/bookShelf.js";
-import { getCurrentlyReadingBooks, getSocialCardUpdatesByUser, updateBookProgress} from "../../controllers/bookShelf.js";
+import { getCurrentlyReadingBooks, getSocialCardUpdatesByUser, updateBookProgress, fetchBookReview} from "../../controllers/bookShelf.js";
 
 export const addBook = async (req, res) => {
     try {
@@ -71,6 +71,16 @@ export const updateProgress = async (req, res) => {
     try {
         let {userId, bookId, progress} = req.body;
         let result = await updateBookProgress({userId, bookId, progress});
+        res.status(200).json(result);
+    } catch (error) {
+        console.log('Error in updateProgress:', error);
+    }
+}
+
+export const fetchReview = async (req, res) => {
+    try {
+        let {userId, bookId} = req.body;
+        let result = await fetchBookReview({userId, bookId});
         res.status(200).json(result);
     } catch (error) {
         console.log('Error in updateProgress:', error);

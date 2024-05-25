@@ -1,7 +1,7 @@
 import {Router} from "express";
 import {signUp, updateProfile, getProfile, searchUser} from "./sign-Up.js";
 import signIn from "./sign-In.js";
-import {addBook, fetchBooks, updateBookReview, startReading, fetchCurrentlyReadingBooks} from "./book-Shelf.js";
+import {addBook, fetchBooks, updateBookReview, startReading, fetchCurrentlyReadingBooks, fetchReview} from "./book-Shelf.js";
 import {fetchUpdatesByfriends, updateProgress} from "./book-Shelf.js";
 import { addFriend, friendRequests, acknowledgeFriendRequest, fetchFriends} from "./friend.js";
 
@@ -22,4 +22,5 @@ router.post('/addfriend', addFriend);
 router.post('/friendrequests', friendRequests);
 router.post('/acknowledgefriendrequest', acknowledgeFriendRequest);
 router.post('/fetchfriends', fetchFriends);
+router.post('/fetchReview', fetchReview);
 export default router;
