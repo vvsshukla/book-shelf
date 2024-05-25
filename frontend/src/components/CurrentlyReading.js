@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
 import { BookCard } from "./BookCard";
+import { useDispatch } from "react-redux";
+import { resetProgress } from "../store/actions/dashboardActions";
 
 const CurrentlyReading = () => {
     const { user } = useAuth();
     const [loading, setLoading] = useState(true);
     const [currentlyReading, setCurrentlyReading] = useState([]);
+    const dispatch = useDispatch();
     const fetchCurrentlyReadingBooks = async () => {
         let headers = { 'Content-type': 'application/json' };
         let userData = { userId: user._id };
@@ -21,6 +24,7 @@ const CurrentlyReading = () => {
 
     useEffect(() => {
         fetchCurrentlyReadingBooks();
+        dispatch(resetProgress());
     }, []);
     //console.log('currentlyReading:', currentlyReading);
     return (

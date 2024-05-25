@@ -130,6 +130,15 @@ export const getSocialCardUpdatesByUser = async ({userId, friendIds}) => {
 export const updateBookProgress = async ({userId, bookId, progress}) => {
     const userIdObjectId = new mongoose.Types.ObjectId(userId);
     const bookIdObjectId = new mongoose.Types.ObjectId(bookId);
-    await BookShelfUser.updateOne({bookId: bookIdObjectId, userId: userIdObjectId}, {$set:{progress: progress}});
-    return Promise.resolve(progress);
+    console.log('progress:', progress);
+    let response = {};
+    if (progress == 100) {
+        console.log('update tag completed');
+        await BookShelfUser.updateOne({bookId: bookIdObjectId, userId: userIdObjectId}, {$set:{progress: progress, tag: 'completed'}});
+        response = {progress: progress, tag: 'completed'};
+    } else {
+        await BookShelfUser.updateOne({bookId: bookIdObjectId, userId: userIdObjectId}, {$set:{progress: progress}});
+        response = {progress: progress, tag: 'currently-reading'};
+    }
+    return Promise.resolve(response);
 }

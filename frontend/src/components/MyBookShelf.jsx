@@ -7,10 +7,11 @@ import Library from "./Library";
 import { updateRating, updateTag, resetReview, addBook, getExistingBooks } from "../store/actions/reviewActions";
 import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faBookReader } from "@fortawesome/free-solid-svg-icons";
 import { Rating } from "react-simple-star-rating";
 import "./Friends.css";
 import "./BookShelf.css";
+import { Link } from "react-router-dom";
 
 const tabItems = [
     {
@@ -183,17 +184,34 @@ const MyBookShelf = () => {
                 </>
             );
             let action;
-            if (updatedTag === 'to-read') {
-                action = (
-                    <>
-                        <button type="button" onClick={() => startReading(book.id)} title="Mark as Currently Reading">Start Reading</button>
-                        <button type="button"><span>&#43;</span> View </button>
-                    </>
-                );
-            } else {
-                action = <button type="button"><span>&#43;</span> View </button>;
+            switch(updatedTag){
+                case 'to-read':
+                    action = (
+                        <div className="actionBtns">
+                            <button type="button" className="read-button" onClick={() => startReading(book.id)} title="Mark as Currently Reading"><FontAwesomeIcon icon={faBookReader} size="1x"/>Read</button>
+                            <button type="button" className="view-button"><span>&#128065;</span> View </button>
+                        </div>
+                    );
+                    break;
+                case 'currently-reading':
+                    action = <div className="actionBtns"><button type="button" className="view-button"><span>&#128065;</span>View</button></div>;
+                    break;
+                case 'completed':
+                    action = <div className="actionBtns"><button type="button" className="view-button"><span>&#128065;</span>View</button><Link to={`/review/${book.id}`} className="review-button"><span>&#9733;</span>Review</Link></div>;   
+                    break;
             }
-            //let action = updatedTag == 'to-read' ? <><button type="button" onClick={()=>startReading(book.id)} title="Mark as Currently Reading">Start Reading</button><button type="button"><span>&#43;</span> View </button></>: <button type="button"><span>&#43;</span> View </button>;
+            console.log('action:', action);
+            // if (updatedTag === 'to-read') {
+            //     action = (
+            //         <div className="actionBtns">
+            //             <button type="button" className="read-button" onClick={() => startReading(book.id)} title="Mark as Currently Reading"><FontAwesomeIcon icon={faBookReader} size="1x"/>Read</button>
+            //             <button type="button" className="view-button"><span>&#128065;</span> View </button>
+            //             <Link to={`/review/${book.id}`} className="review-button"><span> &#9733;</span>Review</Link>
+            //         </div>
+            //     );
+            // } else {
+            //     action = <div className="actionBtns"><button type="button" className="view-button"><span>&#128065;</span>View</button><Link to={`/review/${book.id}`} className="review-button"><span>&#9733;</span>Review</Link></div>;
+            // }
             dataSource.push({ cover: cover, title: title, author: authors, shelves: shelves, avgRating: avgRating, action: action });
         });
         console.log('existingBooks.length:', existingBooks.length);
