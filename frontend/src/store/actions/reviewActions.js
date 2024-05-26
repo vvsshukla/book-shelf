@@ -39,3 +39,10 @@ export const resetReview = () => {
         type:'RESET_REVIEW'
     }
 }
+
+export const setViewBookId = (viewBookId) => {
+    return {
+        type:"SET_VIEW_BOOK_ID",
+        viewBookId
+    }
+}

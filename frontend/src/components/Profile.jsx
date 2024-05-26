@@ -5,9 +5,7 @@ import "./Profile.css";
 import axios from "axios";
 
 export const Profile = () => {
-    console.log('Hi...');
     const { user } = useAuth();
-    console.log('user:', user);
     const [firstname, setFirstName] = useState(user?.firstname);
     const [lastname, setLastName] = useState(user?.lastname);
     const [email, setEmail] = useState(user?.email);

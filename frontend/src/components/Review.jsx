@@ -10,6 +10,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { BookCard } from "./BookCard";
 
+const headers = {
+    'Content-Type': 'application/json'
+}
+
 const Review = () => {
     const [messsage, setMessage] = useState('');
     const [loader, setLoader] = useState(true);
@@ -20,9 +24,9 @@ const Review = () => {
     const handleRating = async (rating) => {
         setRating(rating);
     }
+    const [book, setBook] = useState({});
 
     const fetchReview = async () => {
-        let headers = {'Content-type': 'application/json'};
         let userData = {userId: user._id, bookId: bookId};
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/fetchReview', userData, headers);
         console.log('response:', response);
@@ -38,11 +42,19 @@ const Review = () => {
         }
     }
 
+    const fetchBookDetails = async () => {
+        let data = {
+            bookId: bookId
+        }
+        const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/book', data, headers);
+        if (typeof response !== "undefined" && typeof response.data !== "undefined") {
+            setBook(response.data);
+        }
+        console.log('response:', response);
+    }
+
     const submitReview = async (e) => {
         e.preventDefault();
-        const headers = {
-            'Content-Type': 'application/json'
-        }
         let data = {
             rating: rating,
             userId: user._id,
@@ -50,22 +62,33 @@ const Review = () => {
             comment: content
         }
         const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/updaterating', data, headers);
+        if (typeof response !== "undefined" && typeof response.data !== "undefined") {
+            setMessage('Review Added Successfully.');
+        }
         console.log('response:', response);
     }
 
     useEffect(()=>{
         if (bookId) {
             fetchReview();
+            fetchBookDetails();
         }
     }, []);
     return <>
         <Header />
         <div id="reviewDiv">
-            <BookCard book={bookId}/>
+            {Object.entries(book).length > 0 ?
+            <> 
             <div className="reviewContent">
                 <h3>Write Your Review</h3>
-                {messsage ? <p>{messsage}</p> : ''}
+                {messsage ? <p className="successMessage">{messsage}</p> : ''}
                 {loader ? <FontAwesomeIcon icon={faSpinner} size="2x"/> : <form onSubmit={submitReview}>
+                                <div className="contentRow">
+                                    <label className="contentLabel">Book Name</label>
+                                    <div className="reviewContentValue">
+                                        <label className="reviewContentValue capitalize">{book.title}</label>
+                                    </div>
+                                </div>
                                 <div className="contentRow">
                                     <label className="contentLabel">Rating</label>
                                     <div className="reviewContentValue">
@@ -89,6 +112,7 @@ const Review = () => {
                             </form>
                 }
             </div>
+            </>:<p>Error in fetching book details</p>}    
         </div>
     </>;
 }

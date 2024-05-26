@@ -150,3 +150,10 @@ export const fetchBookReview = async ({userId, bookId}) => {
     console.log('reviews:', reviews);
     return Promise.resolve(reviews);
 }
+
+export const fetchBookDetails = async ({bookId}) => {
+    const bookIdObjectId = new mongoose.Types.ObjectId(bookId);
+    const bookDetails = await Bookshelf.findOne({_id:bookIdObjectId});
+    console.log('bookDetails:', bookDetails);
+    return Promise.resolve(bookDetails);
+}

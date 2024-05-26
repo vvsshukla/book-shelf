@@ -33,7 +33,7 @@
     }
 
     .view-button {
-        padding: 5px 10px;
+        padding: 2px 10px;
         /* font-size: 12px; */
         color: white;
         background-color: #29b637;
@@ -44,7 +44,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 6.3vw;
+        width: 5vw;
     }
 
     .read-button {

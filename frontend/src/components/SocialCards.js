@@ -52,7 +52,7 @@ const SocialCards = () => {
                                 ? socialCardUpdates?.map((update) => {
                                     let book = update.bookId;
                                     let user = update.userId;
-                                    console.log('book:', book);
+                                    console.log('update:', update);
                                     return (
                                         <SocialCard update={update} />
                                     )

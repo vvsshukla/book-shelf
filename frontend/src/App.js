@@ -8,6 +8,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import MyBookShelf from './components/MyBookShelf';
 import { Friends } from './components/Friends';
 import Review from './components/Review';
+import ViewBook from './components/ViewBook';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}/>
         <Route path="/friends" element={<ProtectedRoute><Friends /></ProtectedRoute>}/>
         <Route path="/review/:bookId" element={<ProtectedRoute><Review/></ProtectedRoute>}/>
+        <Route path="/book" element={<ProtectedRoute><ViewBook/></ProtectedRoute>}/>
       </Routes>
     </>
   );

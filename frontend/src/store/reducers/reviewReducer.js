@@ -4,7 +4,8 @@ const initState = {
     newBook:{},
     bookShelfExternalIds:[],
     bookId: '',
-    tag:''
+    tag:'',
+    viewBookId:''
 }
 
 export default (state = initState, action) => {
@@ -50,7 +51,14 @@ export default (state = initState, action) => {
                 newBook: {},
                 bookShelfExternalIds: [],
                 bookId: '',
-                tag: ''
+                tag: '',
+                viewBookId: ''
+            }
+        }
+        case 'SET_VIEW_BOOK_ID':{
+            return {
+                ...state,
+                viewBookId: action.viewBookId
             }
         }
         default:{

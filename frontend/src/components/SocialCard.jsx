@@ -20,7 +20,7 @@ export const SocialCard = ({update}) => {
                 fillColor="gold"
                 emptyColor="lightgray"
             /></p>
-    <BookCard book={book}/></>;
+    <BookCard book={book} section={'SocialCard'}/></>;
             
             case 'currently-reading':
                 return <><p><span className="capitalize">{user.firstname} {user.lastname}</span> {update.content} <Rating
@@ -30,7 +30,17 @@ export const SocialCard = ({update}) => {
                 fillColor="gold"
                 emptyColor="lightgray"
             /></p>
-    <BookCard book={book}/></>;
+    <BookCard book={book} section={'SocialCard'}/></>;
+
+            case 'review':
+                return <><p><span className="capitalize">{user.firstname} {user.lastname}</span> {update.content} <Rating
+                initialValue={rating}
+                size={18}
+                transition
+                fillColor="gold"
+                emptyColor="lightgray"
+            /></p>
+    <BookCard book={book} section={'SocialCard'}/></>;
         }
     }
 
