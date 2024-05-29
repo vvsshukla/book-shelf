@@ -4,6 +4,7 @@ import BookShelfUser from "../database/models/bookShelfUser.js";
 import Review from "../database/models/review.js";
 import Activity from "../database/models/activity.js";
 import User from "../database/models/user.js";
+import { book } from "../routes/api/book-Shelf.js";
 
 export const addBookToShelf = async ({ title, authors, externalId, imageLinks, userId }) => {
     try {
@@ -27,7 +28,6 @@ export const fetchBooksfromShelf = async ({ userId }) => {
     try {
         console.log('type:', typeof userId, userId);
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
-        //const books = await Bookshelf.find({userId: userIdObjectId});
         const books = await BookShelfUser.find({ userId: userIdObjectId })
             .select('bookId userId tag')
             .populate({
@@ -156,4 +156,23 @@ export const fetchBookDetails = async ({bookId}) => {
     const bookDetails = await Bookshelf.findOne({_id:bookIdObjectId});
     console.log('bookDetails:', bookDetails);
     return Promise.resolve(bookDetails);
+}
+
+export const fetchBookfromShelf = async ({ userId, bookId }) => {
+    try {
+        const userIdObjectId = new mongoose.Types.ObjectId(userId);
+        const bookIdObjectId = new mongoose.Types.ObjectId(bookId);
+        const books = await BookShelfUser.findOne({ userId: userIdObjectId, bookId: bookIdObjectId })
+            .select('bookId userId tag progress')
+            .populate({
+                path: 'bookId',
+                model: 'BookShelf',
+                select: 'title authors externalId imageLinks avgRating',
+            })
+            .exec();
+        console.log('book:', books);
+        return Promise.resolve(books);
+    } catch (error) {
+        return Promise.reject({ error });
+    }
 }

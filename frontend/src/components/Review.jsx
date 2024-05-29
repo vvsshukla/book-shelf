@@ -79,39 +79,39 @@ const Review = () => {
         <div id="reviewDiv">
             {Object.entries(book).length > 0 ?
             <> 
-            <div className="reviewContent">
-                <h3>Write Your Review</h3>
-                {messsage ? <p className="successMessage">{messsage}</p> : ''}
-                {loader ? <FontAwesomeIcon icon={faSpinner} size="2x"/> : <form onSubmit={submitReview}>
-                                <div className="contentRow">
-                                    <label className="contentLabel">Book Name</label>
-                                    <div className="reviewContentValue">
-                                        <label className="reviewContentValue capitalize">{book.title}</label>
+                <div className="reviewContent">
+                    <h3>Write Your Review</h3>
+                    {messsage ? <p className="successMessage">{messsage}</p> : ''}
+                    {loader ? <FontAwesomeIcon icon={faSpinner} size="2x"/> : <form onSubmit={submitReview}>
+                                    <div className="contentRow">
+                                        <label className="contentLabel">Book Name</label>
+                                        <div className="reviewContentValue">
+                                            <label className="reviewContentValue capitalize">{book.title}</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="contentRow">
-                                    <label className="contentLabel">Rating</label>
-                                    <div className="reviewContentValue">
-                                        <Rating
-                                            initialValue={rating}
-                                            size={18}
-                                            transition
-                                            fillColor="gold"
-                                            emptyColor="lightgray"
-                                            onClick={handleRating}
-                                        />
+                                    <div className="contentRow">
+                                        <label className="contentLabel">Rating</label>
+                                        <div className="reviewContentValue">
+                                            <Rating
+                                                initialValue={rating}
+                                                size={18}
+                                                transition
+                                                fillColor="gold"
+                                                emptyColor="lightgray"
+                                                onClick={handleRating}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="contentRow">
-                                    <label className="contentLabel">What do you think?</label>
-                                    <div className="reviewContentValue"><textarea value={content} onChange={(e) => setContent(e.target.value)} /></div>
-                                </div>
-                                <div className="contentRow">
-                                    <button type="submit">Submit</button>
-                                </div>
-                            </form>
-                }
-            </div>
+                                    <div className="contentRow">
+                                        <label className="contentLabel">What do you think?</label>
+                                        <div className="reviewContentValue"><textarea value={content} onChange={(e) => setContent(e.target.value)} /></div>
+                                    </div>
+                                    <div className="contentRow">
+                                        <button type="submit">Submit</button>
+                                    </div>
+                                </form>
+                    }
+                </div>
             </>:<p>Error in fetching book details</p>}    
         </div>
     </>;
