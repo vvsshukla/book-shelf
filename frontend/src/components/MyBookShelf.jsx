@@ -189,21 +189,20 @@ const MyBookShelf = () => {
                     action = (
                         <div className="actionBtns">
                             <button type="button" className="read-button" onClick={() => startReading(book.id)} title="Mark as Currently Reading"><FontAwesomeIcon icon={faBookReader} size="1x"/>Read</button>
-                            {/* <button type="button" className="view-button" onClick={() => dispatch(setViewBookId(book.id))}><span>&#128065;</span> View </button> */}
-                            <Link to={`/book`} className="view-button" onClick={() => dispatch(setViewBookId(book.id))}><span>&#128065;</span>View</Link>
+                            <Link to={`/book/${book.id}`} className="view-button"><span>&#128065;</span>View</Link>
                         </div>
                     );
                     break;
                 case 'currently-reading':
                     action = <div className="actionBtns">
                         {/* <button type="button" className="view-button"><span>&#128065;</span>View</button> */}
-                        <Link to={`/book`} className="view-button" onClick={() => dispatch(setViewBookId(book.id))}><span>&#128065;</span>View</Link>
+                        <Link to={`/book/${book.id}`} className="view-button" onClick={() => dispatch(setViewBookId(book.id))}><span>&#128065;</span>View</Link>
                         </div>;
                     break;
                 case 'completed':
                     action = <div className="actionBtns">
                                 {/* <button type="button" className="view-button"><span>&#128065;</span>View</button> */}
-                                <Link to={`/book`} className="view-button" onClick={() => dispatch(setViewBookId(book.id))}><span>&#128065;</span>View</Link>
+                                <Link to={`/book/${book.id}`} className="view-button" onClick={() => dispatch(setViewBookId(book.id))}><span>&#128065;</span>View</Link>
                                 <Link to={`/review/${book.id}`} className="review-button"><span>&#9733;</span>Review</Link>
                             </div>;   
                     break;

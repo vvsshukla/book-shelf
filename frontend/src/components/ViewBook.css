@@ -5,3 +5,21 @@
 #bookDetailsDiv h3 {
     text-align: center;
 }
+
+#bookDetailsDiv #book {
+    border: 2px solid #ddd;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+#bookDetailsDiv #bookImage {
+    text-align: center;
+    display: inline-block;
+    width: 30%;
+}
+
+#bookDetailsDiv #otherBookDetails {
+    display: inline-block;
+    width: 70%;
+}

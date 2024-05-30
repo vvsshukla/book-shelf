@@ -4,6 +4,7 @@ import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProgress } from "../store/actions/dashboardActions";
+import { Link } from "react-router-dom";
 
 export const BookCard = ({ book, tag, currentProgress, section }) => {
     const [updateProgressFlag, setUpdateProgressFlag] = useState(false);
@@ -37,7 +38,7 @@ export const BookCard = ({ book, tag, currentProgress, section }) => {
         {section=='CurrentlyReading' && tag == 'completed' ? '' : <div className="bookCard">
             <img src={book?.imageLinks.smallThumbnail} alt={book.title} />
             <div className="details">
-                <h3>{book?.title}</h3>
+                <h3><Link to={`${process.env.REACT_APP_BASE_URL}/book/${book._id}`}>{book?.title}</Link></h3>
                 <p>By: {book?.authors}</p>
                 {tag == 'currently-reading' ? 
                 <>

@@ -160,18 +160,11 @@ export const fetchBookDetails = async ({bookId}) => {
 
 export const fetchBookfromShelf = async ({ userId, bookId }) => {
     try {
-        const userIdObjectId = new mongoose.Types.ObjectId(userId);
+        //const userIdObjectId = new mongoose.Types.ObjectId(userId);
         const bookIdObjectId = new mongoose.Types.ObjectId(bookId);
-        const books = await BookShelfUser.findOne({ userId: userIdObjectId, bookId: bookIdObjectId })
-            .select('bookId userId tag progress')
-            .populate({
-                path: 'bookId',
-                model: 'BookShelf',
-                select: 'title authors externalId imageLinks avgRating',
-            })
-            .exec();
-        console.log('book:', books);
-        return Promise.resolve(books);
+        const book = await Bookshelf.findOne({_id: bookIdObjectId });
+        console.log('book:', book);
+        return Promise.resolve(book);
     } catch (error) {
         return Promise.reject({ error });
     }
