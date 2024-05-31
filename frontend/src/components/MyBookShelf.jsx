@@ -48,10 +48,17 @@ const MyBookShelf = () => {
 
     let { newBook, rating, bookShelfExternalIds, bookId, avgRating, tag } = useSelector(state => state.review);
 
-    const searchBook = async (evt) => {
+    const searchBook = async (evt, serachText) => {
         if (evt.key === 'Enter' || evt.type === 'click') {
             try {
-                let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${evt.target.value}&key=${apiKey}`);
+                let searchText = '';
+                if (evt.key === 'Enter') {
+                    searchText = evt.target.value;
+                } else {
+                    searchText = document.getElementById('search-books').value;
+                }
+                console.log('serachText:', serachText);
+                let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchText}&key=${apiKey}`);
                 console.log('response:', response);
                 if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.items !== "undefined") {
                     let shelfBooks = response.data.items;
