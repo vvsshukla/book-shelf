@@ -1,5 +1,5 @@
 import {Router} from "express";
-import {signUp, updateProfile, getProfile, searchUser} from "./sign-Up.js";
+import {signUp, updateProfile, getProfile, searchUser, uploadFile} from "./sign-Up.js";
 import signIn from "./sign-In.js";
 import {addBook, fetchBooks, updateBookReview, startReading, fetchCurrentlyReadingBooks, fetchReview} from "./book-Shelf.js";
 import {fetchUpdatesByfriends, updateProgress, book, bookDetails} from "./book-Shelf.js";
@@ -25,4 +25,5 @@ router.post('/fetchfriends', fetchFriends);
 router.post('/fetchReview', fetchReview);
 router.post('/book', book);
 router.post('/bookDetails', bookDetails);
+router.post('/uploadFile', uploadFile);
 export default router;

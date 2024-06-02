@@ -1,4 +1,8 @@
-import { signUpUser, updateUserProfile, getUserProfile, searchUserByEmail } from "../../controllers/user.js";
+import { signUpUser, updateUserProfile, getUserProfile, searchUserByEmail, updateAvatarImageUrl} from "../../controllers/user.js";
+import { fileURLToPath } from "url";
+import path from "path";
+const __dirname = fileURLToPath(import.meta.url);
+
 export const signUp = async (req, res) => {
     try {
         console.log('test signUp');
@@ -60,4 +64,24 @@ export const searchUser = async (req, res) => {
         console.log('signIn Error:', error);
         res.status(401).json({success: false, message: 'Something went wrong.'});
     }
+}
+
+export const uploadFile = async (req, res) => {
+    let uploadFile = req.files.file;
+    let {userId} = req.body; 
+    const name = uploadFile.name;
+    const md5 = uploadFile.md5();
+    const saveAs = `${md5}_${name}`;
+    uploadFile.mv(`../../uploads/${saveAs}`, async function(err){
+        if (err) {
+            return res.status(500).send(err);
+        }
+        //mongodb logic
+        let result = await updateAvatarImageUrl({saveAs, userId});
+        if (result) {
+            return res.status(200).json({success:true, message:'Avatar Uploaded Successfully.', name, saveAs});
+        } else {
+            return res.status(200).json({success:false, message:'Unable to upload avatar.', name, saveAs});
+        }
+    });
 }

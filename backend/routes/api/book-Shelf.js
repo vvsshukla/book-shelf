@@ -5,8 +5,8 @@ export const addBook = async (req, res) => {
     try {
         console.log('test addBook');
         console.log('req.body:', req.body);
-        let {title, authors, externalId, imageLinks, userId} = req.body;
-        let newBook = await addBookToShelf({title, authors, externalId, imageLinks, userId});
+        let {title, authors, externalId, imageLinks, userId, description, publishedDate, language, pageCount, maturityRating} = req.body;
+        let newBook = await addBookToShelf({title, authors, externalId, imageLinks, userId, description, publishedDate, language, pageCount, maturityRating});
         res.status(200).json({success: true, message: 'Book added to shelf.', newBook});   
     } catch (error) {
         console.error('Error in shelf:', error);

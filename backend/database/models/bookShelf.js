@@ -22,6 +22,21 @@ const bookShelfSchema = new Schema({
         type: Number,
         default: 0.0
     },
+    description: {
+        type: String
+    },
+    language: {
+        type: String
+    },
+    publishedDate:{
+        type: String
+    },
+    pageCount: {
+        type: Number
+    },
+    maturityRating: {
+        type: String
+    },
     createdAt: { type: Date, default: Date.now }
 });
 

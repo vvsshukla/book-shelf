@@ -72,7 +72,14 @@ const MyBookShelf = () => {
                                 authors: book.volumeInfo?.authors,
                                 externalId: book.id,
                                 smallThumbnail: smallThumbnail,
-                                imageLinks: book.volumeInfo?.imageLinks
+                                imageLinks: book.volumeInfo?.imageLinks,
+                                description: book.volumeInfo?.description,
+                                language: book.volumeInfo?.language,
+                                pageCount: book.volumeInfo?.pageCount,
+                                publishedDate: book.volumeInfo?.publishedDate,
+                                categories: book.volumeInfo?.categories,
+                                subTitle: book.volumeInfo?.subtitle,
+                                maturityRating: book.volumeInfo?.maturityRating
                             };
                             searchedbookArray.push(bookDetails);
                         }
@@ -208,7 +215,6 @@ const MyBookShelf = () => {
                     break;
                 case 'completed':
                     action = <div className="actionBtns">
-                                {/* <button type="button" className="view-button"><span>&#128065;</span>View</button> */}
                                 <Link to={`/book/${book.id}`} className="view-button" onClick={() => dispatch(setViewBookId(book.id))}><span>&#128065;</span>View</Link>
                                 <Link to={`/review/${book.id}`} className="review-button"><span>&#9733;</span>Review</Link>
                             </div>;   
@@ -236,7 +242,14 @@ const MyBookShelf = () => {
                 authors: book.authors,
                 externalId: book.externalId,
                 imageLinks: book.imageLinks,
-                userId: user._id
+                userId: user._id,
+                description: book.description,
+                subTitle: book.subTitle,
+                language: book.language,
+                pageCount: book.pageCount,
+                categories: book.categories,
+                maturityRating: book.maturityRating,
+                publishedDate: book.publishedDate
             };
             const addToBookShelf = async (bookDetails) => {
                 console.log('bookDetails:', bookDetails);

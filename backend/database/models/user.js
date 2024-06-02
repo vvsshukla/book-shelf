@@ -27,6 +27,9 @@ const userSchema = new Schema({
     address: {
         type: String
     },
+    avatarUrl : {
+        type: String
+    },
     booksCount:{
         type: Number,
         default: 0

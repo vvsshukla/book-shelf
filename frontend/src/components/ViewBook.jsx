@@ -7,7 +7,6 @@ import "./ViewBook.css";
 import { useAuth } from "../hooks/useAuth";
 
 const ViewBook = () => {
-    //let {viewBookId} = useSelector(state => state.review);
     const [book, setBook] = useState({});
     const [loader, setLoader] = useState(true);
     const [rating, setRating] = useState(0);
@@ -20,8 +19,7 @@ const ViewBook = () => {
             'Content-Type':'application/json'
         }
         let data = {
-            bookId: bookId,
-            userId: user._id
+            bookId: bookId
         }
         const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/bookDetails', data, headers);
         console.log('response:', response);
@@ -51,9 +49,21 @@ const ViewBook = () => {
                         </div>
                         <div id="otherBookDetails">
                             <div className="contentRow">
-                                <label className="contentLabel">Book Title</label>
+                                <label className="contentLabel">Title</label>
                                 <div className="reviewContentValue">
                                     <label className="reviewContentValue capitalize">{book.title}</label>
+                                </div>
+                            </div>
+                            <div className="contentRow">
+                                <label className="contentLabel">Subtitle</label>
+                                <div className="reviewContentValue">
+                                    <label className="reviewContentValue capitalize">{book?.subtitle ? book.subtitle :'Not Available'}</label>
+                                </div>
+                            </div>
+                            <div className="contentRow">
+                                <label className="contentLabel">Description</label>
+                                <div className="reviewContentValue">
+                                    <label className="reviewContentValue capitalize">{book?.description ? book.description :'Not Available'}</label>
                                 </div>
                             </div>
                             <div className="contentRow">
@@ -65,6 +75,7 @@ const ViewBook = () => {
                             <div className="contentRow">
                                 <label className="contentLabel">Rating</label>
                                 <div className="reviewContentValue">
+                                <label className="reviewContentValue capitalize">
                                     <Rating
                                         initialValue={book.avgRating}
                                         size={18}
@@ -72,20 +83,27 @@ const ViewBook = () => {
                                         fillColor="gold"
                                         emptyColor="lightgray"
                                     />
-                                </div>
-                            </div>
-                            {/* <div className="contentRow">
-                                <label className="contentLabel">Shelf</label>
-                                <div className="reviewContentValue">
-                                    <label className="reviewContentValue capitalize">{book.tag}</label>
+                                </label>
                                 </div>
                             </div>
                             <div className="contentRow">
-                                <label className="contentLabel">Progress</label>
+                                <label className="contentLabel">Language</label>
                                 <div className="reviewContentValue">
-                                    <label className="reviewContentValue capitalize">{book.progress} %</label>
+                                    <label className="reviewContentValue capitalize">{book.language ? book.language : 'Not Available'}</label>
                                 </div>
-                            </div> */}
+                            </div>
+                            <div className="contentRow">
+                                <label className="contentLabel">Pagecount</label>
+                                <div className="reviewContentValue">
+                                    <label className="reviewContentValue capitalize">{book.pageCount ? book.pageCount : 'Not Available'}</label>
+                                </div>
+                            </div>
+                            <div className="contentRow">
+                                <label className="contentLabel">Maturity Rating</label>
+                                <div className="reviewContentValue">
+                                    <label className="reviewContentValue capitalize">{book.maturityRating ? book.maturityRating : 'Not Available'}</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                </div>}              

@@ -5,12 +5,14 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProgress } from "../store/actions/dashboardActions";
 import { Link } from "react-router-dom";
+import { Rating } from "react-simple-star-rating";
 
-export const BookCard = ({ book, tag, currentProgress, section }) => {
+export const BookCard = ({ book, tag, currentProgress, section, bookuser }) => {
     const [updateProgressFlag, setUpdateProgressFlag] = useState(false);
     const [progress, setProgress] = useState('');
     const [updated, setUpdated] = useState(false);
     const { user } = useAuth();
+    let userId = bookuser ? bookuser._id : user._id;
     const dispatch = useDispatch();
     let { bookProgress, progressBookId, updatedTag } = useSelector(state => state.dashboard);
     if (updatedTag != '' && progressBookId == book._id) {
@@ -39,7 +41,8 @@ export const BookCard = ({ book, tag, currentProgress, section }) => {
             <img src={book?.imageLinks.smallThumbnail} alt={book.title} />
             <div className="details">
                 <h3><Link to={`${process.env.REACT_APP_BASE_URL}/book/${book._id}`}>{book?.title}</Link></h3>
-                <p>By: {book?.authors}</p>
+                <p>By: <b>{book?.authors}</b></p>
+                {section === 'SocialCard' && <p><Link to={`${process.env.REACT_APP_BASE_URL}/review/${book._id}/${userId}`}>Review</Link></p>}
                 {tag == 'currently-reading' ? 
                 <>
                     {finalProgress ? (<p>{finalProgress} %</p>) : ''}

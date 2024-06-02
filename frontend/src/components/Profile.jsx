@@ -3,6 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 import { Header } from "./Header";
 import "./Profile.css";
 import axios from "axios";
+import { config } from "@fortawesome/fontawesome-svg-core";
 
 export const Profile = () => {
     const { user } = useAuth();
@@ -12,10 +13,24 @@ export const Profile = () => {
     const [phone, setPhone] = useState(user?.phone);
     const [gender, setGender] = useState(user?.gender);
     const [messsage, setMessage] = useState('');
+    const [file, setFile] = useState();
+    let uploadedFileUrl = '';
 
     const updateProfile = async (e) => {
         e.preventDefault();
-        const userData = { firstname: firstname, lastname: lastname, phone: phone, gender: gender, userId: user._id };
+        const fileUploadUrl = process.env.REACT_APP_SERVER_URL + 'uploadFile';
+        const formData = new FormData();
+        formData.append('file', file);
+        const config = {
+            headers : {
+                'Content-Type':'multipart/formdata'
+            }
+        };
+        axios.post(fileUploadUrl, formData, config).then((response) => {
+            uploadedFileUrl = response.data.fileUrl;
+        });
+
+        const userData = { firstname: firstname, lastname: lastname, phone: phone, gender: gender, userId: user._id, avatarUrl: uploadedFileUrl};
         const headers = {
             'Content-Type': 'application/json'
         };
@@ -35,6 +50,10 @@ export const Profile = () => {
         } catch (error) {
             console.log('Error in profile updation:', error);
         }
+    }
+
+    const handleProfileImage = (e) => {
+        setFile(e.target.files[0]);
     }
 
     // const fetchProfile = async () => {
@@ -92,6 +111,12 @@ export const Profile = () => {
                         <div className="contentValue">
                             <input type="radio" name="gender" value="male" checked={gender === 'male'} onChange={(e) => setGender(e.target.value)} /><label htmlFor="male">Male</label>
                             <input type="radio" name="gender" value="female" checked={gender === 'female'} onChange={(e) => setGender(e.target.value)} /><label htmlFor="female">Female</label>
+                        </div>
+                    </div>
+                    <div className="contentRow">
+                        <label className="contentLabel">Photo:</label>
+                        <div className="contentValue">
+                            <input type="file" name="profile_image" id="profile_image" onChange={handleProfileImage}/>
                         </div>
                     </div>
                     <div className="contentRow profileButton">

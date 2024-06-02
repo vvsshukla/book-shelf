@@ -19,15 +19,16 @@ const Review = () => {
     const [loader, setLoader] = useState(true);
     const [content, setContent] = useState('');
     const [rating, setRating] = useState(0);
-    const {bookId} = useParams();
+    const {bookId, userId} = useParams();
     const {user} = useAuth();
+    let bookUserId =  userId ? userId : user._id;
     const handleRating = async (rating) => {
         setRating(rating);
     }
     const [book, setBook] = useState({});
 
     const fetchReview = async () => {
-        let userData = {userId: user._id, bookId: bookId};
+        let userData = {userId: bookUserId, bookId: bookId};
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/fetchReview', userData, headers);
         console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
@@ -104,11 +105,11 @@ const Review = () => {
                                     </div>
                                     <div className="contentRow">
                                         <label className="contentLabel">What do you think?</label>
-                                        <div className="reviewContentValue"><textarea value={content} onChange={(e) => setContent(e.target.value)} /></div>
+                                        <div className="reviewContentValue"><textarea value={content} onChange={(e) => setContent(e.target.value)} readOnly = {bookUserId != user._id}placeholder="Write what you think about this book"/></div>
                                     </div>
-                                    <div className="contentRow">
+                                    {bookUserId == user._id && <div className="contentRow">
                                         <button type="submit">Submit</button>
-                                    </div>
+                                    </div>}
                                 </form>
                     }
                 </div>

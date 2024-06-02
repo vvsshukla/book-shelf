@@ -13,34 +13,13 @@ export const SocialCard = ({update}) => {
     const renderContent = (type) => {
         switch (type) {
             case 'rating':
-                return <><p><span className="capitalize">{user.firstname} {user.lastname}</span> {update.content} <Rating
-                initialValue={rating}
-                size={18}
-                transition
-                fillColor="gold"
-                emptyColor="lightgray"
-            /></p>
-    <BookCard book={book} section={'SocialCard'}/></>;
+                return <><p><span className="capitalize">{user.firstname} {user.lastname}</span> {update.content}</p><BookCard book={book} section={'SocialCard'} bookuser={user}/></>;
             
             case 'currently-reading':
-                return <><p><span className="capitalize">{user.firstname} {user.lastname}</span> {update.content} <Rating
-                initialValue={rating}
-                size={18}
-                transition
-                fillColor="gold"
-                emptyColor="lightgray"
-            /></p>
-    <BookCard book={book} section={'SocialCard'}/></>;
+                return <><p><span className="capitalize">{user.firstname} {user.lastname}</span> {update.content}</p><BookCard book={book} section={'SocialCard'} bookuser={user}/></>;
 
             case 'review':
-                return <><p><span className="capitalize">{user.firstname} {user.lastname}</span> {update.content} <Rating
-                initialValue={rating}
-                size={18}
-                transition
-                fillColor="gold"
-                emptyColor="lightgray"
-            /></p>
-    <BookCard book={book} section={'SocialCard'}/></>;
+                return <><p><span className="capitalize">{user.firstname} {user.lastname}</span> {update.content}</p><BookCard book={book} section={'SocialCard'} bookuser={user}/></>;
         }
     }
 

@@ -74,3 +74,13 @@ export const searchUserByEmail = async ({email}) => {
         return Promise.reject(error);
     }
 }
+
+export const updateAvatarImageUrl = async({saveAs, userId}) => {
+    try {
+        const userIdObjectId = new mongoose.Types.ObjectId(userId);
+        User.updateOne({_id: userIdObjectId}, {$set:{avatarUrl : saveAs}});
+        return Promise.resolve(true);        
+    } catch (error) {
+        console.log('Error in updateAvatarImageUrl', error);
+    }
+}
