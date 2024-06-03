@@ -1,5 +1,6 @@
 import { signUpUser, updateUserProfile, getUserProfile, searchUserByEmail, updateAvatarImageUrl} from "../../controllers/user.js";
 import { fileURLToPath } from "url";
+import md5 from "md5";
 import path from "path";
 const __dirname = fileURLToPath(import.meta.url);
 
@@ -67,12 +68,16 @@ export const searchUser = async (req, res) => {
 }
 
 export const uploadFile = async (req, res) => {
-    let uploadFile = req.files.file;
-    let {userId} = req.body; 
+    console.log('uploadFile req.body:', req.body);
+    console.log('uploadFile:', req.files.file);
+    let {userId} = req.body;
+    let uploadFile = req.files.file; 
+    console.log('userId:', userId);
+    console.log('uploadFile:', uploadFile);
     const name = uploadFile.name;
-    const md5 = uploadFile.md5();
+    const md5 = uploadFile.md5;
     const saveAs = `${md5}_${name}`;
-    uploadFile.mv(`../../uploads/${saveAs}`, async function(err){
+    uploadFile.mv(`uploads/${saveAs}`, async function(err){
         if (err) {
             return res.status(500).send(err);
         }

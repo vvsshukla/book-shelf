@@ -5,6 +5,7 @@ import path, { join } from "path";
 import { fileURLToPath } from "url";
 import session from "express-session";
 import cors from "cors";
+import fileUpload from "express-fileupload";
 // Serve static files from the frontend build directory
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,6 +16,7 @@ const logfile = join(__dirname, 'bookshelf.log');
 //app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
 app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 app.use('/api', session({
     name: 'sessId',
     secret: process.env.sessionSecret,

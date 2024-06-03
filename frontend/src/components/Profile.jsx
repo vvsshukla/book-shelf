@@ -14,42 +14,45 @@ export const Profile = () => {
     const [gender, setGender] = useState(user?.gender);
     const [messsage, setMessage] = useState('');
     const [file, setFile] = useState();
-    let uploadedFileUrl = '';
+    let uploadedFileName = '';
 
     const updateProfile = async (e) => {
         e.preventDefault();
-        const fileUploadUrl = process.env.REACT_APP_SERVER_URL + 'uploadFile';
+        const fileUploadUrl = process.env.REACT_APP_SERVER_URL + 'api/uploadFile';
         const formData = new FormData();
         formData.append('file', file);
+        formData.append('userId', user._id);
         const config = {
             headers : {
-                'Content-Type':'multipart/formdata'
+                'Content-Type':'multipart/form-data'
             }
         };
-        axios.post(fileUploadUrl, formData, config).then((response) => {
-            uploadedFileUrl = response.data.fileUrl;
+        axios.post(fileUploadUrl, formData, config).then(async (response) => {
+            console.log('response:', response);
+            uploadedFileName = response.data.name;
+            if (response.data.success == true) {
+                const userData = { firstname: firstname, lastname: lastname, phone: phone, gender: gender, userId: user._id, avatarUrl: uploadedFileName};
+                const headers = {
+                    'Content-Type': 'application/json'
+                };
+                try {
+                    const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/profile', userData, headers);
+                    //https://book-shelf-xvxk.onrender.com
+                    const response = result.data;
+                    if (typeof response.success !== "undefined" && response.success === true && response.existingUser._id !== "") {
+                        let profileDetails = response.existingUser;
+                        setFirstName(profileDetails.firstname);
+                        setLastName(profileDetails.lastname);
+                        setPhone(profileDetails.phone);
+                        setEmail(profileDetails.email.toLowerCase());
+                        setGender(profileDetails.gender);
+                    }
+                    setMessage(response.message);
+                } catch (error) {
+                    console.log('Error in profile updation:', error);
+                }
+            }
         });
-
-        const userData = { firstname: firstname, lastname: lastname, phone: phone, gender: gender, userId: user._id, avatarUrl: uploadedFileUrl};
-        const headers = {
-            'Content-Type': 'application/json'
-        };
-        try {
-            const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/profile', userData, headers);
-            //https://book-shelf-xvxk.onrender.com
-            const response = result.data;
-            if (typeof response.success !== "undefined" && response.success === true && response.existingUser._id !== "") {
-                let profileDetails = response.existingUser;
-                setFirstName(profileDetails.firstname);
-                setLastName(profileDetails.lastname);
-                setPhone(profileDetails.phone);
-                setEmail(profileDetails.email.toLowerCase());
-                setGender(profileDetails.gender);
-            }
-            setMessage(response.message);
-        } catch (error) {
-            console.log('Error in profile updation:', error);
-        }
     }
 
     const handleProfileImage = (e) => {
