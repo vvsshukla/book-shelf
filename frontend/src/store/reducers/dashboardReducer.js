@@ -1,7 +1,8 @@
 const initState = {
     bookProgress: '',
     progressBookId: '',
-    updatedTag:''
+    updatedTag:'',
+    profileImage:''
 }
 
 export default (state = initState, action) => {
@@ -19,6 +20,11 @@ export default (state = initState, action) => {
                     bookProgress: '',
                     progressBookId: '',
                     updatedTag:''
+                }
+            }
+            case 'SET_PROFILE_IMAGE':{
+                return {
+                    profileImage: action.profileImage
                 }
             }
             default:

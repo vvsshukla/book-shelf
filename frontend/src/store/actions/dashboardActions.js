@@ -13,3 +13,10 @@ export const resetProgress = () => {
         type:'RESET_PROGRESS'
     }
 }
+
+export const setProfileImage = (profileImage) => {
+    return {
+        type: "SET_PROFILE_IMAGE",
+        profileImage
+    }
+}

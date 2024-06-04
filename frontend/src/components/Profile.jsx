@@ -3,7 +3,8 @@ import { useAuth } from "../hooks/useAuth";
 import { Header } from "./Header";
 import "./Profile.css";
 import axios from "axios";
-import { config } from "@fortawesome/fontawesome-svg-core";
+import { setProfileImage } from "../store/actions/dashboardActions";
+import { useDispatch } from "react-redux";
 
 export const Profile = () => {
     const { user } = useAuth();
@@ -14,6 +15,7 @@ export const Profile = () => {
     const [gender, setGender] = useState(user?.gender);
     const [messsage, setMessage] = useState('');
     const [file, setFile] = useState();
+    const dispatch = useDispatch();
     let uploadedFileName = '';
 
     const updateProfile = async (e) => {
@@ -29,8 +31,8 @@ export const Profile = () => {
         };
         axios.post(fileUploadUrl, formData, config).then(async (response) => {
             console.log('response:', response);
-            uploadedFileName = response.data.name;
-            if (response.data.success == true) {
+            uploadedFileName = response.data.saveAs;
+            if (response.data.success === true) {
                 const userData = { firstname: firstname, lastname: lastname, phone: phone, gender: gender, userId: user._id, avatarUrl: uploadedFileName};
                 const headers = {
                     'Content-Type': 'application/json'
@@ -46,6 +48,7 @@ export const Profile = () => {
                         setPhone(profileDetails.phone);
                         setEmail(profileDetails.email.toLowerCase());
                         setGender(profileDetails.gender);
+                        dispatch(setProfileImage(uploadedFileName));
                     }
                     setMessage(response.message);
                 } catch (error) {
@@ -58,33 +61,6 @@ export const Profile = () => {
     const handleProfileImage = (e) => {
         setFile(e.target.files[0]);
     }
-
-    // const fetchProfile = async () => {
-    //     const userData = { userId: user._id };
-    //     const headers = {
-    //         'Content-Type': 'application/json'
-    //     };
-    //     try {
-    //         const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/getProfile', userData, headers);//https://book-shelf-xvxk.onrender.com
-    //         console.log('result:', result);
-    //         const response = result.data;
-    //         console.log('response:', response);
-    //         // if (typeof response.success !== "undefined" && response.success === true) {
-    //         //     await login(response.user);
-    //         //     console.log('navigated');
-    //         // } else {
-    //         //     console.log('message:', response.message);
-    //         //     setMessage(response.message);
-    //         // }
-    //         // document.getElementById('signIn').innerText = 'Sign In';
-    //     } catch (error) {
-    //         console.log('Error in fetchProfile:', error);
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     fetchProfile();
-    // }, []);
 
     return <>
         <Header />

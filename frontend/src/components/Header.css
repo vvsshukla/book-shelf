@@ -102,6 +102,8 @@ nav ul li button:hover,
 
 .user-profile img {
     border-radius: 50%;
+    width: 5vw;
+    height: 10vh;
 }
 
 #profile-panel ul li {

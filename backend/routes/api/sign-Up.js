@@ -21,8 +21,8 @@ export const updateProfile = async (req, res) => {
     try {
         console.log('test updateProfile');
         console.log('req.body:', req.body);
-        let { firstname, lastname, phone, gender, userId} = req.body;
-        const existingUser = await updateUserProfile({firstname, lastname, phone, gender, userId});
+        let { firstname, lastname, phone, gender, userId, avatarUrl} = req.body;
+        const existingUser = await updateUserProfile({firstname, lastname, phone, gender, userId, avatarUrl});
         if (existingUser) {
             res.json({success: true, message: 'Profile updated successfully.', existingUser});
         } else {
@@ -74,7 +74,7 @@ export const uploadFile = async (req, res) => {
     let uploadFile = req.files.file; 
     console.log('userId:', userId);
     console.log('uploadFile:', uploadFile);
-    const name = uploadFile.name;
+    const name = uploadFile.name.replaceAll(' ', '_');
     const md5 = uploadFile.md5;
     const saveAs = `${md5}_${name}`;
     uploadFile.mv(`uploads/${saveAs}`, async function(err){

@@ -36,11 +36,11 @@ export const signInUser = async ({email, password}) => {
     }
 }
 
-export const updateUserProfile = async ({firstname, lastname, phone, gender, userId}) => {
+export const updateUserProfile = async ({firstname, lastname, phone, gender, userId, avatarUrl}) => {
     try {
-        console.log('Profile details:', {firstname, lastname, phone, gender});
+        console.log('Profile details:', {firstname, lastname, phone, gender, userId, avatarUrl});
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
-        await User.updateOne({ _id: userIdObjectId }, { $set: { firstname: firstname, lastname: lastname, phone: phone, gender: gender}}, { upsert: true });
+        await User.updateOne({ _id: userIdObjectId }, { $set: { firstname: firstname, lastname: lastname, phone: phone, gender: gender, avatarUrl: avatarUrl}}, { upsert: true });
         const user = await User.findOne({_id: userIdObjectId});
         console.log('updateOne result:', user); 
         return Promise.resolve(user);

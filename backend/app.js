@@ -13,7 +13,7 @@ console.log('__dirname:', __dirname);
 console.log('path.join:', path.join(__dirname, '..', 'frontend', 'build'));
 const app = express();
 const logfile = join(__dirname, 'bookshelf.log');
-//app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+app.use(express.static("uploads"));
 app.use(cors());
 app.use(express.json());
 app.use(fileUpload());
