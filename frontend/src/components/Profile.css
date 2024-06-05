@@ -28,13 +28,13 @@
     .contentLabel {
         font-weight: bold;
         padding: 5px;
-        width: 15vw;
+        width: 10vw;
         border: 2px solid #ddd;
     }
     
     .contentValue {
         padding: 5px;
-        width: 32vw;
+        width: 20vw;
         border: 2px solid #ddd;
     }
     
