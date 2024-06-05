@@ -7,6 +7,10 @@
     text-align: center;
 }
 
+.profileContent div.errorMessage {
+    color: red;
+}
+
 /* Desktop devices */
 @media only screen and (min-width:768px) {
     #profileDiv {
@@ -24,13 +28,13 @@
     .contentLabel {
         font-weight: bold;
         padding: 5px;
-        width: 10vw;
+        width: 15vw;
         border: 2px solid #ddd;
     }
     
     .contentValue {
         padding: 5px;
-        width: 17vw;
+        width: 32vw;
         border: 2px solid #ddd;
     }
     

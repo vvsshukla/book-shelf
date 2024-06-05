@@ -105,7 +105,9 @@ const Review = () => {
                                     </div>
                                     <div className="contentRow">
                                         <label className="contentLabel">What do you think?</label>
-                                        <div className="reviewContentValue"><textarea value={content} onChange={(e) => setContent(e.target.value)} readOnly = {bookUserId != user._id}placeholder="Write what you think about this book"/></div>
+                                        <div className="reviewContentValue">
+                                        {bookUserId == user._id ? <textarea value={content} onChange={(e) => setContent(e.target.value)} readOnly = {bookUserId != user._id}placeholder="Write what you think about this book"/> : <label className="reviewContentValue reviewComment">{content ? content:'Comment not added yet.'}</label>}
+                                        </div>
                                     </div>
                                     {bookUserId == user._id && <div className="contentRow">
                                         <button type="submit">Submit</button>

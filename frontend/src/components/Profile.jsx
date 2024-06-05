@@ -11,9 +11,13 @@ export const Profile = () => {
     const [firstname, setFirstName] = useState(user?.firstname);
     const [lastname, setLastName] = useState(user?.lastname);
     const [email, setEmail] = useState(user?.email);
-    const [phone, setPhone] = useState(user?.phone);
+    let [phone, setPhone] = useState(user?.phone);
     const [gender, setGender] = useState(user?.gender);
     const [messsage, setMessage] = useState('');
+    const [firstNameError, setFirstNameError] = useState('');
+    const [lastNameError, setLastNameError] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [phoneError, setPhoneError] = useState('');
     const [file, setFile] = useState();
     const dispatch = useDispatch();
     let uploadedFileName = '';
@@ -62,6 +66,50 @@ export const Profile = () => {
         setFile(e.target.files[0]);
     }
 
+    const validateProfile = (event) => {
+        switch (event.target.id) {
+            case 'firstname':
+                console.log('firstname:', firstname.trim());
+                if (!firstname.trim()) {
+                    setFirstNameError('firstname is required.');
+                } else if (!(/^[a-zA-Z]{2,}$/.test(firstname.trim()))) {
+                    setFirstNameError('firstname must contain only alphabets with at least two characters.');
+                } else {
+                    setFirstNameError('');
+                }
+                break;
+            case 'lastname':
+                console.log('lastname:', lastname.trim());
+                if (!lastname.trim()) {
+                    setLastNameError('lastname is required.');
+                } else if (!(/^[a-zA-Z]{2,}$/.test(lastname.trim()))) {
+                    setLastNameError('lastname must contain only alphabets with at least two characters.');
+                } else {
+                    setLastNameError('');
+                }
+                break;
+            case 'email':
+                if (!email.trim()) {
+                    setEmailError('Email is required.');
+                } else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.trim()))) {
+                    setEmailError('Please enter valid email address.');
+                } else {
+                    setEmailError('');
+                }
+                break;
+            case 'phone':
+                phone = '+' + phone;
+                if (!phone.trim()) {
+                    setEmailError('Mobile number is required.');//^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$
+                } else if (!(/^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/.test(phone.trim()))) {
+                    setPhoneError('Please enter valid 10 digits mobile number.');
+                } else {
+                    setPhoneError('');
+                }
+                break;
+        }
+    }
+
     return <>
         <Header />
         <div id="profileDiv">
@@ -71,19 +119,28 @@ export const Profile = () => {
                 <form onSubmit={updateProfile}>
                     <div className="contentRow">
                         <label className="contentLabel">First Name:</label>
-                        <div className="contentValue"><input type="text" className="capitalize" value={firstname} onChange={(e) => setFirstName(e.target.value)} /></div>
+                        <div className="contentValue">
+                            <input type="text" className="capitalize" id="firstname" value={firstname} onChange={(e) => setFirstName(e.target.value)} onKeyUp={validateProfile}/>
+                            {firstNameError && <div className="errorMessage">{firstNameError}</div>}
+                        </div>
                     </div>
                     <div className="contentRow">
                         <label className="contentLabel">Last Name:</label>
-                        <div className="contentValue"><input type="text" className="capitalize" value={lastname} onChange={(e) => setLastName(e.target.value)} /></div>
+                        <div className="contentValue">
+                            <input type="text" className="capitalize" id="lastname" value={lastname} onChange={(e) => setLastName(e.target.value)} onKeyUp={validateProfile}/>
+                            {lastNameError && <div className="errorMessage">{lastNameError}</div>}
+                        </div>
                     </div>
                     <div className="contentRow">
                         <label className="contentLabel">Email:</label>
-                        <div className="contentValue"><input type="text" value={email} readOnly /></div>
+                        <div className="contentValue"><input type="text" id="email" value={email} readOnly /></div>
                     </div>
                     <div className="contentRow">
-                        <label className="contentLabel">Phone:</label>
-                        <div className="contentValue"><input type="text" className="capitalize" value={phone} onChange={(e) => setPhone(e.target.value)} /></div>
+                        <label className="contentLabel">Mobile:</label>
+                        <div className="contentValue">
+                            <input type="text" id="phone" className="capitalize" value={phone} onChange={(e) => setPhone(e.target.value)} onKeyUp={validateProfile}/>
+                            {phoneError && <div className="errorMessage">{phoneError}</div>}
+                        </div>
                     </div>
                     <div className="contentRow">
                         <label className="contentLabel">Gender:</label>

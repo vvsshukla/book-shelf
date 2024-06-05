@@ -69,7 +69,7 @@ export const searchUser = async (req, res) => {
 
 export const uploadFile = async (req, res) => {
     console.log('uploadFile req.body:', req.body);
-    console.log('uploadFile:', req.files.file);
+    console.log('uploadFile:', req);
     let {userId} = req.body;
     let uploadFile = req.files.file; 
     console.log('userId:', userId);

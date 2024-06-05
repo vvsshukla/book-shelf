@@ -9,9 +9,9 @@ export const Header = () => {
     const {profileImage} = useSelector(state => state.dashboard);
     let profileImageUrl = "https://s.gr-assets.com/assets/nophoto/user/u_60x60-267f0ca0ea48fd3acfd44b95afa64f01.png";
     if (profileImage) {
-        profileImageUrl = "http://localhost:5000/"+profileImage; 
+        profileImageUrl = process.env.REACT_APP_SERVER_URL + profileImage; 
     } else if (user?.avatarUrl) {
-        profileImageUrl = "http://localhost:5000/"+user?.avatarUrl;
+        profileImageUrl = process.env.REACT_APP_SERVER_URL + user?.avatarUrl;
     }
     const handleLogout = () => {
         console.log('logout');
