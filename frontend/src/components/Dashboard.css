@@ -1,19 +1,31 @@
-.dashboardContent {
-    display: flex;
+
+
+.currentlyReading, .socialCards {
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    /* width: 100%; */
+}
+
+#currentlReadingBooks .fallBackMsg, #socialCardUpdates .fallBackMsg {
+    text-align: center;
+    height: 10vh;
 }
 
 @media only screen and (min-width:768px) {
-    .dashboardContent {
+    /* .dashboardContent {
+        display: flex;
         justify-content: space-evenly;
         margin-top: 10vh;
         gap: 1rem;
-        /* align-items: center; */
-    }
-
-    /* .bookCard {
-        display: flex;
-        gap: 1rem;
     } */
+    .dashboardContent {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        padding: 20px;
+    }
 }
 
 /* mobile devices */
@@ -28,15 +40,6 @@
         padding: 10px;
         gap: 1rem;
     }
-
-    /* .bookCard {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .bookCard img{
-        width: 30vw;
-    } */
 }
 
 /* <a href="https://www.freepik.com/free-vector/blank-user-circles_134996379.htm#query=default%20user&position=5&from_view=keyword&track=ais&uuid=f2a94e02-4925-4ebe-b72a-85ee7504f89f">Image by juicy_fish</a> on Freepik*/

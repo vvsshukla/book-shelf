@@ -57,7 +57,7 @@ const SocialCards = () => {
                                         <SocialCard update={update} />
                                     )
                                 })
-                                : <div>No new updates.</div>
+                                : <div className="fallBackMsg">No new updates.</div>
                         }
                     </div>
             }

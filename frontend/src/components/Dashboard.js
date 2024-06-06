@@ -9,8 +9,12 @@ const Dashboard = () => {
         <>
             <Header/>
             <div className="dashboardContent">
-                <CurrentlyReading/>
-                <SocialCards/>
+                <div className="currentlyReading">
+                    <CurrentlyReading/>
+                </div>
+                <div className="socialCards">
+                    <SocialCards/>
+                </div>
             </div>
         </>
     )

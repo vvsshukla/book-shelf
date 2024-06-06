@@ -44,7 +44,7 @@ const CurrentlyReading = () => {
                                     return <BookCard book={book} key={book?._id} tag={currentBook.tag} currentProgress={currentBook.progress} section={'CurrentlyReading'} />;
                                 })}
                             </>
-                            : <div>You are not reading any book currently.</div>
+                            : <div className="fallBackMsg">You are not reading any book currently.</div>
                     }
                 </div>
             }
