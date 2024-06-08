@@ -1,5 +1,5 @@
 import { fetchBooksfromShelf, updateBookReviewByUser, addBookToShelf, updateTagByUser, fetchBookfromShelf} from "../../controllers/bookShelf.js";
-import { getCurrentlyReadingBooks, getSocialCardUpdatesByUser, updateBookProgress, fetchBookReview, fetchBookDetails} from "../../controllers/bookShelf.js";
+import { getCurrentlyReadingBooks, getSocialCardUpdatesByUser, updateBookProgress, fetchBookReview, fetchBookDetails, fetchRecommendations} from "../../controllers/bookShelf.js";
 
 export const addBook = async (req, res) => {
     try {
@@ -105,4 +105,14 @@ export const bookDetails = async (req, res) => {
     } catch (error) {
         console.log('Error in book details:', error);
     }   
+}
+
+export const recommendations = async (req, res) => {
+    try {
+        let {language} = req.body;
+        let result = await fetchRecommendations({language});
+        res.status(200).json(result);
+    } catch (error) {
+        console.log('Error in recommendations:', error);
+    }
 }

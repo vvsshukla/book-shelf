@@ -4,7 +4,6 @@ import BookShelfUser from "../database/models/bookShelfUser.js";
 import Review from "../database/models/review.js";
 import Activity from "../database/models/activity.js";
 import User from "../database/models/user.js";
-import { book } from "../routes/api/book-Shelf.js";
 
 export const addBookToShelf = async ({ title, authors, externalId, imageLinks, userId, description, publishedDate, language, pageCount, maturityRating}) => {
     try {
@@ -12,7 +11,6 @@ export const addBookToShelf = async ({ title, authors, externalId, imageLinks, u
         if (!newBook) {
             newBook = await Bookshelf.create({ title, authors, externalId, imageLinks, description, publishedDate, language, pageCount, maturityRating});
         }
-        //const newBook = await Bookshelf.create({ title, authors, externalId, imageLinks});
         const bookId = newBook._id;
         const newbookShelfUser = await BookShelfUser.create({ bookId, userId });
         console.log('newbookShelfUser:', newbookShelfUser);
@@ -166,5 +164,15 @@ export const fetchBookfromShelf = async ({ userId, bookId }) => {
         return Promise.resolve(book);
     } catch (error) {
         return Promise.reject({ error });
+    }
+}
+
+export const fetchRecommendations = async ({language}) => {
+    try {
+        const recommendations = await Bookshelf.find({language:language}).sort({avgRating:-1});
+        console.log('recommendations:', recommendations);
+        return Promise.resolve(recommendations);
+    } catch (error) {
+        return Promise.reject(error);
     }
 }

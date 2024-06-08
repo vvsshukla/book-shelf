@@ -34,6 +34,12 @@ const userSchema = new Schema({
         type: Number,
         default: 0
     },
+    languagesKnown:{
+        type:String
+    },
+    motherTongue:{
+        type: String
+    },
     createdAt: { type: Date, default: Date.now },
     lastLoggedIn: { type: Date, default: Date.now }
 });

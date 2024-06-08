@@ -14,12 +14,12 @@ const CurrentlyReading = () => {
         let headers = { 'Content-type': 'application/json' };
         let userData = { userId: user._id };
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/currentlyreadingbooks', userData, headers);
-        console.log('response:', response);
+        //console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let currentlyReadingBooks = response.data.books;
             //console.log('currentlyReadingBooks:', currentlyReadingBooks);
             setCurrentlyReading(response.data.books);
-            console.log('currentlyReading.length:', currentlyReading.length);
+            //console.log('currentlyReading.length:', currentlyReading.length);
             setLoading(false);
         }
     }

@@ -5,7 +5,6 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProgress } from "../store/actions/dashboardActions";
 import { Link } from "react-router-dom";
-import { Rating } from "react-simple-star-rating";
 
 export const BookCard = ({ book, tag, currentProgress, section, bookuser }) => {
     const [updateProgressFlag, setUpdateProgressFlag] = useState(false);
