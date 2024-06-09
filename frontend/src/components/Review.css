@@ -40,3 +40,18 @@
     }
 }
 
+@media screen and (max-width:767px){
+    .reviewContent form {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+    }
+    
+    .reviewContent form .contentRow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ddd;
+    }
+}
