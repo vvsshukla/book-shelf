@@ -51,13 +51,13 @@ const RecommendationsList = ({recommendations}) => {
         background: '#fff',
         width: 8,
         height: 8,
-        display: 'inline-block',
+        display: 'none',
         margin: '0 8px',
     };
     return <><Carousel 
     showArrows={true}
     centerMode
-    centerSlidePercentage={33.33}
+    centerSlidePercentage={50}
     statusFormatter={(current, total) => `Current slide: ${current} / Total: ${total}`}
             renderArrowPrev={(onClickHandler, hasPrev, label) =>
                 hasPrev && (
