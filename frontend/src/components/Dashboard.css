@@ -5,11 +5,39 @@
     padding: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     border-radius: 5px;
+    background-color:#d0c37f; /*#695e55f5, #d0c37f #898887*/
+    color: #000;
 }
 
 #currentlReadingBooks .fallBackMsg, #socialCardUpdates .fallBackMsg {
     text-align: center;
     height: 10vh;
+}
+
+#currentlReadingBooks {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.dashboardHeadings {
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    font-size: 24px;    
+}
+
+#recommendations {
+    text-align: center;
+    background-color: #d0c37f;
+    padding-top: 7vh;
+}
+
+.dashboardContent h3, .dashboardContent h3 a {
+    color: #000;
+}
+
+#recommendationHeading {
+    color: #000;
 }
 
 @media only screen and (min-width:768px) {
@@ -18,8 +46,12 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 30px;
-        padding: 20px;
-        width: 90%;
+        padding: 20px 0;
+        width: 95%;
+    }
+
+    .lowerHalf {
+        width: 95%;
     }
 
     .dashboardContent {
@@ -27,19 +59,19 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        background-color: #fff;
     }
 
     #recommendations {
         text-align: center;
         border: 2px solid #ddd;
-        width: 90vw;
+        /* width: 90vw; */
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
     }
 
     #recommendations img {
         height: 30vh;
         width: fit-content;
-        /* width: 20%;      */
     }
 
     #recommendation {
@@ -58,9 +90,10 @@
     }
 
     .dashboardContent {
+        display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 10px;
+        /* padding: 10px; */
         gap: 1rem;
     }
 }

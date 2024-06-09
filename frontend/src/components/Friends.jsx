@@ -8,7 +8,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { reset } from "../store/actions/friendActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faL, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const TabItemComponent = ({ title, onItemClicked = () => console.error('You passed no action to the component.'), isActive = false }) => {
     return (
@@ -47,20 +47,35 @@ export const Friends = () => {
         }
     ]
 
+    const validateSearch = () => {
+        if (!search.trim()) {
+            setSearchMessage(<span className="failureMessage">Search cannot be empty.</span>);
+            return false;
+        } else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(search.trim()))) {
+            setSearchMessage(<span className="failureMessage">Please enter valid email address.</span>);
+            return false;
+        } else {
+            setSearchMessage('');
+            return true;
+        }                         
+    }
+
     const searchFriends = async (evt) => {
         if (evt.key === 'Enter' || evt.type === 'click') {
-            let headers = { 'Content-Type': 'application/json' };
-            let data = { 'email': search };
-            let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/searchuser', data, headers);
-            let userResult = typeof response.data !== "undefined" ? response.data : '';
-            console.log('result:', userResult);
-            if (typeof userResult.user !== "undefined" && userResult.user !== null) {
-                setResult(userResult.user);
-            } else {
-                setResult([]);
-                setSearchMessage(<span className="failureMessage">{userResult.message}</span>);
+            if (validateSearch()) {
+                let headers = { 'Content-Type': 'application/json' };
+                let data = { 'email': search };
+                let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/searchuser', data, headers);
+                let userResult = typeof response.data !== "undefined" ? response.data : '';
+                console.log('result:', userResult);
+                if (typeof userResult.user !== "undefined" && userResult.user !== null) {
+                    setResult(userResult.user);
+                } else {
+                    setResult([]);
+                    setSearchMessage(<span className="failureMessage">{userResult.message}</span>);
+                }
+                console.log('response:', response);
             }
-            console.log('response:', response);
         }
     }
 
@@ -119,18 +134,12 @@ export const Friends = () => {
             case 1:
                 console.log('populateTabContent fetchFriends');
                 fetchFriends();
-                // setTimeout(function(){
-                //     fetchFriends()
-                // }, 2000);
                 break;
             case 2:
                 console.log('populateTabContent searchFriends');
             case 3:
                 console.log('populateTabContent fetchFriendRequests');
                 fetchFriendRequests();
-                // setTimeout(function(){
-                //     fetchFriendRequests()
-                // }, 2000);
                 break;
 
         }

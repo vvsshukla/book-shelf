@@ -23,3 +23,37 @@
     display: inline-block;
     width: 70%;
 }
+
+@media screen and (max-width:767px){
+    #bookDetailsDiv #book {
+        border: 2px solid #ddd;
+        /* padding: 5px; */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #bookDetailsDiv #otherBookDetails {
+        display: inline-block;
+        width: 104%;
+    }
+
+    #bookDetailsDiv #otherBookDetails .contentRow{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #ddd;
+    }
+    
+    .contentLabel {
+        width: 100%;
+        text-align: center;
+        border: none;
+    }
+
+    #otherBookDetails .reviewContentValue {
+        text-align: justify;
+        padding: 5px;
+    }
+}

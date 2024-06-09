@@ -46,7 +46,7 @@ const SocialCards = () => {
                 loading ?
                     <div key="socialCardLoader">Loading...</div> :
                     <div id="socialCardUpdates">
-                        <h2>Social Cards</h2>
+                        <h3 className="dashboardHeadings">Social Cards</h3>
                         {
                             socialCardUpdates?.length > 0
                                 ? socialCardUpdates?.map((update) => {

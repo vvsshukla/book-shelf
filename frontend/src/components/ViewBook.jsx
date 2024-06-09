@@ -63,7 +63,7 @@ const ViewBook = () => {
                             <div className="contentRow">
                                 <label className="contentLabel">Description</label>
                                 <div className="reviewContentValue">
-                                    <label className="reviewContentValue capitalize">{book?.description ? book.description :'Not Available'}</label>
+                                    <label className="reviewContentValue">{book?.description ? book.description :'Not Available'}</label>
                                 </div>
                             </div>
                             <div className="contentRow">

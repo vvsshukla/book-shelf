@@ -34,7 +34,7 @@ const CurrentlyReading = () => {
             {loading ?
                 <div>Loading...</div> :
                 <div id="currentlReadingBooks">
-                    <h2>Currently Reading</h2>
+                    <h3 className="dashboardHeadings">Currently Reading</h3>
                     {
                         currentlyReading.length > 0 ?
                             <>

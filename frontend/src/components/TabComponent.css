@@ -33,6 +33,20 @@
     flex-direction: column;
     align-items: center;
     margin-top : 1rem;
-    /* padding: 0; */
 }
 
+@media screen and (max-width:767px) {
+    .wrapper {
+        width: 100vw;
+    }
+
+    .tabs {
+        display: flex;
+        width: 100%;
+    }
+    
+    .wrapper .content {
+        width: 100vw;
+        overflow-x: auto;
+    }
+}

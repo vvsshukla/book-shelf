@@ -260,7 +260,7 @@ const MyBookShelf = () => {
                     dispatch(addBook(response.data.newBook));
                 }
             }
-            let action = (Object.keys(newBook).length > 0 && newBook.externalId === book.externalId) || (bookShelfExternalIds.includes(book.externalId)) ? <button type="button"><span>&#43;</span> View</button> : <button type="button" onClick={() => addToBookShelf(bookDetails)}><span>&#43;</span> Add To BookShelf</button>;
+            let action = (Object.keys(newBook).length > 0 && newBook.externalId === book.externalId) || (bookShelfExternalIds.includes(book.externalId)) ? <label className="addedToShelf">Added</label> : <button type="button" className="addToBookShelf" onClick={() => addToBookShelf(bookDetails)}><span>&#43;</span> Add</button>;
             dataSource.push({ cover: cover, title: title, author: authors, action: action });
         });
         console.log('searchedBooks.length:', searchedBooks.length);

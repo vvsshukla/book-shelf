@@ -97,3 +97,15 @@
 button[disabled] {
     background-color: #676d6ef5!important;
 }
+
+@media screen and (max-width:767px){
+    .infoMessage {
+        display: block;
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-color: #d6e9c6;
+        padding: 15px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }    
+}

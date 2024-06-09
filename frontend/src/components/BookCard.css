@@ -7,6 +7,9 @@
     .bookCard {
         display: flex;
         gap: 1rem;
+        justify-content: left;
+        border: 2px solid;
+        border-radius: 5px;
     }
 }
 

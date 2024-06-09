@@ -31,7 +31,7 @@ export const Recommendations = () => {
     
     return <>
                 {
-                        loader ? (<FontAwesomeIcon icon={faSpinner} size="2x"/>) : (recommendations.length > 0 ? (<div id="recommendations"><h3>Recommendations by Bookshelf</h3><RecommendationsList recommendations={recommendations}/></div>):(<p className="">No book recommendations for now.</p>))
+                        loader ? (<FontAwesomeIcon icon={faSpinner} size="2x"/>) : (recommendations.length > 0 ? (<div id="recommendations"><RecommendationsList recommendations={recommendations}/></div>):(<p className="">No book recommendations for now.</p>))
                 }
            </>;
 }

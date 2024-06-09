@@ -18,6 +18,7 @@ const Dashboard = () => {
                         <SocialCards/>
                     </div>
                 </div>
+                <h3 id="recommendationHeading">Recommendations by Bookshelf</h3>
                 <div className="lowerHalf">
                     <Recommendations/>
                 </div>

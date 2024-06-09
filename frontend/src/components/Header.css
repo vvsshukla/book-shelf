@@ -4,19 +4,22 @@
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 0 10px;
-    background-color: rgb(47, 220, 140);
+    background-color: #94712a;/*FFD700*/
+    gap: 32vw;
 }
 
 .logo img {
-    max-height: 40px;
+    max-height: 10vh;
+    width: fit-content;
 }
 
 nav ul {
     list-style: none;
     display: flex;
+    justify-content: center;
     gap: 0.75rem;
     padding: 0;
 }
@@ -31,14 +34,18 @@ nav ul li a {
     text-decoration: none;
     background: transparent;
     border: none;
-    color: #333;
+    color: #fff;
     font-weight: bold;
     cursor: pointer;
 }
 
 nav ul li button:hover,
 .active {
-    color: #006699;
+    color: #000000;
+    background-color: #d0c37f;
+    border-radius: 8px;
+    display: block;
+    padding: 0 4px;
 }
 
 /* logo css */
@@ -93,17 +100,18 @@ nav ul li button:hover,
 
 #profile-panel {
     position: absolute;
-    top: 60px;
+    top: 12.5vh;
     right: 0;
-    /* width: 65vh; */
     width: 25vh;
     text-transform: capitalize;
+    background-color: aquamarine;
 }
 
 .user-profile img {
     border-radius: 50%;
-    width: 5vw;
     height: 10vh;
+    width: 10vh;
+    object-fit: cover;
 }
 
 #profile-panel ul li {
@@ -121,7 +129,7 @@ nav ul li button:hover,
     border: none;
 }
 
-h2 {
+h2, h3 {
     text-align: center;
 }
 
@@ -162,12 +170,17 @@ h2 {
     #searchResult {
         margin-top: 2rem;
     }
+
+    header {
+        padding: 10px 35px;
+    }
 }
 
 @media only screen and (max-width:767px){
     header {
         display: flex;
         flex-direction: column;
+        gap: 0;
     }
 
     .logo {
@@ -209,13 +222,22 @@ h2 {
     }
 
     .failureMessage {
-        color: red;
-        font-weight: bold;
+        display: block;
         text-align: center;
     }
 
     .search-form {
         display: flex;
         align-items: center;
+        justify-content: center;
+    }
+
+    #friendsDiv .search-form #search-friends {
+        width: 52vw;
+        height: 3.35vh;
+    }
+
+    .content {
+        margin: 0;
     }
 }

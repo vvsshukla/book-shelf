@@ -3,6 +3,7 @@ import { useAuth } from "../hooks/useAuth";
 import { Link, NavLink } from "react-router-dom";
 import "./Header.css";
 import { useSelector } from "react-redux";
+import bookshelfcover from "../images/bookshelfcover.jpg";
 
 export const Header = () => {
     const { user, logout } = useAuth();
@@ -49,7 +50,7 @@ export const Header = () => {
     return (
         <header>
             <div className="logo">
-                <span><Link to="/dashboard" className="logoLink">BookShelf</Link></span>
+                <span><Link to="/dashboard" className="logoLink"><img src={bookshelfcover} alt="BookShelf"/></Link></span>
             </div>
             <nav>
                 <ul>
