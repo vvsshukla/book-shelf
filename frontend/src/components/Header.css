@@ -104,7 +104,7 @@ nav ul li button:hover,
     right: 0;
     width: 25vh;
     text-transform: capitalize;
-    background-color: aquamarine;
+    background-color: #d0c37f;
 }
 
 .user-profile img {

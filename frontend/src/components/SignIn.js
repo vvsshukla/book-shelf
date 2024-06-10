@@ -3,6 +3,8 @@ import { useAuth } from "../hooks/useAuth.jsx";
 import "./SignIn.css";
 import SignUp from "./SignUp.js";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const SignIn = () => {
     const [isSignIn, setIsSignIn] = useState(true);
@@ -12,10 +14,11 @@ const SignIn = () => {
     const [messsage, setMessage] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [submitted, setSubmitted] = useState(false);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        document.getElementById('signIn').innerText = "Signing In...";
+        setSubmitted(true);
         const userData = { email, password };
         const headers = {
             'Content-Type': 'application/json'
@@ -75,7 +78,7 @@ const SignIn = () => {
                         {passwordError && <p className="errorMessage">{passwordError}</p>}
                     </div>
                     <div>
-                        <button type="submit" id="signIn" disabled={emailError || passwordError}>Sign In</button>
+                        <button type="submit" id="signIn" disabled={emailError || passwordError}>{submitted == false ? 'Sign In' : <>Signing In <FontAwesomeIcon icon={faSpinner} spin size="1x"/></>}</button>
                     </div>
 
                     <p id="terms_policy">By signing in, you agree to the BookShelf Terms of Service and Privacy Policy</p>

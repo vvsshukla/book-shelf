@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
 import "./SignIn.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
 const SignUp = ({ onSignInClick }) => {
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
@@ -12,6 +15,7 @@ const SignUp = ({ onSignInClick }) => {
     const [lastNameError, setLastNameError] = useState('');
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
+    const [submitted, setSubmitted] = useState(false);
     //const [loginUser, setLoginUser] = useState({});
     const { login } = useAuth();
     const signUp = async () => {
@@ -121,7 +125,9 @@ const SignUp = ({ onSignInClick }) => {
                         {passwordError && <p className="errorMessage">{passwordError}</p>}
                     </div>
                     <div>
-                        <button type="button" id="signUp" disabled={firstNameError || lastNameError || emailError || passwordError} onClick={(e) => signUp()}>Sign Up</button>
+                        <button type="button" id="signUp" disabled={firstNameError || lastNameError || emailError || passwordError} onClick={(e) => signUp()}>
+                            {submitted == false ? 'Sign Up' : <>Signing Up<FontAwesomeIcon icon={faSpinner} size="2x"/></>}
+                        </button>
                     </div>
                     <div>By creating an account, you agree to the BookShelf Terms of Service and Privacy Policy.</div>
                     {messsage ? <p className="failureMessage">{messsage}</p> : ''}

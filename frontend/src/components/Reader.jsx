@@ -5,7 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 export const Reader = ({ reader, userType, friendIds }) => {
+    console.log('Reader:', reader);
     let firstName = '', lastName = '', booksCount='';
+    let profileImageUrl = "https://s.gr-assets.com/assets/nophoto/user/u_60x60-267f0ca0ea48fd3acfd44b95afa64f01.png";
+    if (reader?.avatarUrl) {
+        profileImageUrl = process.env.REACT_APP_SERVER_URL + reader?.avatarUrl;
+    }
     const { user } = useAuth();
     const dispatch = useDispatch();
     const { receiverId, requestId, requestStatus } = useSelector(state => state.friend);
@@ -96,7 +101,7 @@ export const Reader = ({ reader, userType, friendIds }) => {
 
     return (
         <div className="reader">
-            <img src="https://s.gr-assets.com/assets/nophoto/user/u_60x60-267f0ca0ea48fd3acfd44b95afa64f01.png" alt="User Profile" id="profile-photo" />
+            <img src={profileImageUrl} alt="User Profile" id="profile-photo" />
             <div className="readerDetails">
                 {/* <div className="readerName capitalize">{userType === 'receiver' ? `${reader.senderId.firstname} ${reader.senderId.lastname}` : `${reader.firstname} ${reader.lastname}`}</div> */}
                 <div className="readerName capitalize">{firstName} {lastName}</div>

@@ -105,7 +105,7 @@ export const getSocialCardUpdatesByUser = async ({userId, friendIds}) => {
         let friendObjectIds = friendIds.map((id)=> new mongoose.Types.ObjectId(id));
         const userIdObjectId = new mongoose.Types.ObjectId(userId);
         console.log('friendObjectIds:', friendObjectIds);
-        const socialCardUpdates = await Activity.find({userId: {$in:friendObjectIds}})
+        const socialCardUpdates = await Activity.find({userId: {$in:friendObjectIds}}).sort({createdAt:-1})
                                    .select('bookId userId type content rating')
                                    .populate({
                                         path: 'bookId',
