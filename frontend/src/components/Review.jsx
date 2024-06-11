@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { BookCard } from "./BookCard";
 
 const headers = {
     'Content-Type': 'application/json'
@@ -38,7 +37,6 @@ const Review = () => {
             if (typeof reviewDetails.comment !== "undefined") {
                 setContent(reviewDetails.comment);
             }
-            setLoader(false);
         }
     }
 
@@ -49,6 +47,7 @@ const Review = () => {
         const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/book', data, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             setBook(response.data);
+            setLoader(false);
         }
     }
 
@@ -75,12 +74,12 @@ const Review = () => {
     return <>
         <Header />
         <div id="reviewDiv">
-            {Object.entries(book).length > 0 ?
-            <> 
+            {loader ? <FontAwesomeIcon icon={faSpinner} size="2x"/> : (Object.entries(book).length > 0) ?
+            (<> 
                 <div className="reviewContent">
                     <h3>Write Your Review</h3>
                     {messsage ? <p className="successMessage">{messsage}</p> : ''}
-                    {loader ? <FontAwesomeIcon icon={faSpinner} size="2x"/> : <form onSubmit={submitReview}>
+                    <form onSubmit={submitReview}>
                                     <div className="contentRow">
                                         <label className="contentLabel">Book Name</label>
                                         <div className="reviewContentValue">
@@ -110,9 +109,8 @@ const Review = () => {
                                         <button type="submit">Submit</button>
                                     </div>}
                                 </form>
-                    }
                 </div>
-            </>:<p>Error in fetching book details</p>}    
+            </>):(<p>Error in fetching book details</p>)}    
         </div>
     </>;
 }
