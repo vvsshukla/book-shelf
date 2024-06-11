@@ -218,7 +218,7 @@ h2, h3 {
         width: 25vh;
         text-transform: capitalize;
         top:5vh;
-        background-color: aquamarine;
+        background-color: #d0c37f;
     }
 
     .failureMessage {

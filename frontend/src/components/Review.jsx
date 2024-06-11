@@ -74,7 +74,7 @@ const Review = () => {
     return <>
         <Header />
         <div id="reviewDiv">
-            {loader ? <FontAwesomeIcon icon={faSpinner} size="2x"/> : (Object.entries(book).length > 0) ?
+            {loader ? <div className="loaderDiv"><FontAwesomeIcon icon={faSpinner} spin size="2x"/></div> : (Object.entries(book).length > 0) ?
             (<> 
                 <div className="reviewContent">
                     <h3>Write Your Review</h3>

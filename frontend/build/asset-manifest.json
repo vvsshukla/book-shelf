@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/static/css/main.dfceede0.css",
-    "main.js": "/static/js/main.1bb14707.js",
+    "main.css": "/static/css/main.a5222f3b.css",
+    "main.js": "/static/js/main.a9b65a49.js",
+    "static/media/bookshelfcover.jpg": "/static/media/bookshelfcover.c81932b803a24cb3b7a1.jpg",
     "index.html": "/index.html",
-    "main.dfceede0.css.map": "/static/css/main.dfceede0.css.map",
-    "main.1bb14707.js.map": "/static/js/main.1bb14707.js.map"
+    "main.a5222f3b.css.map": "/static/css/main.a5222f3b.css.map",
+    "main.a9b65a49.js.map": "/static/js/main.a9b65a49.js.map"
   },
   "entrypoints": [
-    "static/css/main.dfceede0.css",
-    "static/js/main.1bb14707.js"
+    "static/css/main.a5222f3b.css",
+    "static/js/main.a9b65a49.js"
   ]
 }

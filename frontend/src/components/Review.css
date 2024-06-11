@@ -1,3 +1,7 @@
+#reviewDiv {
+    height: 50vh;
+}
+
 @media screen and (min-width: 768px) {
     .reviewContent h3 {
         text-align: center;
