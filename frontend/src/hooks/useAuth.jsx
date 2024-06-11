@@ -14,8 +14,7 @@ export const AuthProvider = ({children}) => {
 
     const logout = () => {
         setUser(null);
-        navigate('/', {replace:true});
-        console.log('navigated');
+        window.location.href = process.env.REACT_APP_BASE_URL;
     }
 
     const value = useMemo(() => ({
