@@ -19,7 +19,6 @@ export const Recommendations = () => {
         let data = {language: language};
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/recommendations', data, header);
         if (typeof response.data !== "undefined") {
-            console.log('recommendations:', response.data);
             setRecommendations(response.data);
             setLoader(false);
         }
@@ -37,7 +36,6 @@ export const Recommendations = () => {
 }
 
 const RecommendationsList = ({recommendations}) => {
-    console.log('recommendationslist');
     const arrowStyles = {
         position: 'absolute',
         zIndex: 2,
@@ -101,7 +99,6 @@ const RecommendationsList = ({recommendations}) => {
 }
 
 const Recommendation = ({book}) => {
-    console.log('book:', book);
     return <div id="recommendation">
                 <img src={book?.imageLinks?.smallThumbnail}/>
                 <b>{book.title}</b>

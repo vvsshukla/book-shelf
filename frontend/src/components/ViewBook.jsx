@@ -12,7 +12,6 @@ const ViewBook = () => {
     const [rating, setRating] = useState(0);
     const {user} = useAuth();
     const {bookId} = useParams();
-    console.log('viewBookId:', bookId);
 
     const fetchBookDetails = async () => {
         let headers = {
@@ -22,20 +21,15 @@ const ViewBook = () => {
             bookId: bookId
         }
         const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/bookDetails', data, headers);
-        console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             setBook(response.data);
             setLoader(false);
         }
     }
 
-    // if (viewBookId) {
-    //     fetchBookDetails();
-    // }
     useEffect(() => {
             fetchBookDetails();
     }, []);
-    console.log('book:', book);
     return <>
               <Header />
               {loader ? <div>Loading...</div> : 

@@ -23,7 +23,6 @@ export const BookCard = ({ book, tag, currentProgress, section, bookuser }) => {
     } else {
         finalProgress = currentProgress;
     }
-    console.log(`currentProgress:`, currentProgress);
 
     const updateBookProgress = async () => {
         let headers = { 'Content-type': 'application/json' };

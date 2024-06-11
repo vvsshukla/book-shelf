@@ -18,7 +18,6 @@ export const SearchBooks = () => {
         if (evt.key === 'Enter' || evt.type === 'click') {
             try {
                 let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=${apiKey}`);
-                console.log('response:', response);
                 if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.items !== "undefined") {
                     let shelfBooks = response.data.items;
                     let searchedbookArray = [];
@@ -36,7 +35,6 @@ export const SearchBooks = () => {
                             searchedbookArray.push(bookDetails);
                         }
                     }
-                    console.log('result:', searchedbookArray);
                     setSearchedBooks(searchedbookArray);
                 }
             } catch (error) {
@@ -51,7 +49,6 @@ export const SearchBooks = () => {
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/books', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let shelfBooks = response.data.books;
-            console.log('fetchBooks:', shelfBooks);
             let existingBookArray = [];
             for (const book of shelfBooks) {
                 let bookObject = book.bookId;
@@ -70,7 +67,6 @@ export const SearchBooks = () => {
                     existingBookArray.push(bookDetails);
                 }
             }
-            console.log('existingBookArray:', existingBookArray);
             setExistingBooks(existingBookArray);
             dispatch(getExistingBooks(existingBookArray));
         }

@@ -12,11 +12,8 @@ const SocialCards = () => {
         let headers = { 'Content-type': 'application/json' };
         let data = { userId: user._id };
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/fetchfriends', data, headers);
-        console.log('response:', response);
-        console.log('fiends:', response.data.friends);
         if (typeof response.data.success !== "undefined" && response.data.success === true && typeof response.data.friends !== "undefined") {
             let friends = response.data.friends;
-            console.log('fetchedFriends:', friends);
             let myFriendsIds = [];
             friends.forEach(friend => {
                 if (user._id === friend.senderId._id) {
@@ -27,9 +24,7 @@ const SocialCards = () => {
             });
             let userData = { userId: user._id, friendIds: myFriendsIds };
             let updateResponse = await axios.post(process.env.REACT_APP_SERVER_URL+'api/fetchupdates', userData, headers);
-            console.log('response:', updateResponse);
             if (typeof updateResponse !== "undefined" && typeof updateResponse.data !== "undefined") {
-                console.log('socialCardUpdates:', updateResponse.data);
                 setSocialCardUpdates(updateResponse.data);
                 setLoading(false);
             }
@@ -52,7 +47,6 @@ const SocialCards = () => {
                                 ? socialCardUpdates?.map((update) => {
                                     let book = update.bookId;
                                     let user = update.userId;
-                                    console.log('update:', update);
                                     return (
                                         <SocialCard update={update} />
                                     )

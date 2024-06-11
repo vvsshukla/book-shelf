@@ -30,7 +30,6 @@ const Review = () => {
     const fetchReview = async () => {
         let userData = {userId: bookUserId, bookId: bookId};
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/fetchReview', userData, headers);
-        console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let reviewDetails = response.data;
             if (typeof reviewDetails.rating !=="undefined") {
@@ -51,7 +50,6 @@ const Review = () => {
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             setBook(response.data);
         }
-        console.log('response:', response);
     }
 
     const submitReview = async (e) => {
@@ -66,7 +64,6 @@ const Review = () => {
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             setMessage('Review Added Successfully.');
         }
-        console.log('response:', response);
     }
 
     useEffect(()=>{

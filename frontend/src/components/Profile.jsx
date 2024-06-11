@@ -34,7 +34,6 @@ export const Profile = () => {
             }
         };
         axios.post(fileUploadUrl, formData, config).then(async (response) => {
-            console.log('response:', response);
             uploadedFileName = response.data.saveAs;
             if (response.data.success === true) {
                 const userData = { firstname: firstname, lastname: lastname, phone: phone, gender: gender, userId: user._id, avatarUrl: uploadedFileName};
@@ -69,7 +68,6 @@ export const Profile = () => {
     const validateProfile = (event) => {
         switch (event.target.id) {
             case 'firstname':
-                console.log('firstname:', firstname.trim());
                 if (!firstname.trim()) {
                     setFirstNameError('firstname is required.');
                 } else if (!(/^[a-zA-Z]{2,}$/.test(firstname.trim()))) {
@@ -79,7 +77,6 @@ export const Profile = () => {
                 }
                 break;
             case 'lastname':
-                console.log('lastname:', lastname.trim());
                 if (!lastname.trim()) {
                     setLastNameError('lastname is required.');
                 } else if (!(/^[a-zA-Z]{2,}$/.test(lastname.trim()))) {

@@ -20,35 +20,16 @@ const SignUp = ({ onSignInClick }) => {
     const { login } = useAuth();
     const signUp = async () => {
         document.getElementById('signUp').innerText = "Signing Up...";
-        console.log('firstName:', firstname);
-        console.log('lastName:', lastname);
         const userData = { firstname, lastname, email, password };
         const headers = {
             'Content-Type': 'application/json'
         };
         try {
             const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/signup', userData, headers);
-            //https://book-shelf-xvxk.onrender.com/api/signup
             const response = result.data;
-            // const response = {
-            //     "success": true,
-            //     "message": "Registration Successful",
-            //     "user": {
-            //         "_id": "6616cdd60a355b5cfb00435f",
-            //         "firstname": "vaibhav",
-            //         "lastname": "shukla",
-            //         "email": "vaibhav125shukla@gmail.com",
-            //         "password": "$2a$10$CKP/bVd.f17P2vu4yGoQ6eIobzEJzGAZ0ZjqD3moGcseFIMMhka36",
-            //         "createdAt": "2024-04-10T17:35:18.332Z",
-            //         "lastLoggedIn": "2024-04-10T17:58:14.734Z",
-            //         "__v": 0
-            //     }
-            // };
-            console.log('response:', response);
             if (typeof response.success !== "undefined" && response.success === true) {
                 await login(response.newUser);
             } else {
-                console.log('message:', response.message);
                 setMessage(response.message);
             }
             document.getElementById('signUp').innerText = "Sign Up";
@@ -61,7 +42,6 @@ const SignUp = ({ onSignInClick }) => {
     const validateSignUp = (event) => {
         switch (event.target.id) {
             case 'firstname':
-                console.log('firstname:', firstname.trim());
                 if (!firstname.trim()) {
                     setFirstNameError('firstname is required.');
                 } else if (!(/^[a-zA-Z]{2,}$/.test(firstname.trim()))) {
@@ -71,7 +51,6 @@ const SignUp = ({ onSignInClick }) => {
                 }
                 break;
             case 'lastname':
-                console.log('lastname:', lastname.trim());
                 if (!lastname.trim()) {
                     setLastNameError('lastname is required.');
                 } else if (!(/^[a-zA-Z]{2,}$/.test(lastname.trim()))) {

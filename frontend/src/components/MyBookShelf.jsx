@@ -47,7 +47,6 @@ const MyBookShelf = () => {
     const dispatch = useDispatch();
 
     let { newBook, rating, bookShelfExternalIds, bookId, avgRating, tag } = useSelector(state => state.review);
-    console.log('avgRating:', avgRating, 'rating:', rating);
 
     const searchBook = async (evt, serachText) => {
         if (evt.key === 'Enter' || evt.type === 'click') {
@@ -58,9 +57,7 @@ const MyBookShelf = () => {
                 } else {
                     searchText = document.getElementById('search-books').value;
                 }
-                console.log('serachText:', serachText);
                 let response = await axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchText}&key=${apiKey}`);
-                console.log('response:', response);
                 if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.items !== "undefined") {
                     let shelfBooks = response.data.items;
                     let searchedbookArray = [];
@@ -85,7 +82,6 @@ const MyBookShelf = () => {
                             searchedbookArray.push(bookDetails);
                         }
                     }
-                    console.log('result:', searchedbookArray);
                     setSearchedBooks(searchedbookArray);
                 } else {
                     setSearch(evt.target.value);
@@ -102,7 +98,6 @@ const MyBookShelf = () => {
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/books', userData, headers);
         if (typeof response !== "undefined" && typeof response.data !== "undefined") {
             let shelfBooks = response.data.books;
-            console.log('fetchBooks:', shelfBooks);
             let existingBookArray = [];
             for (const book of shelfBooks) {
                 let bookObject = book.bookId;
@@ -121,7 +116,6 @@ const MyBookShelf = () => {
                     existingBookArray.push(bookDetails);
                 }
             }
-            console.log('existingBookArray:', existingBookArray);
             setExistingBooks(existingBookArray);
             dispatch(getExistingBooks(existingBookArray));
             setLoader(0);
@@ -135,9 +129,7 @@ const MyBookShelf = () => {
 
     const startReading = async (bookId) => {
         const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/startreading', { bookId: bookId, userId: user._id, tag: 'currently-reading' }, headers);
-        console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.updatedTag !== "undefined" && typeof response.data.updatedTag !== "") {
-            console.log('read response:', response);
             let tag = response.data.updatedTag.tag;
             let bookId = response.data.updatedTag.bookId;
             dispatch(updateTag(tag, bookId));
@@ -152,19 +144,14 @@ const MyBookShelf = () => {
             let updatedTag = '';
             if (tag != '' && bookId == book.id) {
                 updatedTag = tag;
-                console.log('updated tag:', updatedTag);
             } else {
                 updatedTag = book.tag;
             }
             if (propRating != '' && bookId == book.id && propAvgRating != '') {
                 finalRating = propRating;
                 finalAvgRating = propAvgRating;
-                console.log('finalRating:', finalRating);
-                console.log('finalAvgRating:', finalRating);
-                console.log('book title:', book.title);
             } else {
                 finalRating = finalAvgRating = book.avgRating;
-                console.log('finalRating:', finalRating, 'book title:', book.title);
             }
             let cover = <img src={book.smallThumbnail} alt={book.title} />;
             let title = book.title;
@@ -176,9 +163,7 @@ const MyBookShelf = () => {
                     userId: user._id,
                     bookId: book.id
                 }
-                console.log(data);
                 const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/updaterating', data, headers);
-                console.log('response:', response);
                 if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating !== "undefined") {
                     console.log('Rating updated successfully.');
                     dispatch(updateRating(response.data.review.rating, response.data.review.avgRating, book.id));
@@ -221,10 +206,8 @@ const MyBookShelf = () => {
                             </div>;   
                     break;
             }
-            console.log('action:', action);
             dataSource.push({ cover: cover, title: title, author: authors, shelves: shelves, avgRating: avgRating, action: action });
         });
-        console.log('existingBooks.length:', existingBooks.length);
         return <>
             <div id="bookShelfResults">
                 {existingBooks.length > 0 ? <BookShelf dataSource={dataSource} /> : <span className="infoMessage">BookShelf is empty.</span>}
@@ -253,9 +236,7 @@ const MyBookShelf = () => {
                 publishedDate: book.publishedDate
             };
             const addToBookShelf = async (bookDetails) => {
-                console.log('bookDetails:', bookDetails);
                 const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/addbooktoshelf', bookDetails, headers);
-                console.log('response:', response);
                 if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.newBook !== "undefined") {
                     console.log('Book added successfully.');
                     dispatch(addBook(response.data.newBook));
@@ -264,7 +245,6 @@ const MyBookShelf = () => {
             let action = (Object.keys(newBook).length > 0 && newBook.externalId === book.externalId) || (bookShelfExternalIds.includes(book.externalId)) ? <label className="addedToShelf">Added</label> : <button type="button" className="addToBookShelf" onClick={() => addToBookShelf(bookDetails)}><span>&#43;</span> Add</button>;
             dataSource.push({ cover: cover, title: title, author: authors, action: action });
         });
-        console.log('searchedBooks.length:', searchedBooks.length);
         return <>
             <div id="searchBooksDiv">
                 <div className="search-form">

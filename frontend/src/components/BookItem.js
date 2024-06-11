@@ -11,7 +11,6 @@ const headers = {
 
 export const BookItem = ({ book, source, search }) => {
     const { user } = useAuth();
-    console.log('book:', book);
     let finalRating = '';
     let finalAvgRating = '';
     let updatedTag = '';
@@ -19,16 +18,12 @@ export const BookItem = ({ book, source, search }) => {
     if (rating != '' && bookId == book.id && avgRating != '') {
         finalRating = rating;
         finalAvgRating = avgRating;
-        console.log('updated rating:', rating);
-        console.log('updated avgRating:', avgRating);
     } else {
         finalRating = finalAvgRating = book.avgRating;
-        console.log('existing rating:', finalRating, 'book:', book.title);
     }
 
     if (tag != '' && bookId == book.id) {
         updatedTag = tag;
-        console.log('updated tag:', updatedTag);
     } else {
         updatedTag = book.tag;
     }
@@ -48,7 +43,6 @@ export const BookItem = ({ book, source, search }) => {
             bookId: book.id
         }
         const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/updaterating', data, headers);
-        console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.review !== "undefined" && typeof response.data.review.avgRating !== "undefined") {
             console.log('Rating updated successfully.');
             dispatch(updateRating(response.data.review.rating, response.data.review.avgRating, book.id));
@@ -57,9 +51,7 @@ export const BookItem = ({ book, source, search }) => {
 
     const startReading = async (bookId) => {
         const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/startreading', { bookId: bookId, userId: user._id, tag: 'currently-reading' }, headers);
-        console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.updatedTag !== "undefined" && typeof response.data.updatedTag !== "") {
-            console.log('read response:', response);
             let tag = response.data.updatedTag.tag;
             let bookId = response.data.updatedTag.bookId;
             dispatch(updateTag(tag, bookId));
@@ -68,7 +60,6 @@ export const BookItem = ({ book, source, search }) => {
 
     const addToBookShelf = async (bookDetails) => {
         const response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/addbooktoshelf', bookDetails, headers);
-        console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data !== "undefined" && typeof response.data.newBook !== "undefined") {
             console.log('Book added successfully.');
             dispatch(addBook(response.data.newBook));

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 export const Reader = ({ reader, userType, friendIds }) => {
-    console.log('Reader:', reader);
     let firstName = '', lastName = '', booksCount='';
     let profileImageUrl = "https://s.gr-assets.com/assets/nophoto/user/u_60x60-267f0ca0ea48fd3acfd44b95afa64f01.png";
     if (reader?.avatarUrl) {
@@ -42,16 +41,12 @@ export const Reader = ({ reader, userType, friendIds }) => {
             case 'friend'://friends list
                 return <></>
             case 'receiver': //Notifications
-                console.log('userType:', userType);
-                console.log('requestId:', requestId, 'reader._id:', reader._id, 'requestStatus:', requestStatus);
                 if (requestId !== "" && requestId === reader._id && requestStatus !== "sent") {
                     return <label className="capitalize frStatus">{requestStatus}</label>;
                 } else if (reader.receiverId === user._id) {
                     return <><button type="button" className="frActions fa fa-check" onClick={() => friendRequestAction(reader._id, 'accepted')}>Accept</button><button type="button" className="frActions fa fa-ban" onClick={() => friendRequestAction(reader._id, 'rejected')}>Reject</button></>
                 }
             default://Add friend
-                console.log('add friend reader:', reader);
-                console.log('friendIds:', friendIds);
                 if (reader._id === receiverId) {
                     return <span>Request sent.</span>;
                 } else if (friendIds?.includes(reader._id)) {
@@ -86,7 +81,6 @@ export const Reader = ({ reader, userType, friendIds }) => {
         };
         try {
             const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/acknowledgefriendrequest', data, headers);
-            console.log('result:', result);
             //https://book-shelf-xvxk.onrender.com
             const response = result.data;
             if (typeof response.success !== "undefined" && response.success === true) {

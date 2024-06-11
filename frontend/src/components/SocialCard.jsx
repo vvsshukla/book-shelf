@@ -8,7 +8,6 @@ export const SocialCard = ({update}) => {
     let book = update.bookId;
     let user = update.userId;
     let rating = update.rating ? update.rating : book.avgRating;
-    console.log('rating:', rating);
 
     const renderContent = (type) => {
         switch (type) {
@@ -23,7 +22,6 @@ export const SocialCard = ({update}) => {
         }
     }
 
-    console.log('book:', book, 'user:', user);
     return (
         <div className="socialCard">
                 {renderContent(update.type)}           

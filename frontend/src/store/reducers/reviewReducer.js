@@ -11,16 +11,13 @@ const initState = {
 export default (state = initState, action) => {
     switch (action.type) {
         case "GET_EXISTING_BOOKS":{
-            console.log('action:', action);
             let externalIds = action?.existingBooks.map(book => book.externalId);
-            console.log('externalIds:', externalIds);
             return {
                 ...state,
                 bookShelfExternalIds: externalIds
             }
         }
         case "UPDATE_RATING":{
-            console.log('action:', action);
             return {
                 ...state,
                 rating: action.rating,
@@ -29,7 +26,6 @@ export default (state = initState, action) => {
             };
         }
         case "ADD_BOOK_TO_SHELF":{
-            console.log('ADD_BOOK_TO_SHELF reducer action:', action);
             return {
                 ...state,
                 newBook: action.bookDetails,
@@ -37,7 +33,6 @@ export default (state = initState, action) => {
             }
         }
         case "START_READING": {
-            console.log('START_READING reducer action:', action);
             return {
                 ...state,
                 tag: action.tag,

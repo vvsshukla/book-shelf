@@ -67,14 +67,12 @@ export const Friends = () => {
                 let data = { 'email': search };
                 let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/searchuser', data, headers);
                 let userResult = typeof response.data !== "undefined" ? response.data : '';
-                console.log('result:', userResult);
                 if (typeof userResult.user !== "undefined" && userResult.user !== null) {
                     setResult(userResult.user);
                 } else {
                     setResult([]);
                     setSearchMessage(<span className="failureMessage">{userResult.message}</span>);
                 }
-                console.log('response:', response);
             }
         }
     }
@@ -83,10 +81,8 @@ export const Friends = () => {
         let headers = { 'Content-type': 'application/json' };
         let data = { receiverId: user._id };
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/friendrequests', data, headers);
-        console.log('response:', response);
         if (typeof response !== "undefined" && typeof response.data.success !== "undefined" && response.data.success === true) {
             let requests = response.data.requests;
-            console.log('fetchFriendRequests:', requests);
             setFriendRequests(requests);
             if (requests.length === 0) {
                 setNotificationMessage(<span className="infoMessage">No new friend request.</span>);
@@ -101,10 +97,8 @@ export const Friends = () => {
         let headers = { 'Content-type': 'application/json' };
         let data = { userId: user._id };
         let response = await axios.post(process.env.REACT_APP_SERVER_URL+'api/fetchfriends', data, headers);
-        console.log('response:', response);
         if (typeof response.data.success !== "undefined" && response.data.success === true) {
             let friends = response.data.friends;
-            console.log('fetchedFriends:', friends);
             let myFriendsIds = [];
             friends.forEach(friend => {
                 if (user._id === friend.senderId._id) {
@@ -129,10 +123,8 @@ export const Friends = () => {
             setLoader(1);
         }
 
-        console.log('populateTabContent:', tabId);
         switch (tabId) {
             case 1:
-                console.log('populateTabContent fetchFriends');
                 fetchFriends();
                 break;
             case 2:
@@ -144,9 +136,6 @@ export const Friends = () => {
 
         }
     }
-
-    console.log('searchMessage:', searchMessage);
-    console.log('result:', result);
 
     const renderTabContent = () => {
         switch (activeTab) {

@@ -24,16 +24,11 @@ const SignIn = () => {
             'Content-Type': 'application/json'
         };
         try {
-            console.log('process.env.REACT_APP_SERVER_URL:'+process.env.REACT_APP_SERVER_URL);
             const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/signin', userData, headers);//https://book-shelf-xvxk.onrender.com
-            console.log('result:', result);
             const response = result.data;
-            console.log('response:', response);
             if (typeof response.success !== "undefined" && response.success === true) {
                 await login(response.user);
-                console.log('navigated');
             } else {
-                console.log('message:', response.message);
                 setMessage(response.message);
             }
             document.getElementById('signIn').innerText = 'Sign In';
@@ -43,7 +38,6 @@ const SignIn = () => {
     }
 
     const validateEmail = () => {
-        console.log('email:', emailError);
         if (!email.trim()) {
             setEmailError('Email is required.');
         } else if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.trim()))) {
@@ -54,7 +48,6 @@ const SignIn = () => {
     }
 
     const validatePasswword = () => {
-        console.log('password:', password);
         if (!password.trim()) {
             setPasswordError('Password is required.');
         } else {
