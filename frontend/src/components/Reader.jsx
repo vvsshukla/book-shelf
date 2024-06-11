@@ -40,7 +40,7 @@ export const Reader = ({ reader, userType, friendIds }) => {
     const renderActionButtons = (userType) => {
         switch (userType) {
             case 'friend'://friends list
-                return <>No Action</>
+                return <></>
             case 'receiver': //Notifications
                 console.log('userType:', userType);
                 console.log('requestId:', requestId, 'reader._id:', reader._id, 'requestStatus:', requestStatus);

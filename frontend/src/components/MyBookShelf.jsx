@@ -47,6 +47,7 @@ const MyBookShelf = () => {
     const dispatch = useDispatch();
 
     let { newBook, rating, bookShelfExternalIds, bookId, avgRating, tag } = useSelector(state => state.review);
+    console.log('avgRating:', avgRating, 'rating:', rating);
 
     const searchBook = async (evt, serachText) => {
         if (evt.key === 'Enter' || evt.type === 'click') {
@@ -155,15 +156,15 @@ const MyBookShelf = () => {
             } else {
                 updatedTag = book.tag;
             }
-            console.log('updated avgRating:', propAvgRating);
             if (propRating != '' && bookId == book.id && propAvgRating != '') {
                 finalRating = propRating;
                 finalAvgRating = propAvgRating;
-                console.log('updated rating:', propRating);
-                console.log('updated avgRating:', propAvgRating);
+                console.log('finalRating:', finalRating);
+                console.log('finalAvgRating:', finalRating);
+                console.log('book title:', book.title);
             } else {
                 finalRating = finalAvgRating = book.avgRating;
-                console.log('existing rating:', finalRating, 'book:', book.title);
+                console.log('finalRating:', finalRating, 'book title:', book.title);
             }
             let cover = <img src={book.smallThumbnail} alt={book.title} />;
             let title = book.title;
