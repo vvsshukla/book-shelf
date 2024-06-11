@@ -17,7 +17,7 @@ Bookshelf is a social media application for readers that allows to search books 
 3. Dashboard contains two sections: **Currently Reading** and **Social Cards**. 
 4. Currently Reading section features details about the book you are reading currently. You can update progress of book reading.
 5. Social Cards lists down the activities done by your friends like rating a book, marked as currently-reading.
-6. MyBookShelf has two tabs. **BookShelf** and **Library**. You can search books from Library and add them to your BookShelf. BookShelf lists books currently added in your shelf. Shelves column of BookShelf list indicates whether you want to read book (to-read), your are currently reading a book. In Bookshelf list, you can start reading the books, also update its rating.
+6. MyBookShelf has two tabs. **BookShelf** and **Library**. You can search books from Library and add them to your BookShelf. BookShelf lists books currently added in your shelf. Shelves column of BookShelf list indicates whether you want to read book (to-read), your are currently reading a book(currently-reading) or you completed the book(completed). In Bookshelf list, you can start reading the books, also update its rating, view book details, add review to your book. **Read** and **View** buttons are visible by default. When you click Read button, the book appears into Currently Reading section on Dashboard. You can update progress for that book in that section. When you update progress to 100%, the book will disappered from Curently Reading section and in BookShelf table, yopu will see **Review** button for that completed book.
 7. Friends contains three tabs: **Friends**, **Add Friend**, **Friend Requests**.
 
 ## TechStack
