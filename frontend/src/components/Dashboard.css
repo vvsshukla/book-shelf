@@ -45,6 +45,14 @@
     overflow-y: auto;
 }
 
+.details h3 {
+    text-align: left;
+}
+
+.details .review {
+    text-decoration: none;
+}
+
 @media only screen and (min-width:768px) {
 
     .upperHalf {

@@ -40,7 +40,7 @@ export const BookCard = ({ book, tag, currentProgress, section, bookuser }) => {
             <div className="details">
                 <h3><Link to={`${process.env.REACT_APP_BASE_URL}/book/${book._id}`}>{book?.title}</Link></h3>
                 <p>By: <b>{book?.authors}</b></p>
-                {section === 'SocialCard' && <p><Link to={`${process.env.REACT_APP_BASE_URL}/review/${book._id}/${userId}`}>Review</Link></p>}
+                {section === 'SocialCard' && <h3><Link className="review" to={`${process.env.REACT_APP_BASE_URL}/review/${book._id}/${userId}`}>Review</Link></h3>}
                 {tag == 'currently-reading' ? 
                 <>
                     {finalProgress ? (<p>{finalProgress} %</p>) : ''}
