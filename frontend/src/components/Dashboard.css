@@ -9,6 +9,23 @@
     color: #000;
 }
 
+#currentlyReading {
+    width: 100%;
+    height: 100%;
+}
+
+#socialCards {
+    width: 100%;
+    height: 100%;
+}
+
+.loaderDiv {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #currentlReadingBooks .fallBackMsg, #socialCardUpdates .fallBackMsg {
     text-align: center;
     height: 10vh;
@@ -51,6 +68,10 @@
 
 .details .review {
     text-decoration: none;
+}
+
+.fa-spinner {
+    text-align: center;
 }
 
 @media only screen and (min-width:768px) {

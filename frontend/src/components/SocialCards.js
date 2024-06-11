@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { SocialCard } from "./SocialCard";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const SocialCards = () => {
     const [loading, setLoading] = useState(true);
@@ -39,7 +41,7 @@ const SocialCards = () => {
         <div id="socialCards">
             {
                 loading ?
-                    <div key="socialCardLoader">Loading...</div> :
+                    <div className="loaderDiv"><FontAwesomeIcon icon={faSpinner} size="2x" spin /></div> :
                     <div id="socialCardUpdates">
                         <h3 className="dashboardHeadings">Social Cards</h3>
                         {

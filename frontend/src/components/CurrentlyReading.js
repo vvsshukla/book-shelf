@@ -4,6 +4,8 @@ import axios from "axios";
 import { BookCard } from "./BookCard";
 import { useDispatch } from "react-redux";
 import { resetProgress } from "../store/actions/dashboardActions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const CurrentlyReading = () => {
     const { user } = useAuth();
@@ -28,7 +30,7 @@ const CurrentlyReading = () => {
     return (
         <div id="currentlyReading">
             {loading ?
-                <div>Loading...</div> :
+                <div className="loaderDiv"><FontAwesomeIcon icon={faSpinner} spin size="2x"/></div>:
                 <div id="currentlReadingBooks">
                     <h3 className="dashboardHeadings">Currently Reading</h3>
                     {
