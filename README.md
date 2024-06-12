@@ -23,7 +23,7 @@ Bookshelf is a social media application for readers that allows to search books 
 see default image. Clicking profile image will expand profile panel which lists three profile section links: **Profile**, **Friends** and **Logout**.
 
 ## TechStack
-Frontend is built using React,HTML5,CSS3,JavaScript
+Frontend is built using React,HTML5,CSS3,JavaScript.\
 Backend is built using mongo, express, nodeJs
 
 ## Build by
