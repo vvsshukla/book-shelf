@@ -7,6 +7,7 @@
     border-radius: 5px;
     background-color:#d0c37f; /*#695e55f5, #d0c37f #898887*/
     color: #000;
+    min-height: 60vh;
 }
 
 #currentlyReading {
@@ -68,6 +69,7 @@
 
 .details .review {
     text-decoration: none;
+    color: #000000;
 }
 
 .fa-spinner {
