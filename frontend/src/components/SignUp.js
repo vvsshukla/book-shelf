@@ -21,7 +21,7 @@ const SignUp = ({ onSignInClick }) => {
     const { login } = useAuth();
     const signUp = async () => {
         if ((firstname!='' && firstNameError == '') && (lastname!='' && lastNameError == '') && (email!='' && emailError == '') && (password != '' && passwordError == '')) {
-            document.getElementById('signUp').innerText = "Signing Up...";
+            setSubmitted(true);
             const userData = { firstname, lastname, email, password };
             const headers = {
                 'Content-Type': 'application/json'
@@ -113,7 +113,7 @@ const SignUp = ({ onSignInClick }) => {
                     </div>
                     <div>
                         <button type="button" id="signUp" disabled={firstNameError || lastNameError || emailError || passwordError} onClick={(e) => signUp()}>
-                            {submitted == false ? 'Sign Up' : <>Signing Up<FontAwesomeIcon icon={faSpinner} size="2x"/></>}
+                            {submitted == false ? 'Sign Up' : <>Signing Up<FontAwesomeIcon icon={faSpinner} spin size="1x"/></>}
                         </button>
                     </div>
                     <div>By creating an account, you agree to the BookShelf Terms of Service and Privacy Policy.</div>
