@@ -16,26 +16,31 @@ const SignUp = ({ onSignInClick }) => {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [submitted, setSubmitted] = useState(false);
+    const [validation, setValidation] = useState(false);
     //const [loginUser, setLoginUser] = useState({});
     const { login } = useAuth();
     const signUp = async () => {
-        document.getElementById('signUp').innerText = "Signing Up...";
-        const userData = { firstname, lastname, email, password };
-        const headers = {
-            'Content-Type': 'application/json'
-        };
-        try {
-            const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/signup', userData, headers);
-            const response = result.data;
-            if (typeof response.success !== "undefined" && response.success === true) {
-                await login(response.newUser);
-            } else {
-                setMessage(response.message);
+        if ((firstname!='' && firstNameError == '') && (lastname!='' && lastNameError == '') && (email!='' && emailError == '') && (password != '' && passwordError == '')) {
+            document.getElementById('signUp').innerText = "Signing Up...";
+            const userData = { firstname, lastname, email, password };
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            try {
+                const result = await axios.post(process.env.REACT_APP_SERVER_URL+'api/signup', userData, headers);
+                const response = result.data;
+                if (typeof response.success !== "undefined" && response.success === true) {
+                    await login(response.newUser);
+                } else {
+                    setMessage(response.message);
+                }
+                document.getElementById('signUp').innerText = "Sign Up";
+            } catch (error) {
+                //Handle registration failure
+                console.log('Error registering user:', error);
             }
-            document.getElementById('signUp').innerText = "Sign Up";
-        } catch (error) {
-            //Handle registration failure
-            console.log('Error registering user:', error);
+        } else {
+            setMessage('Please enter valid form details.');
         }
     }
 
@@ -75,6 +80,9 @@ const SignUp = ({ onSignInClick }) => {
                     setPasswordError('');
                 }
                 break;
+        }
+        if (messsage) {
+            setMessage('');
         }
     }
 
