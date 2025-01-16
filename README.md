@@ -27,4 +27,4 @@ Frontend is built using React,HTML5,CSS3,JavaScript.\
 Backend is built using mongo, express, nodeJs
 
 ## Build by
-This capstone project is built by `Vaibhav Shukla` for UpGrad KnowledgeHut Fullstack JS BootCamp.
+This capstone project is built by `Vaibhav Shukla`
